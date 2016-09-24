@@ -10,7 +10,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-	res.send('home');
+  res.send('home');
 });
 
 app.use('/document', documentRouter);
