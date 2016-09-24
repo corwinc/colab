@@ -1,0 +1,26 @@
+{
+  "name": "revolutionary-eels",
+  "version": "1.0.0",
+  "description": "collaborative text editor",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandontiqui/Revolutionary-Eels.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brandontiqui/Revolutionary-Eels/issues"
+  },
+  "homepage": "https://github.com/brandontiqui/Revolutionary-Eels#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "nodemon": "^1.10.2"
+  }
+}
