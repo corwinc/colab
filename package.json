@@ -23,7 +23,9 @@
     "express": "^4.14.0",
     "mocha": "^3.0.2",
     "morgan": "^1.7.0",
-    "nodemon": "^1.10.2"
+    "mysql": "^2.11.1",
+    "nodemon": "^1.10.2",
+    "sequelize": "^3.24.3"
   },
   "devDependencies": {
     "eslint": "^3.6.0",
