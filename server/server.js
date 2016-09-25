@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var documentRouter = require('./resources/routers/documentRouter');
 var usersRouter = require('./resources/routers/usersRouter');
 var commentsRouter = require('./resources/routers/commentsRouter');
-
+var db = require('../db/config.js');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
