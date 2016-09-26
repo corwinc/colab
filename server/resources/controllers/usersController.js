@@ -1,6 +1,5 @@
 var db = require('../../../db/config.js');
 var User = require('../../../db/Models/User');
-console.log("USER IS: ", User);
 /**
  * Get user
  * @param {Object} req
@@ -8,15 +7,9 @@ console.log("USER IS: ", User);
  * @return undefined
  */ 
 exports.getUser = function(req, res) {
-  // TODO: Check which params are given in the request, customize the db query accordingly
-  // if (req.query.username) {
-  //   for (key in req.query.params) {
-  //     dbQueryParams[key] = req.query.params[key];
-  //   }
-  // }
-  User.findOne({username: req.query.username})
+  User.findOne({where: req.query})
     .then(function(user){
-      if (user !== undefined) {
+      if (user !== null) {
         res.send(user);
       } else {
         res.status(404).send('User not found.');
@@ -34,21 +27,12 @@ exports.getUser = function(req, res) {
  * @return undefined
  */
 exports.createUser = function(req, res) {
-
-  User.findOne({username: req.query.username})
+  User.findOne({where: {username: req.body.username} })
     .then(function(user){
       if (user !== null){
-        res.send('User already exists.');
+        res.send('A user with that username already exists.');
       } else {
-        // TODO: Use actual data from the req.body, posted from front end. 
-        var newUser = {
-          firstName: 'Corwin', 
-          lastName: 'Crownovet', 
-          username: 'ccouioui', 
-          email: 'corwinCestMoi@gmail.com', 
-          password: 'PASSWORD'
-        };
-        User.create(newUser)
+        User.create(req.body)
           .then(function(user){
             res.send(user);
           })
@@ -56,6 +40,9 @@ exports.createUser = function(req, res) {
             res.status(500).send('Error creating the user.');
           })
       }
+    })    
+    .catch(function(error){
+      res.status(500).send('Error finding this user.');
     });
 };
 
@@ -66,7 +53,19 @@ exports.createUser = function(req, res) {
  * @return undefined
  */
 exports.updateUser = function(req, res) {
-  res.send('update user');
+  User.findOne({where: {username: req.body.username} })
+    .then(function(user){
+      user.update(req.body)
+        .then(function(user){
+          res.send(user);
+        })
+        .catch(function(error){
+          res.status(500).send('Error updating the user.');
+        })
+    })
+    .catch(function(error){
+      res.status(500).send('Error finding this user.');
+    });
 };
 
 /**
@@ -76,7 +75,19 @@ exports.updateUser = function(req, res) {
  * @return undefined
  */
 exports.deleteUser = function(req, res) {
-  res.send('delete user');
-};
+  User.findOne({where: req.query })
+    .then(function(user){
+      user.destroy()
+        .then(function(user){
+          res.send(user);
+        })
+        .catch(function(error){
+          res.status(500).send('Error updating the user.');
+        })
+    })
+    .catch(function(error){
+      res.status(500).send('Error finding this user.');
+    });
+  };
 
 
