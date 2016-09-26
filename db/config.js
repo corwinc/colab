@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 //AWS DB CONNECTION
-var connectionString = process.env.connectionString;
+var connectionString = process.env.CONNECTION_STRING;
 
 var connection = new Sequelize(connectionString, {
   pool: {
