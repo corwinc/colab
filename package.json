@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server/server.js"
+    "start": "nodemon server/server.js",
+    "dev": "webpack -d --watch",
+    "build" : "webpack -p"
   },
   "repository": {
     "type": "git",
@@ -38,6 +40,7 @@
     "eslint-config-airbnb": "^11.2.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0"
+    "eslint-plugin-react": "^6.3.0",
+    "react-hot-loader": "^3.0.0-beta.5"
   }
 }
