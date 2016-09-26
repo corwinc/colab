@@ -1,5 +1,5 @@
 node_modules
-# comment out for deploy branch: db/config.js
+db/config.js
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
