@@ -8,6 +8,7 @@ var commentsRouter = require('./resources/routers/commentsRouter');
 var db = require('../db/config.js');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function(req, res) {
   res.send('home');
