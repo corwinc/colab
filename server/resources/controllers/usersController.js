@@ -40,6 +40,9 @@ exports.createUser = function(req, res) {
             res.status(500).send('Error creating the user.');
           })
       }
+    })    
+    .catch(function(error){
+      res.status(500).send('Error finding this user.');
     });
 };
 
@@ -50,7 +53,19 @@ exports.createUser = function(req, res) {
  * @return undefined
  */
 exports.updateUser = function(req, res) {
-  res.send('update user');
+  User.findOne({where: {username: req.body.username} })
+    .then(function(user){
+      user.update(req.body)
+        .then(function(user){
+          res.send(user);
+        })
+        .catch(function(error){
+          res.status(500).send('Error updating the user.');
+        })
+    })
+    .catch(function(error){
+      res.status(500).send('Error finding this user.');
+    });
 };
 
 /**
@@ -60,7 +75,19 @@ exports.updateUser = function(req, res) {
  * @return undefined
  */
 exports.deleteUser = function(req, res) {
-  res.send('delete user');
-};
+  User.findOne({where: req.query })
+    .then(function(user){
+      user.destroy()
+        .then(function(user){
+          res.send(user);
+        })
+        .catch(function(error){
+          res.status(500).send('Error updating the user.');
+        })
+    })
+    .catch(function(error){
+      res.status(500).send('Error finding this user.');
+    });
+  };
 
 
