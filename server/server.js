@@ -1,4 +1,4 @@
-//require('dotenv').config();
+require('dotenv').config();
 
 var express = require('express');
 var app = express();
@@ -11,6 +11,8 @@ var db = require('../db/config.js');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static('public'));
 
 app.get('/', function(req, res) {
   res.send('home');
