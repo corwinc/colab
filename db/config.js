@@ -19,3 +19,4 @@ var connection = new Sequelize(connectionString, {
 // var connection = new Sequelize('eels1', 'root');
  
 module.exports = connection;
+
