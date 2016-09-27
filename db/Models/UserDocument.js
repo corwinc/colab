@@ -12,3 +12,4 @@ Document.belongsToMany(User, { through: UserDocument });
 
 User.sync();
 Document.sync();
+UserDocument.sync();
