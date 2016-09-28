@@ -22031,7 +22031,6 @@
 	    )
 	  );
 	};
-	
 	exports.default = TextEditor;
 
 /***/ },
@@ -22096,7 +22095,7 @@
 	      null,
 	      "Chat"
 	    ),
-	    _react2.default.createElement("img", { src: "http://placehold.it/300x300" })
+	    _react2.default.createElement("img", { alt: "app-video", src: "http://placehold.it/300x300" })
 	  );
 	};
 	
