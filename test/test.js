@@ -29,6 +29,6 @@ describe('Server Tests', () => {
       return true;
     });
   });
-});
+};
 
 
