@@ -2,17 +2,19 @@ import React from 'react';
 import { render } from 'react-dom';
 import TextEditor from './TextEditor.jsx';
 import AppVideo from './Video.jsx';
+import Chat from './Chat.jsx';
 
 class App extends React.Component {
   render() {
     return (
-    	<div className="TextEditor">
-	      <div>
-	        <TextEditor />
-	      </div>
-	      <div>
-	        <AppVideo />
-	      </div>
+      <div>
+        <div className="TextEditor">
+          <TextEditor />
+        </div>
+        <div className="Video">
+          <AppVideo />
+          <Chat />
+        </div>
       </div>
     );
   }

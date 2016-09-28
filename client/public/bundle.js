@@ -65,6 +65,10 @@
 	
 	var _Video2 = _interopRequireDefault(_Video);
 	
+	var _Chat = __webpack_require__(/*! ./Chat.jsx */ 175);
+	
+	var _Chat2 = _interopRequireDefault(_Chat);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87,16 +91,17 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'TextEditor' },
+	        null,
 	        _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'TextEditor' },
 	          _react2.default.createElement(_TextEditor2.default, null)
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          _react2.default.createElement(_Video2.default, null)
+	          { className: 'Video' },
+	          _react2.default.createElement(_Video2.default, null),
+	          _react2.default.createElement(_Chat2.default, null)
 	        )
 	      );
 	    }
@@ -22007,7 +22012,24 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var TextEditor = function TextEditor() {
-	  return _react2.default.createElement("div", { contentEditable: "true" });
+	  return _react2.default.createElement(
+	    "div",
+	    null,
+	    _react2.default.createElement(
+	      "h3",
+	      null,
+	      "Document"
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { contentEditable: "true" },
+	      _react2.default.createElement(
+	        "span",
+	        null,
+	        "type here"
+	      )
+	    )
+	  );
 	};
 	
 	exports.default = TextEditor;
@@ -22019,7 +22041,7 @@
   \******************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -22033,13 +22055,52 @@
 	
 	var AppVideo = function AppVideo() {
 	  return _react2.default.createElement(
-	    'p',
+	    "div",
 	    null,
-	    'video'
+	    _react2.default.createElement(
+	      "h3",
+	      null,
+	      "Video"
+	    ),
+	    _react2.default.createElement("img", { src: "http://placehold.it/300x300" })
 	  );
 	};
 	
 	exports.default = AppVideo;
+
+/***/ },
+/* 175 */
+/*!*****************************!*\
+  !*** ./client/app/Chat.jsx ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Chat = function Chat() {
+	  return _react2.default.createElement(
+	    "div",
+	    null,
+	    _react2.default.createElement(
+	      "h3",
+	      null,
+	      "Chat"
+	    ),
+	    _react2.default.createElement("img", { src: "http://placehold.it/300x300" })
+	  );
+	};
+	
+	exports.default = Chat;
 
 /***/ }
 /******/ ]);
