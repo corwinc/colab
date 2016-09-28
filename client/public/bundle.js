@@ -57,15 +57,15 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 34);
 	
-	var _TextEditor = __webpack_require__(/*! ./TextEditor.jsx */ 173);
+	var _TextEditor = __webpack_require__(/*! ./TextEditor.jsx */ 172);
 	
 	var _TextEditor2 = _interopRequireDefault(_TextEditor);
 	
-	var _Video = __webpack_require__(/*! ./Video.jsx */ 174);
+	var _Video = __webpack_require__(/*! ./Video.jsx */ 173);
 	
 	var _Video2 = _interopRequireDefault(_Video);
 	
-	var _Chat = __webpack_require__(/*! ./Chat.jsx */ 175);
+	var _Chat = __webpack_require__(/*! ./Chat.jsx */ 174);
 	
 	var _Chat2 = _interopRequireDefault(_Chat);
 	
@@ -21992,8 +21992,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 3)))
 
 /***/ },
-/* 172 */,
-/* 173 */
+/* 172 */
 /*!***********************************!*\
   !*** ./client/app/TextEditor.jsx ***!
   \***********************************/
@@ -22034,7 +22033,7 @@
 	exports.default = TextEditor;
 
 /***/ },
-/* 174 */
+/* 173 */
 /*!******************************!*\
   !*** ./client/app/Video.jsx ***!
   \******************************/
@@ -22068,7 +22067,7 @@
 	exports.default = AppVideo;
 
 /***/ },
-/* 175 */
+/* 174 */
 /*!*****************************!*\
   !*** ./client/app/Chat.jsx ***!
   \*****************************/
