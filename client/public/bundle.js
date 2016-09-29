@@ -21612,10 +21612,13 @@
 	    ),
 	    _react2.default.createElement(
 	      "div",
-	      null,
+	      { className: "NavBarContainer" },
 	      _react2.default.createElement(
 	        "div",
 	        { className: "userCircles" },
+	        _react2.default.createElement("div", { className: "userCircle" }),
+	        _react2.default.createElement("div", { className: "userCircle" }),
+	        _react2.default.createElement("div", { className: "userCircle" }),
 	        _react2.default.createElement("div", { className: "userCircle" })
 	      ),
 	      _react2.default.createElement(

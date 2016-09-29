@@ -4,8 +4,11 @@ const NavBar = () =>
   (
     <div>
       <h3 className="brandIcon">ColLab</h3>
-      <div>
+      <div className="NavBarContainer">
         <div className="userCircles">
+          <div className="userCircle"></div>
+          <div className="userCircle"></div>
+          <div className="userCircle"></div>
           <div className="userCircle"></div>
         </div>
         <button className="btn-info">Share</button>
