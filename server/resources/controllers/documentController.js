@@ -1,3 +1,6 @@
+var Document = require('../../../db/Models/Document');
+var UserDocument = require('../../../db/Models/UserDocument');
+
 /**
  * Gets documents for a given user or a document given a doc_id
  * @param {Object} req
