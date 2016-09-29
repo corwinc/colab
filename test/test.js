@@ -1,5 +1,5 @@
-// const expect = require('chai').expect;
-// const request = require('request');
+const expect = require('chai').expect;
+const request = require('request');
 
 describe('Server Tests', () => {
   describe('GET request to home page', () => {
