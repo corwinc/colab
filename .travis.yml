@@ -4,16 +4,8 @@ node_js:
   - node
 
 cache:
-directories:
-- node_modules
+  directories:
+    - node_modules
 
-# language: node_js
-# node_js:
-# - node
-# cache:
-#   directories:
-#   - node_modules
-
-# before_install:
-#   npm update -g npm
-
+notifications:
+  slack: hr46:RMkWoHXI3snH4EBQZ1MO2THu
