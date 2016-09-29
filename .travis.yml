@@ -1,11 +1,12 @@
 language: node_js
+
 node_js:
   - "6"
   - "6.1"
   - "5.11"
   - "0.6"
   - "iojs"
-before_script:
-- npm cache clean
-- npm update -g npm
+
+before_install:
+- sudo npm update -g npm
 
