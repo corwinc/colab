@@ -15,9 +15,27 @@ exports.getDocuments = function(req, res) {
     res.send(doc);
   })
   .catch((doc) => {
-    res.status(500).send('Error getting document.');
+    res.status(500).send('Error getting documents.');
   });
 };
+
+/**
+ * Gets single document given a doc_id
+ * @param {Object} req
+ * @param {Object} res
+ * @return undefined
+ */
+ exports.getDocument = function(req, res) {
+  Document.findOne({
+    where: req.query
+  })
+  .then((doc) => {
+    res.send(doc);
+  })
+  .catch((doc) => {
+    res.status(500).send('Error getting documents.');
+  });
+ };
 
 /**
  * Creates a document
