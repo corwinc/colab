@@ -8,12 +8,15 @@ var UserDocument = require('../../../db/Models/UserDocument');
  * @return undefined
  */
 exports.getDocuments = function(req, res) {
-  if (req.query.user) {
-  	res.send(req.query.user);
-  } else if (req.query.doc_id) {
-    res.send(req.query.doc_id);
-  }
-  res.status(400).send('Query string parameter for "user" or "doc_id" is needed.')
+  Document.findOne({
+  	where: req.query
+  })
+  .then(function(doc) {
+    res.send(doc);
+  })
+  .catch(function(doc) {
+    res.status(500).send('Error getting document.');
+  });
 };
 
 /**
@@ -22,8 +25,35 @@ exports.getDocuments = function(req, res) {
  * @param {Object} res
  * @return undefined
  */
+
+/**
+ * Need to modify later to enforce many-many relationship
+ * http://docs.sequelizejs.com/en/latest/docs/associations/
+ */
 exports.createDocument = function(req, res) {
-  res.send('create a document');
+  Document.findAndCountAll({
+  	where: {
+  	  sharelink: req.body.sharelink   	
+  	}
+  })
+  .then(function (result) {
+    if (result.count === 0) {
+    	// create document
+    	Document.create(req.body)
+    	  .then(function(doc) {
+          res.send(doc);
+    	  })
+    	  .catch(function(error) {
+          res.status(500).send('Error creating the document:' + error);
+    	  });
+    } else {
+    	res.status(500).send('Document with this sharelink already exists.');
+    }
+  })
+  .catch(function (error) {
+    res.send(error);
+  });
+  // res.send('create a document');
 };
 
 /**
@@ -33,7 +63,23 @@ exports.createDocument = function(req, res) {
  * @return undefined
  */
 exports.updateDocument = function(req, res) {
-  res.send('update a document');
+	Document.findOne({
+		where: {
+			sharelink: req.body.sharelink
+		}
+	})
+	.then(function(doc) {
+	  doc.update(req.body)
+	    .then(function(doc) {
+	    	res.send(doc);
+	    })
+	    .catch(function(error) {
+	    	res.status(500).send('Error updating the document.');
+	    });
+	})
+	.catch(function(error) {
+    res.status(500).send('Document with this sharelink does not exist.');
+	});
 };
 
 /**
@@ -43,5 +89,19 @@ exports.updateDocument = function(req, res) {
  * @return undefined
  */
 exports.deleteDocument = function(req, res) {
-  res.send('delete all documents');
+	Document.findOne({
+		where: req.query
+	})
+	.then(function(doc) {
+    doc.destroy()
+      .then(function(doc) {
+        res.send(doc);
+      })
+      .catch(function(error) {
+      	res.status(500).send('Error deleting the document.');
+      })
+	})
+	.catch(function(error) {
+    res.status(500).send('Error finding the document.');
+	});
 };
