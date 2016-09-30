@@ -31386,8 +31386,10 @@
 			_this.state = {
 				firstname: '',
 				lastname: '',
-				username: '',
-				email: {}
+				username: ''
+				// errors:''
+				// password:'',
+				// passwordConfirmation:''
 			};
 			_this.onChange = _this.onChange.bind(_this);
 			_this.onSubmit = _this.onSubmit.bind(_this);
