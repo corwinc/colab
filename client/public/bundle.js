@@ -22913,17 +22913,17 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var getPrototype = __webpack_require__(/*! ./_getPrototype */ 182),
-	    isHostObject = __webpack_require__(/*! ./_isHostObject */ 183),
 	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 184);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
 	
 	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
+	var funcProto = Function.prototype,
+	    objectProto = Object.prototype;
 	
 	/** Used to resolve the decompiled source of functions. */
-	var funcToString = Function.prototype.toString;
+	var funcToString = funcProto.toString;
 	
 	/** Used to check objects for own properties. */
 	var hasOwnProperty = objectProto.hasOwnProperty;
@@ -22933,7 +22933,7 @@
 	
 	/**
 	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
 	var objectToString = objectProto.toString;
@@ -22947,8 +22947,7 @@
 	 * @since 0.8.0
 	 * @category Lang
 	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object,
-	 *  else `false`.
+	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
 	 * @example
 	 *
 	 * function Foo() {
@@ -22968,8 +22967,7 @@
 	 * // => true
 	 */
 	function isPlainObject(value) {
-	  if (!isObjectLike(value) ||
-	      objectToString.call(value) != objectTag || isHostObject(value)) {
+	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
 	    return false;
 	  }
 	  var proto = getPrototype(value);
@@ -22989,52 +22987,38 @@
 /*!***********************************!*\
   !*** ./~/lodash/_getPrototype.js ***!
   \***********************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeGetPrototype = Object.getPrototypeOf;
+	var overArg = __webpack_require__(/*! ./_overArg */ 183);
 	
-	/**
-	 * Gets the `[[Prototype]]` of `value`.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {null|Object} Returns the `[[Prototype]]`.
-	 */
-	function getPrototype(value) {
-	  return nativeGetPrototype(Object(value));
-	}
+	/** Built-in value references. */
+	var getPrototype = overArg(Object.getPrototypeOf, Object);
 	
 	module.exports = getPrototype;
 
 
 /***/ },
 /* 183 */
-/*!***********************************!*\
-  !*** ./~/lodash/_isHostObject.js ***!
-  \***********************************/
+/*!******************************!*\
+  !*** ./~/lodash/_overArg.js ***!
+  \******************************/
 /***/ function(module, exports) {
 
 	/**
-	 * Checks if `value` is a host object in IE < 9.
+	 * Creates a unary function that invokes `func` with its argument transformed.
 	 *
 	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+	 * @param {Function} func The function to wrap.
+	 * @param {Function} transform The argument transform.
+	 * @returns {Function} Returns the new function.
 	 */
-	function isHostObject(value) {
-	  // Many host objects are `Object` objects that can coerce to strings
-	  // despite having improperly defined `toString` methods.
-	  var result = false;
-	  if (value != null && typeof value.toString != 'function') {
-	    try {
-	      result = !!(value + '');
-	    } catch (e) {}
-	  }
-	  return result;
+	function overArg(func, transform) {
+	  return function(arg) {
+	    return func(transform(arg));
+	  };
 	}
 	
-	module.exports = isHostObject;
+	module.exports = overArg;
 
 
 /***/ },
@@ -23069,7 +23053,7 @@
 	 * // => false
 	 */
 	function isObjectLike(value) {
-	  return !!value && typeof value == 'object';
+	  return value != null && typeof value == 'object';
 	}
 	
 	module.exports = isObjectLike;
@@ -31614,8 +31598,12 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'TextEditor' },
-	          _react2.default.createElement(_textEditor2.default, null)
+	          { id: 'editor' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Type here...'
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
