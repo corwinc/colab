@@ -1,3 +1,7 @@
 {
   "presets" : ["es2015", "react"]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 145e0470466a8e4f3ed1ab9aedd46c712d3bc119

@@ -1,0 +1,103 @@
+.ql-toolbar,
+.ql-snow,
+#editor {
+  width: 50vw;
+}
+
+.Video,
+.Chat {
+	width: 45vw;
+	float: right;
+}
+
+.videoElement {
+  background-color: #888;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  resize: both;
+  display: inline-block;
+}
+.vid-left{
+  display: inline-block;
+  position: relative;
+  width: 50%;
+}
+.vid-right{
+  display: inline-block;
+  width: 50%;
+  position: relative;
+}
+.vid-box {
+  height: auto;
+  position: relative;
+  width: 100%;
+  resize: both !important;
+  display: inline-block;
+}
+button {
+  position: relative;
+  width: 100%;
+  text-align: center;
+
+}
+
+.button-row {
+  margin: .2em;
+}
+
+.button-box {
+  display: inline-block;
+  width: 33.3%;
+}
+
+label {
+  display: inline-block;
+  text-align: center
+}
+
+.NavBar {
+  height: 5vw;
+  width: 100vw;
+  background-color: #f4fdff;
+}
+
+.NavBarContainer {
+  position: relative;
+}
+
+.logout {
+  position: absolute;
+  right: 1vw;
+  transform: translate(-50%, -50%);
+/*  display: inline-block;*/
+}
+
+.btn-info {
+  border-radius: 5px;
+  position: absolute;
+  right: 4vw;
+  transform: translate(-50%, -50%);
+/*  display: inline-block;*/
+}
+
+.userCircles {
+  width: 30vw;
+  position: absolute;
+/*  float: right;*/
+/*  position: center;*/
+  height: 40px;
+  left: 30vw;
+  display: inline-block;
+}
+
+.userCircle {
+  height: 50px;
+  width: 50px;
+  background-color: #F1F0F0;
+  border-radius: 50%;
+  margin: 4px;
+  float: right;
+  display: inline-block;
+  transform: translate(-50%, -50%);
+}

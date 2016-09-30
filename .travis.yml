@@ -1,0 +1,11 @@
+language: node_js
+
+node_js:
+  - node
+
+cache:
+  directories:
+    - node_modules
+
+notifications:
+  slack: hr46:RMkWoHXI3snH4EBQZ1MO2THu

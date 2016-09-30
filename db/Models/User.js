@@ -7,7 +7,8 @@ var User = sqlConnection.define('user',
     username: Sequelize.STRING,
     email: Sequelize.STRING });
 
-User.sync();
+// Syncing here is redundant. It is already occurring in UserDocument.js.
+// User.sync();
 
 module.exports = User;
 
