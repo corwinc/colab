@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
  //we are telling redux how to create our applications state
   
   books: BooksReducer,
-  activeBook: ActiveBook
+  activeBook: ActiveBook,
 });
 
 export default rootReducer;

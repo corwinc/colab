@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const path = require('path');
+
 var express = require('express');
 var app = express();
 var morgan = require('morgan');
@@ -14,9 +16,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/../client'));
 
-app.get('/', function(req, res) {
-  res.sendFile('index');
-});
+const rootPath = path.join(__dirname + '/../')
+
+// app.get('/', function(req, res) {
+//   res.sendFile('index');
+// });
+
+app.get('/*', (req, res) => {
+	res.sendFile(rootPath + 'client/index.html');
+})
 
 app.use('/document', documentRouter);
 app.use('/users', usersRouter);
