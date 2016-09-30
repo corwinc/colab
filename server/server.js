@@ -65,6 +65,7 @@ io.on('connection', function(socket){
 app.use('/document', documentRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
+app.use('/userdocs', userDocumentRouter);
 
 app.get('/*', (req, res) => {
  res.sendFile(rootPath + 'client/index.html');
