@@ -4,7 +4,7 @@ var documentController = require('../controllers/documentController');
 var userDocumentController = require('../controllers/userDocumentController');
 
 documentRouter.route('/')
-  .get(documentController.getDocument)
+  .get(documentController.getDocument, userDocumentController.getSharedUsers)
   .post(documentController.createDocument, userDocumentController.createUserDoc)
   .put(documentController.updateDocument)
   .delete(documentController.deleteDocument);

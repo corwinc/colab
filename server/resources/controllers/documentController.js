@@ -26,12 +26,14 @@ exports.getDocuments = function(req, res) {
  * @param {Object} res
  * @return undefined
  */
- exports.getDocument = function(req, res) {
+ exports.getDocument = function(req, res, next) {
   Document.findOne({
     where: req.query
   })
   .then((doc) => {
-    res.send(doc);
+    req.body.doc = doc;
+    next();
+    // res.send(doc);
   })
   .catch((doc) => {
     res.status(500).send('Error getting document.');

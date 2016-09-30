@@ -22,6 +22,40 @@ exports.createUserDoc = function(req, res, next) {
 };
 
 //use case: on document load, get shared users
-exports.getSharedUsers = function(req, res) {
-  
+exports.getSharedUsers = function(req, res, next) {
+  var doc = req.body.doc;
+  var docId = req.body.doc.id;
+  console.log('inside getSharedUsers');
+
+  UserDoc.findAll({where: {docId: docId}})
+    .then(function(userDocs) {
+      var sharedUserIds = userDocs.map(function(userDoc) {
+        return userDoc.userId;
+      });
+
+      sharedUsers = sharedUserIds.map(function(userId) {
+        User.findOne({where: {id: userId}})
+          .then(function(user) {
+            return user;
+          })
+      })
+
+      req.body.sharedUsers = sharedUsers;
+      next();
+      // res.send(sharedUsers);
+    })
 };
+
+// NEXT: INSTEAD OF RES.SEND, PIPE USER IDS INTO FUNCTION THAT GETS THEIR INITIALS TO RENDER TO CLIENT,
+// AND ATTACHES IDS AS ATTRIBUTES
+
+
+
+
+
+
+
+
+
+
+
