@@ -28,14 +28,6 @@ app.use(express.static(__dirname + '/../client'));
 
 const rootPath = path.join(__dirname + '/../')
 
-// app.get('/', function(req, res) {
-//   res.sendFile('index');
-// });
-
-// app.get('/*', (req, res) => {
-// 	res.sendFile(rootPath + 'client/index.html');
-// })
-
 /* VB EDIT FOR VIDEO CALLING #2: Add socket listeners/emitters 
    Added socket for text editor
 */
