@@ -1,8 +1,8 @@
 var express = require('express');
-var documentRouter = express.Router();
+var userDocumentRouter = express.Router();
 var userDocumentController = require('../controllers/userDocumentController');
 
-documentRouter.route('/')
+userDocumentRouter.route('/')
   .get(userDocumentController.getSharedUsers)
   .post(userDocumentController.createUserDoc)
   .delete(userDocumentController.deleteUserDoc)
