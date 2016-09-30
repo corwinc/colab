@@ -36,7 +36,9 @@ const rootPath = path.join(__dirname + '/../')
 // 	res.sendFile(rootPath + 'client/index.html');
 // })
 
-/* VB EDIT FOR VIDEO CALLING #2: Add socket listeners/emitters */
+/* VB EDIT FOR VIDEO CALLING #2: Add socket listeners/emitters 
+   Added socket for text editor
+*/
 
 io.on('connection', function(socket){ 
 
@@ -57,6 +59,11 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function() {
     console.log('A user disconnected.');
+  });
+
+  socket.on('change', function(msg) {
+    console.log('text:' + msg)
+    io.emit('change', msg);
   });
   
 });
