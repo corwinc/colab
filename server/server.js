@@ -62,8 +62,6 @@ io.on('connection', function(socket){
 
 /* END VIDEO CALLING EDITS #2 */
 
-
-
 app.use('/document', documentRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
