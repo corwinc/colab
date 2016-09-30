@@ -9,8 +9,14 @@ var usersRouter = require('./resources/routers/usersRouter');
 var commentsRouter = require('./resources/routers/commentsRouter');
 var db = require('../db/config.js');
 
+/* VB EDIT FOR VIDEO CALLING: Add socket module, use an http server to host socket. 
+   Note that this means the app.listen(port) becomes server.listen(port) to start 
+   the server. This does not conflict with the RESTful API handling its requests. */
+
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+
+/* END VIDEO CALL EDITS #1 */
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -22,7 +28,7 @@ app.get('/', function(req, res) {
   res.sendFile('index');
 });
 
-/* VB EDIT FOR VIDEO CALLING: Add socket listeners/emitters */
+/* VB EDIT FOR VIDEO CALLING #2: Add socket listeners/emitters */
 
 io.on('connection', function(socket){ 
 
@@ -47,7 +53,7 @@ io.on('connection', function(socket){
   
 });
 
-/* END VIDEO CALLING EDITS */
+/* END VIDEO CALLING EDITS #2 */
 
 
 
