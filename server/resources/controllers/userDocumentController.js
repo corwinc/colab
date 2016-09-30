@@ -41,15 +41,9 @@ exports.getSharedUsers = function(req, res, next) {
       })
 
       req.body.sharedUsers = sharedUsers;
-      next();
-      // res.send(sharedUsers);
+      res.send(sharedUsers);
     })
 };
-
-// NEXT: INSTEAD OF RES.SEND, PIPE USER IDS INTO FUNCTION THAT GETS THEIR INITIALS TO RENDER TO CLIENT,
-// AND ATTACHES IDS AS ATTRIBUTES
-
-
 
 
 
