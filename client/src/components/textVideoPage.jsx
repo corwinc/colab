@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import TextEditor from './TextEditor.jsx';
-import AppVideo from './Video.jsx';
-import Chat from './Chat.jsx';
-import NavBar from './NavBar.jsx';
+import TextEditor from './textEditor.jsx';
+import AppVideo from './video.jsx';
+import Chat from './chat.jsx';
+import NavBar from './navbar.jsx';
 
-class App extends React.Component {
+export default class TextVideoPage extends React.Component {
   render() {
     return (
       <div>
@@ -23,5 +23,3 @@ class App extends React.Component {
     );
   }
 }
-
-render(<App />, document.getElementById('app'));
