@@ -32,8 +32,7 @@ exports.getDocuments = function(req, res) {
   })
   .then((doc) => {
     req.body.doc = doc;
-    next();
-    // res.send(doc);
+    res.send(doc);
   })
   .catch((doc) => {
     res.status(500).send('Error getting document.');
