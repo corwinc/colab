@@ -22052,15 +22052,69 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var AppVideo = function AppVideo() {
+	
 	  return _react2.default.createElement(
 	    "div",
 	    null,
 	    _react2.default.createElement(
-	      "h3",
-	      null,
-	      "Video"
+	      "div",
+	      { className: "vid-labels" },
+	      _react2.default.createElement(
+	        "label",
+	        { "for": "localVideo", className: "vid-left" },
+	        "Your Webcam Feed"
+	      ),
+	      _react2.default.createElement(
+	        "label",
+	        { "for": "remoteVideo", className: "vid-right" },
+	        "Their Webcam Feed"
+	      )
 	    ),
-	    _react2.default.createElement("img", { src: "http://placehold.it/300x300" })
+	    _react2.default.createElement(
+	      "div",
+	      { className: "vid-box" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "vid-left" },
+	        _react2.default.createElement("video", { id: "localVideo", className: "videoElement", autoPlay: "true" })
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "vid-right" },
+	        _react2.default.createElement("video", { id: "remoteVideo", className: "videoElement", autoPlay: "true" })
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { className: "button-row" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "button-box" },
+	        _react2.default.createElement(
+	          "button",
+	          { id: "startButton" },
+	          "Start"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "button-box" },
+	        _react2.default.createElement(
+	          "button",
+	          { id: "callButton" },
+	          "Call"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "button-box" },
+	        _react2.default.createElement(
+	          "button",
+	          { id: "stopButton" },
+	          "Hang Up"
+	        )
+	      )
+	    )
 	  );
 	};
 	
