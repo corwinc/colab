@@ -22913,17 +22913,17 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var getPrototype = __webpack_require__(/*! ./_getPrototype */ 182),
+	    isHostObject = __webpack_require__(/*! ./_isHostObject */ 183),
 	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 184);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
 	
 	/** Used for built-in method references. */
-	var funcProto = Function.prototype,
-	    objectProto = Object.prototype;
+	var objectProto = Object.prototype;
 	
 	/** Used to resolve the decompiled source of functions. */
-	var funcToString = funcProto.toString;
+	var funcToString = Function.prototype.toString;
 	
 	/** Used to check objects for own properties. */
 	var hasOwnProperty = objectProto.hasOwnProperty;
@@ -22933,7 +22933,7 @@
 	
 	/**
 	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
 	var objectToString = objectProto.toString;
@@ -22947,7 +22947,8 @@
 	 * @since 0.8.0
 	 * @category Lang
 	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+	 * @returns {boolean} Returns `true` if `value` is a plain object,
+	 *  else `false`.
 	 * @example
 	 *
 	 * function Foo() {
@@ -22967,7 +22968,8 @@
 	 * // => true
 	 */
 	function isPlainObject(value) {
-	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
+	  if (!isObjectLike(value) ||
+	      objectToString.call(value) != objectTag || isHostObject(value)) {
 	    return false;
 	  }
 	  var proto = getPrototype(value);
@@ -22987,38 +22989,52 @@
 /*!***********************************!*\
   !*** ./~/lodash/_getPrototype.js ***!
   \***********************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	var overArg = __webpack_require__(/*! ./_overArg */ 183);
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeGetPrototype = Object.getPrototypeOf;
 	
-	/** Built-in value references. */
-	var getPrototype = overArg(Object.getPrototypeOf, Object);
+	/**
+	 * Gets the `[[Prototype]]` of `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {null|Object} Returns the `[[Prototype]]`.
+	 */
+	function getPrototype(value) {
+	  return nativeGetPrototype(Object(value));
+	}
 	
 	module.exports = getPrototype;
 
 
 /***/ },
 /* 183 */
-/*!******************************!*\
-  !*** ./~/lodash/_overArg.js ***!
-  \******************************/
+/*!***********************************!*\
+  !*** ./~/lodash/_isHostObject.js ***!
+  \***********************************/
 /***/ function(module, exports) {
 
 	/**
-	 * Creates a unary function that invokes `func` with its argument transformed.
+	 * Checks if `value` is a host object in IE < 9.
 	 *
 	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {Function} transform The argument transform.
-	 * @returns {Function} Returns the new function.
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
 	 */
-	function overArg(func, transform) {
-	  return function(arg) {
-	    return func(transform(arg));
-	  };
+	function isHostObject(value) {
+	  // Many host objects are `Object` objects that can coerce to strings
+	  // despite having improperly defined `toString` methods.
+	  var result = false;
+	  if (value != null && typeof value.toString != 'function') {
+	    try {
+	      result = !!(value + '');
+	    } catch (e) {}
+	  }
+	  return result;
 	}
 	
-	module.exports = overArg;
+	module.exports = isHostObject;
 
 
 /***/ },
@@ -23053,7 +23069,7 @@
 	 * // => false
 	 */
 	function isObjectLike(value) {
-	  return value != null && typeof value == 'object';
+	  return !!value && typeof value == 'object';
 	}
 	
 	module.exports = isObjectLike;
@@ -31454,7 +31470,7 @@
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _react = __webpack_require__(/*! react */ 1);
@@ -31464,69 +31480,79 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var AppVideo = function AppVideo() {
-		return _react2.default.createElement(
-			"div",
-			null,
-			_react2.default.createElement(
-				"div",
-				{ className: "vid-labels" },
-				_react2.default.createElement(
-					"label",
-					{ "for": "localVideo", className: "vid-left" },
-					"Your Webcam Feed"
-				),
-				_react2.default.createElement(
-					"label",
-					{ "for": "remoteVideo", className: "vid-right" },
-					"Their Webcam Feed"
-				)
-			),
-			_react2.default.createElement(
-				"div",
-				{ className: "vid-box" },
-				_react2.default.createElement(
-					"div",
-					{ className: "vid-left" },
-					_react2.default.createElement("video", { id: "localVideo", className: "videoElement", autoPlay: "true" })
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "vid-right" },
-					_react2.default.createElement("video", { id: "remoteVideo", className: "videoElement", autoPlay: "true" })
-				)
-			),
-			_react2.default.createElement(
-				"div",
-				{ className: "button-row" },
-				_react2.default.createElement(
-					"div",
-					{ className: "button-box" },
-					_react2.default.createElement(
-						"button",
-						{ id: "startButton" },
-						"Start"
-					)
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "button-box" },
-					_react2.default.createElement(
-						"button",
-						{ id: "callButton" },
-						"Call"
-					)
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "button-box" },
-					_react2.default.createElement(
-						"button",
-						{ id: "stopButton" },
-						"Hang Up"
-					)
-				)
-			)
-		);
+	  return _react2.default.createElement(
+	    "div",
+	    null,
+	    _react2.default.createElement(
+	      "div",
+	      { className: "vid-labels" },
+	      _react2.default.createElement(
+	        "label",
+	        { htmlFor: "localVideo", className: "vid-left" },
+	        "Your Webcam Feed"
+	      ),
+	      _react2.default.createElement(
+	        "label",
+	        { htmlFor: "remoteVideo", className: "vid-right" },
+	        "Their Webcam Feed"
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { className: "vid-box" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "vid-left" },
+	        _react2.default.createElement("video", { id: "localVideo", className: "videoElement", autoPlay: "true" })
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "vid-right" },
+	        _react2.default.createElement(
+	          "button",
+	          { id: "acceptButton", className: "incoming-call-button" },
+	          " Accept Call "
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          { id: "rejectButton", className: "incoming-call-button" },
+	          " Reject Call "
+	        ),
+	        _react2.default.createElement("video", { id: "remoteVideo", className: "videoElement", autoPlay: "true" })
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { className: "button-row" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "button-box" },
+	        _react2.default.createElement(
+	          "button",
+	          { id: "startButton" },
+	          "Start"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "button-box" },
+	        _react2.default.createElement(
+	          "button",
+	          { id: "callButton" },
+	          "Call"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "button-box" },
+	        _react2.default.createElement(
+	          "button",
+	          { id: "stopButton" },
+	          "Hang Up"
+	        )
+	      )
+	    )
+	  );
 	};
 	
 	exports.default = AppVideo;

@@ -32,7 +32,14 @@ function start(isCaller) {
     if (isCaller) {
       pc.createOffer(gotDescription, errorGettingDescription);
     } else {
-      pc.createAnswer(gotDescription, errorGettingDescription);
+      $('#acceptButton').css('display','block').on('click', function(){
+        $('.incoming-call-button').css('display', 'none');
+        pc.createAnswer(gotDescription, errorGettingDescription);
+      });
+      $('#rejectButton').css('display','block').on('click', function(){
+        $('.incoming-call-button').css('display', 'none');
+        signalingChannel.emit('disconnect call');
+      });
     }
 
     function gotDescription(desc) {
@@ -92,12 +99,15 @@ signalingChannel.on('message', function(evt) {
   } else if (signal.candidate) {
     pc.addIceCandidate(new RTCIceCandidate(signal.candidate));
   }
+
 });
 
 // On the disconnect call event (which can come from either caller or callee) terminates the p2p connection. 
 signalingChannel.on('disconnect call', function(){
   pc.close();
   pc = undefined;
+  globalIsCaller = undefined;
+  remoteVideo.src = undefined;
 });
 
 $('#stopButton').on('click', function(){
@@ -113,3 +123,4 @@ $('#startButton').on('click', function(){
     function(stream){ localVideo.src = window.URL.createObjectURL(stream); }, 
     function(error){ console.log("ERROR: ", error); });
 });
+
