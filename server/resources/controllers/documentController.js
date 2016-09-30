@@ -46,8 +46,7 @@ exports.getDocuments = function(req, res) {
  */
 
 /**
- * Need to modify later to enforce many-many relationship
- * http://docs.sequelizejs.com/en/latest/docs/associations/
+ * Need to modify later to pass in user/userId in order to create UserDoc model
  */
 exports.createDocument = function(req, res, next) {
   Document.findAndCountAll({

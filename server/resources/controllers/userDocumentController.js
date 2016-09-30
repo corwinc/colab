@@ -21,6 +21,7 @@ exports.createUserDoc = function(req, res, next) {
     })
 };
 
+//use case: on document load, get shared users
 exports.getSharedUsers = function(req, res) {
-  // 
+  
 };
