@@ -22,6 +22,7 @@ exports.createUserDoc = function(req, res, next) {
 };
 
 //use case: on document load, get shared users
+// note: may want to modularize to be 1. getUserDocs, 2. Get sharedUsers
 exports.getSharedUsers = function(req, res, next) {
   var doc = req.body.doc;
   var docId = req.body.doc.id;
@@ -44,6 +45,10 @@ exports.getSharedUsers = function(req, res, next) {
       res.send(sharedUsers);
     })
 };
+
+exports.deleteUserDoc = function(req, res, next) {
+  // TODO: fill out
+}
 
 
 
