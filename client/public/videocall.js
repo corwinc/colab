@@ -33,11 +33,11 @@ function start(isCaller) {
       pc.createOffer(gotDescription, errorGettingDescription);
     } else {
       $('#acceptButton').css('display','block').on('click', function(){
-        $('.incoming-call-button').css('display','none');
+        $('.incoming-call-button').css('display', 'none');
         pc.createAnswer(gotDescription, errorGettingDescription);
       });
       $('#rejectButton').css('display','block').on('click', function(){
-        $('.incoming-call-button').css('display','none');
+        $('.incoming-call-button').css('display', 'none');
         signalingChannel.emit('disconnect call');
       });
     }
