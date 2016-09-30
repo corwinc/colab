@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Later: on componentDidMount: get shared users and render circles
+
 const NavBar = () => 
   (
     <div>
