@@ -32,9 +32,9 @@ const rootPath = path.join(__dirname + '/../')
 //   res.sendFile('index');
 // });
 
-app.get('/*', (req, res) => {
-	res.sendFile(rootPath + 'client/index.html');
-})
+// app.get('/*', (req, res) => {
+// 	res.sendFile(rootPath + 'client/index.html');
+// })
 
 /* VB EDIT FOR VIDEO CALLING #2: Add socket listeners/emitters */
 
@@ -68,6 +68,11 @@ io.on('connection', function(socket){
 app.use('/document', documentRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
+
+app.get('/*', (req, res) => {
+ res.sendFile(rootPath + 'client/index.html');
+})
+
 
 var port = process.env.PORT || 8000;
 server.listen(port);
