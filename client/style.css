@@ -13,3 +13,49 @@
 	width: 45vw;
 	float: right;
 }
+
+.NavBar {
+  height: 5vw;
+  width: 100vw;
+  background-color: #f4fdff;
+}
+
+.NavBarContainer {
+  position: relative;
+}
+
+.logout {
+  position: absolute;
+  right: 1vw;
+  transform: translate(-50%, -50%);
+/*  display: inline-block;*/
+}
+
+.btn-info {
+  border-radius: 5px;
+  position: absolute;
+  right: 4vw;
+  transform: translate(-50%, -50%);
+/*  display: inline-block;*/
+}
+
+.userCircles {
+  width: 30vw;
+  position: absolute;
+/*  float: right;*/
+/*  position: center;*/
+  height: 40px;
+  left: 30vw;
+  display: inline-block;
+}
+
+.userCircle {
+  height: 50px;
+  width: 50px;
+  background-color: #F1F0F0;
+  border-radius: 50%;
+  margin: 4px;
+  float: right;
+  display: inline-block;
+  transform: translate(-50%, -50%);
+}
