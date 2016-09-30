@@ -39,7 +39,26 @@ button {
   position: relative;
   width: 100%;
   text-align: center;
+}
 
+button.incoming-call-button {
+  display: none;
+  position: absolute;
+  top: 35%;
+  height: 20%;
+  width: 50%;
+  z-index: 2;
+  margin-left: 25%;
+  border-radius: 1em;
+  background-color: #6bef91;
+}
+
+button#rejectButton {
+  background-color: #ef6b6b;
+  display: none;
+  top: 55%;
+  position: absolute;
+  top: 10%;
 }
 
 .button-row {
@@ -48,7 +67,7 @@ button {
 
 .button-box {
   display: inline-block;
-  width: 33.3%;
+  width: 33%;
 }
 
 label {
