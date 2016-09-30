@@ -3,7 +3,6 @@ import React from 'react';
 const NavBar = () => 
   (
     <div>
-      <h3 className="brandIcon">ColLab</h3>
       <div className="NavBarContainer">
         <div className="userCircles">
           <div className="userCircle"></div>
