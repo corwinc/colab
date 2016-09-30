@@ -12,8 +12,8 @@ export default class TextVideoPage extends React.Component {
         <div className="NavBar">
           <NavBar />
         </div>
-        <div className="TextEditor">
-          <TextEditor />
+        <div id="editor">
+          <p>Type here...</p>
         </div>
         <div className="Video">
           <AppVideo />

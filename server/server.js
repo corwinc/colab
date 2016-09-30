@@ -32,11 +32,13 @@ const rootPath = path.join(__dirname + '/../')
 //   res.sendFile('index');
 // });
 
-app.get('/*', (req, res) => {
-	res.sendFile(rootPath + 'client/index.html');
-})
+// app.get('/*', (req, res) => {
+// 	res.sendFile(rootPath + 'client/index.html');
+// })
 
-/* VB EDIT FOR VIDEO CALLING #2: Add socket listeners/emitters */
+/* VB EDIT FOR VIDEO CALLING #2: Add socket listeners/emitters 
+   Added socket for text editor
+*/
 
 io.on('connection', function(socket){ 
 
@@ -58,6 +60,11 @@ io.on('connection', function(socket){
   socket.on('disconnect', function() {
     console.log('A user disconnected.');
   });
+
+  socket.on('change', function(msg) {
+    console.log('text:' + msg)
+    io.emit('change', msg);
+  });
   
 });
 
@@ -68,6 +75,11 @@ io.on('connection', function(socket){
 app.use('/document', documentRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
+
+app.get('/*', (req, res) => {
+ res.sendFile(rootPath + 'client/index.html');
+})
+
 
 var port = process.env.PORT || 8000;
 server.listen(port);
