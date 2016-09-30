@@ -12,6 +12,8 @@ const AppVideo = () => {
 	          <video id="localVideo" className="videoElement" autoPlay="true"></video>
 	        </div>
 	        <div className="vid-right">
+	        	<button id="acceptButton" className="incoming-call-button"> Accept Call </button>
+	        	<button id="rejectButton" className="incoming-call-button"> Reject Call </button>
 	          <video id="remoteVideo" className="videoElement" autoPlay="true"></video>
 	        </div>
 	      </div>

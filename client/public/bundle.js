@@ -31508,6 +31508,16 @@
 				_react2.default.createElement(
 					"div",
 					{ className: "vid-right" },
+					_react2.default.createElement(
+						"button",
+						{ id: "acceptButton", className: "incoming-call-button" },
+						" Accept Call "
+					),
+					_react2.default.createElement(
+						"button",
+						{ id: "rejectButton", className: "incoming-call-button" },
+						" Reject Call "
+					),
 					_react2.default.createElement("video", { id: "remoteVideo", className: "videoElement", autoPlay: "true" })
 				)
 			),
