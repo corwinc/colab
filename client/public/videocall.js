@@ -1,7 +1,7 @@
 var signalingChannel = io();
 var pc;
 var configuration = {'iceServers': [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]};
-var localVideo = document.querySelector("#localVideo");
+//var localVideo = document.querySelector("#localVideo");
 var remoteVideo = document.querySelector("#remoteVideo");
 var globalIsCaller;
 
@@ -19,12 +19,17 @@ function start(isCaller) {
   // setRemoteDescription fires this. 
   pc.onaddstream = function (evt) {
     remoteVideo.src = window.URL.createObjectURL(evt.stream);
+    $('.call-alerts-outgoing').hide();
+    $('.call-views').show();
+    if (isCaller) {
+      $('.vid-box').show();
+    }
   };
 
   // This is one of the inputs into navigator.getUserMedia. It takes the stream from the user's webcam, sets it to the
   // local video view, 
   var handleVideo = function (stream) {
-    localVideo.src = window.URL.createObjectURL(stream);
+    //localVideo.src = window.URL.createObjectURL(stream);
     pc.addStream(stream);
 
     // If this is running inside the caller's client, creating an offer sends the description to the remote pper. 
@@ -32,12 +37,17 @@ function start(isCaller) {
     if (isCaller) {
       pc.createOffer(gotDescription, errorGettingDescription);
     } else {
-      $('#acceptButton').css('display','block').on('click', function(){
-        $('.incoming-call-button').css('display','none');
+      $('.call-views').show();
+      $('.call-alerts-incoming').show();
+
+      $('#acceptIcon').on('click', function(){
+        $('.call-alerts-incoming').hide();
         pc.createAnswer(gotDescription, errorGettingDescription);
+        $('.vid-box').show();
       });
-      $('#rejectButton').css('display','block').on('click', function(){
-        $('.incoming-call-button').css('display','none');
+
+      $('#rejectIcon').on('click', function(){
+        $('.call-alerts-incoming').hide();
         signalingChannel.emit('disconnect call');
       });
     }
@@ -108,19 +118,23 @@ signalingChannel.on('disconnect call', function(){
   pc = undefined;
   globalIsCaller = undefined;
   remoteVideo.src = undefined;
+  $('.vid-box').hide();
+  $('.call-views').hide();
 });
 
 $('#stopButton').on('click', function(){
   signalingChannel.emit('disconnect call');
 })
 
-$('#callButton').on('click', function(){
+$('#callNavButton, #callButton').on('click', function(){
+  $('.call-alerts-outgoing').show();
+  $('.call-views').show();
   start(true);
 })
 
 $('#startButton').on('click', function(){
   navigator.getUserMedia({ "audio": true, "video": true }, 
-    function(stream){ localVideo.src = window.URL.createObjectURL(stream); }, 
+    function(stream){ /*localVideo.src = window.URL.createObjectURL(stream); */ }, 
     function(error){ console.log("ERROR: ", error); });
 });
 

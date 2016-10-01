@@ -5,6 +5,7 @@ import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
 
+// /* COMPONENT WITHOUT CHAT */
 export default class TextVideoPage extends React.Component {
   render() {
     return (
@@ -15,11 +16,30 @@ export default class TextVideoPage extends React.Component {
         <div id="editor">
           <p>Type here...</p>
         </div>
-        <div className="Video">
-          <AppVideo />
-          <Chat />
+        <div className="video-and-chat">
+          <AppVideo className="Video"/>
         </div>
       </div>
     );
   }
 }
+
+// /* COMPONENT WITH CHAT */
+// export default class TextVideoPage extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <div className="NavBar">
+//           <NavBar />
+//         </div>
+//         <div id="editor">
+//           <p>Type here...</p>
+//         </div>
+//         <div className="video-and-chat">
+//           <AppVideo className="Video"/>
+//           <Chat className="Chat"/>
+//         </div>
+//       </div>
+//     );
+//   }
+// }
