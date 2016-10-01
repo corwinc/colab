@@ -4,20 +4,32 @@
   width: 50vw;
 }
 
-.Video,
-.Chat {
-	width: 45vw;
+.video-and-chat{
+	width: 30%;
 	float: right;
+  margin-left: 70%
 }
 
+.chat-views {
+  position: fixed;
+  z-index: 10;
+  top: 40%;
+}
 
 .call-views {
+  position: fixed;
+  z-index: 10;
+  top: 25%;
   display: none;
+  background-color: #f4fdff; 
+  border: 3px solid #f4fafe;
+  border-radius: 5em;
+  padding: 1em;
+
 }
 img.call-icon{
   height: 50px;
   width: 50px;
-  margin-left: 60%;
   display: inline-block;
 }
 #acceptIcon {
@@ -30,14 +42,10 @@ img.call-icon{
 .vid-alerts {
   display: none;
 }
-.videoElement {
-  position: relative;
-  width: 100%;
-  height: 90%;
-  display: inline-block;
-}
+
 .vid-box {
   background-color: #888;
+  border-radius: 5em !important;
   height: auto;
   position: relative;
   width: 100%;
@@ -45,9 +53,43 @@ img.call-icon{
   resize: both !important;
   display: none;
 }
-.call-alerts {
-  margin-left: 60%;
+
+.video-element {  
+  border-radius: 5em 5em 0 0;
+  position: relative;
+  width: 100%;
+  height: 90%;
+  display: inline-block;
 }
+
+.player-button-row {
+  position: relative;
+  height: 10%;
+  margin-left: 5%;
+  width: 90%;
+  border-radius: 0 0 5em 5em;
+
+}
+
+.button-box button {
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.button-box {
+  display: inline-block;
+  width: 50%;
+}
+
+.left-bottom-curve {
+  border-radius: 0 0 0 5em;
+
+}
+.right-bottom-curve {
+  border-radius: 0 0 5em 0;
+}
+
 .call-alerts-incoming {
   display: none;
 }
@@ -55,7 +97,6 @@ img.call-icon{
   display: none;
   display: inline-block;
 }
-
 button#callNavButton {
   position: relative;
   display: inline-block;
@@ -65,46 +106,11 @@ button#callNavButton {
   text-align: center;
 }
 
-.button-box button {
-  position: relative;
-  width: 100%;
-  text-align: center;
-}
-/*button.incoming-call-button {
-  display: none;
-  position: absolute;
-  top: 35%;
-  height: 20%;
-  width: 50%;
-  z-index: 2;
-  margin-left: 25%;
-  border-radius: 1em;
-  background-color: #6bef91;
-}*/
 
-/*button#rejectButton {
-  background-color: #ef6b6b;
-  display: none;
-  top: 55%;
-  position: absolute;
-  top: 10%;
-}*/
 
-.button-row {
-  position: relative;
-  height: 10%;
-  width: 100%;
-}
 
-.button-box {
-  display: inline-block;
-  width: 33%;
-}
 
-label {
-  display: inline-block;
-  text-align: center
-}
+
 
 .NavBar {
   height: 5vw;

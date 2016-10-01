@@ -2,7 +2,7 @@ import React from 'react';
 
 const NavBar = () => 
   (
-    <div>
+    <div className="NavBarWrapper">
       <div className="NavBarContainer">
         <div className="userCircles">
           <div className="userCircle"></div>
