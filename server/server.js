@@ -1,8 +1,7 @@
-// Comment this out for the deployment branch. Enviroment variables
-// are brough in using AWS config settings. 
-// require('dotenv').config();
 require('dotenv').config();
+
 const path = require('path');
+
 var express = require('express');
 var app = express();
 var morgan = require('morgan');
@@ -24,7 +23,8 @@ var io = require('socket.io')(server);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/../client'));
+
+app.use('/public', express.static(path.join(__dirname, '/../public')));
 
 const rootPath = path.join(__dirname + '/../')
 
@@ -67,7 +67,7 @@ app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
 
 app.get('/*', (req, res) => {
- res.sendFile(rootPath + 'client/index.html');
+ res.sendFile(rootPath + 'public/index.html');
 })
 
 
