@@ -31,37 +31,24 @@ var sharelinkId = '5abc';
 
 // new document button onclick
 $('#newdoc').on('click', function() {
-  // grab docId from URL ?
+  // grab docId from URL?
   sharelinkId = docId;
 
   // need to stop interval and restart
-  // passing in new sharelinkId
-
-  console.log(docId);
+  // ensure new sharelink is being used to save data
   $.post('/document', {
     sharelink: docId
   });
   quill.setContents();
 
-  console.log('loc:', window.location.indexOf('sharelink'));
-  if (window.location.indexOf('sharelink') ) {
-    window.location += '?sharelink=' + sharelinkId;
-  }
+  // if (window.location.indexOf('sharelink') ) {
+  //   window.location += '?sharelink=' + sharelinkId;
+  // }
 });
-  // generates new link id; ensure id is not used
-  // set sharelinkId
-  // creates an empty doc in the db with that link id
-  // later need to link to user(s)
-
-  // set contents to empty since new doc
-  // do not need to initialize editor with text from the empty doc
-
 
 // initialize with content from a given sharelink
 var initDoc = function(sharelink) {
   $.get('/document?sharelink=' + sharelink, function(data) {
-    console.log(window.location.href);
-    console.log('get:', data.textS3);
     quill.setContents( JSON.parse(data.textS3) );
   });
 };
@@ -70,7 +57,7 @@ initDoc(sharelinkId);
 
 var saveInterval = setInterval(function() {
   if (change.length() > 0) {
-    console.log('Saving changes', change);
+    console.log('Saving changes');
 
     $.ajax({
       url: '/document',
