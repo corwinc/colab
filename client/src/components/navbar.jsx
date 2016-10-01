@@ -13,7 +13,7 @@ const NavBar = () =>
           <div className="userCircle"></div>
         </div>
         <div className="nav-bar-buttons">
-          <img id="call-nav-button" src="public/images/makecall2.svg"></img>
+          <img id="call-nav-button" src="public/images/makecall.svg"></img>
           <button>Share</button>
           <a href="http://localhost:8000/">logout</a>
         </div>
