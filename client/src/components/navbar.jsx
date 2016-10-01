@@ -2,15 +2,15 @@ import React from 'react';
 
 // Later: on componentDidMount: get shared users and render circles
 
-const NavBar = () => 
+const NavBar = (props) => 
   (
     <div className="NavBarWrapper">
       <div className="NavBarContainer">
         <div className="userCircles">
-          <div className="userCircle"></div>
-          <div className="userCircle"></div>
-          <div className="userCircle"></div>
-          <div className="userCircle"></div>
+        {props.curSharedUsers.map((user, i) => {
+          var initials = props.getInitials(user); 
+          return <div key={i} className='userCircle'>{initials}</div>
+        })}
         </div>
         <div className="nav-bar-buttons">
           <img id="call-nav-button" src="public/images/makecall.png"></img>
@@ -21,3 +21,9 @@ const NavBar = () =>
     </div>
   );
 export default NavBar;
+
+
+          // <div className="userCircle"></div>
+          // <div className="userCircle"></div>
+          // <div className="userCircle"></div>
+          // <div className="userCircle"></div>

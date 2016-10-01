@@ -33,13 +33,31 @@ export default class TextVideoPage extends React.Component {
       curDoc: 2,
       curSharedUsers: dummyUsers
     };
+
+    this.getInitials = this.getInitials.bind(this);
   };
+
+  getInitials (user) {
+    if (user.firstname !== null) {
+      var firstInit = user.firstname[0];
+    } else {
+      var firstInit = '';
+    }
+
+    if (user.lastname !== null) {
+      var lastInit = user.lastname[0];
+    } else {
+      var lastInit = '';
+    }
+
+    return firstInit + lastInit;
+  }
 
   render() {
     return (
       <div>
         <div className="NavBar">
-          <NavBar curDoc={this.state.curDoc} curSharedUsers={this.state.curSharedUsers} />
+          <NavBar curDoc={this.state.curDoc} curSharedUsers={this.state.curSharedUsers} getInitials={this.getInitials} />
         </div>
         <div id="editor">
           <p>Type here...</p>
@@ -52,6 +70,7 @@ export default class TextVideoPage extends React.Component {
     );
   }
 }
+
 
 
 // /* COMPONENT WITH CHAT */
