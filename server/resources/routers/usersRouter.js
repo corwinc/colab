@@ -1,4 +1,5 @@
 var express = require('express');
+var validator = require('validator');
 var usersRouter = express.Router();
 var usersController = require('../controllers/usersController');
 
