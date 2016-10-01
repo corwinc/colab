@@ -64,7 +64,7 @@ var saveInterval = setInterval(function() {
       type: 'PUT',
       data: 'sharelink=' + sharelinkId + '&textS3=' + JSON.stringify(quill.getContents()),
       success: function(result) {
-        console.log('PUT request:', result);
+        console.log('Data saved.');
       }
     });
 
