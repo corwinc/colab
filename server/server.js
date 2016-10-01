@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(__dirname + '/../client'));
+app.use('/public', express.static(path.join(__dirname, '/../public')));
 
 const rootPath = path.join(__dirname + '/../')
 
@@ -69,7 +69,7 @@ app.use('/comments', commentsRouter);
 app.use('/userdocs', userDocumentRouter);
 
 app.get('/*', (req, res) => {
- res.sendFile(rootPath + 'client/index.html');
+ res.sendFile(rootPath + 'public/index.html');
 })
 
 
