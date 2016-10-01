@@ -9,13 +9,15 @@ var quill = new Quill('#editor', {
   theme: 'snow'
 });
 
-quill.on('text-change', function(delta, source) {
-  // if (source === user) {
-  console.log('delta:', delta);
+quill.on('text-change', function(delta, olddelta, source) {
   console.log('source:', source);
-  console.log('emit change event user:', user);
-  socket.emit('change', {'who': user, 'delta': JSON.stringify(delta)});
-  // }
+  console.log('user text change detected:', user);
+  if (source === 'user') {
+    console.log('delta:', delta);
+    console.log('source:', source);
+    console.log('emit change event user:', user);
+    socket.emit('change', {'who': user, 'delta': JSON.stringify(delta)});
+  }
 });
 
 socket.on('change', function(msg){
@@ -33,6 +35,7 @@ socket.on('change', function(msg){
     var del = JSON.parse(msg.delta);
     // var Delta = fullEditor.getContents().constructor;
     // var delta = new Delta(del.startLength,del.endLength,del.ops);
-    quill.updateContents( del, String = 'user' );
+    // quill.updateContents( del, String = 'user' );
+    quill.updateContents( del );
   }
 });
