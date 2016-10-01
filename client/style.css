@@ -10,38 +10,67 @@
 	float: right;
 }
 
+
+.call-views {
+  display: none;
+}
+img.call-icon{
+  height: 50px;
+  width: 50px;
+  margin-left: 60%;
+  display: inline-block;
+}
+#acceptIcon {
+  margin-left: 40%;
+}
+#rejectIcon {
+  margin-left: 10%;
+}
+
+.vid-alerts {
+  display: none;
+}
 .videoElement {
   position: relative;
   width: 100%;
-  height: 100%;
-  resize: both;
+  height: 90%;
   display: inline-block;
-}
-.vid-left{
-  display: inline-block;
-  position: relative;
-  width: 50%;
-}
-.vid-right{
-  display: inline-block;
-  width: 50%;
-  position: relative;
 }
 .vid-box {
   background-color: #888;
   height: auto;
   position: relative;
   width: 100%;
+  height: 300px;
   resize: both !important;
+  display: none;
+}
+.call-alerts {
+  margin-left: 60%;
+}
+.call-alerts-incoming {
+  display: none;
+}
+.call-alerts-outgoing {
+  display: none;
   display: inline-block;
 }
-button {
+
+button#callNavButton {
+  position: relative;
+  display: inline-block;
+  margin-left: 80%;
+  width: 10%;
+  top: -15px;
+  text-align: center;
+}
+
+.button-box button {
   position: relative;
   width: 100%;
   text-align: center;
 }
-
-button.incoming-call-button {
+/*button.incoming-call-button {
   display: none;
   position: absolute;
   top: 35%;
@@ -51,18 +80,20 @@ button.incoming-call-button {
   margin-left: 25%;
   border-radius: 1em;
   background-color: #6bef91;
-}
+}*/
 
-button#rejectButton {
+/*button#rejectButton {
   background-color: #ef6b6b;
   display: none;
   top: 55%;
   position: absolute;
   top: 10%;
-}
+}*/
 
 .button-row {
-  margin: .2em;
+  position: relative;
+  height: 10%;
+  width: 100%;
 }
 
 .button-box {
