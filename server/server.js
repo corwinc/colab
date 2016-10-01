@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var documentRouter = require('./resources/routers/documentRouter');
 var usersRouter = require('./resources/routers/usersRouter');
 var commentsRouter = require('./resources/routers/commentsRouter');
+var userDocumentRouter = require('./resources/routers/userDocumentRouter');
 var db = require('../db/config.js');
 
 /* VB EDIT FOR VIDEO CALLING: Add socket module, use an http server to host socket. 
@@ -65,6 +66,7 @@ io.on('connection', function(socket){
 app.use('/document', documentRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
+app.use('/userdocs', userDocumentRouter);
 
 app.get('/*', (req, res) => {
  res.sendFile(rootPath + 'client/index.html');
