@@ -2,6 +2,18 @@ var db = require('../../../db/config.js');
 var UserDoc = require('../../../db/Models/UserDocument.js');
 var User = require('../../../db/Models/User');
 var Document = require('../../../db/Models/Document');
+var Promise = require('bluebird');
+
+/// HELPERS ///
+// PROBLEM: not returnnig user object as desired --> how to return value out of these query promises?
+// var getUser = function(userId) {
+//   console.log('getUser userId:', userId);
+//   User.findOne({where: {id: userId}})
+//     .then(function(user) {
+//       console.log('inside then user:', user.dataValues);
+//       return user.dataValues;
+//     })
+// }
 
 
 // Use case: on doc create
@@ -21,28 +33,41 @@ exports.createUserDoc = function(req, res, next) {
     })
 };
 
-//use case: on document load, get shared users
+// Use case: on NavBar load, get shared users
 // note: may want to modularize to be 1. getUserDocs, 2. Get sharedUsers
-exports.getSharedUsers = function(req, res, next) {
-  var doc = req.body.doc;
-  var docId = req.body.doc.id;
-  console.log('inside getSharedUsers');
+// 1. get UserDoc entries
+// 2. Get userIds for each entry
+// 3. get userobject for each userId
+// 4. modify objects before sending back in the response
 
-  UserDoc.findAll({where: {docId: docId}})
+exports.getSharedUsers = function(req, res, next) {
+  var docId = req.query.docId;
+
+  UserDoc.findAll({where: {documentId: docId}})
     .then(function(userDocs) {
       var sharedUserIds = userDocs.map(function(userDoc) {
         return userDoc.userId;
       });
 
-      sharedUsers = sharedUserIds.map(function(userId) {
-        User.findOne({where: {id: userId}})
-          .then(function(user) {
-            return user;
-          })
+      return sharedUserIds;
+    })
+    .then(function(userIds) {
+      return Promise.map(userIds, function(userId) {
+        return User.findOne({where: {id: userId}});
+      });
+    })
+    .then(function(array) {
+      var filteredUsers = array.map(function(user) {
+        var filteredUser = {};
+        filteredUser.id = user.id;
+        filteredUser.firstname = user.firstname;
+        filteredUser.lastname = user.lastname;
+        filteredUser.email = user.email;
+
+        return filteredUser;
       })
 
-      req.body.sharedUsers = sharedUsers;
-      res.send(sharedUsers);
+      res.send(filteredUsers);
     })
 };
 
