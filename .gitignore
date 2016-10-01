@@ -1,4 +1,4 @@
-client/public/bundle.*
+# client/public/bundle.*
 node_modules
 # db/config.js
 .env
