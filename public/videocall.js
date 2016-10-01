@@ -126,7 +126,7 @@ $('#stopButton').on('click', function(){
   signalingChannel.emit('disconnect call');
 })
 
-$('#callNavButton, #callButton').on('click', function(){
+$('#call-nav-button').on('click', function(){
   $('.call-alerts-outgoing').show();
   $('.call-views').show();
   start(true);
