@@ -1,14 +1,17 @@
 import React from 'react';
+import classnames from 'classnames';
 
 
 class SignupForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			firstname:'',
+			lastname:'',
 			username:'',
-			email:'',
-			password:'',
-			passwordConfirmation:''
+			errors:''
+			// password:'',
+			// passwordConfirmation:''
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -22,13 +25,45 @@ class SignupForm extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.props.userSignupRequest(this.state);
+		this.props.userSignupRequest(this.state).then(
+			() => {
+				this.context.router.push('/');
+			}
+		);
 	}
 
 	render() {
 		return (
-			<form onSubmit={this.onSubmit}>
+			<form data-toggle="validator" 
+				role="form"
+				onSubmit={this.onSubmit}>
+
 				<h1>Welcome to our COlLab</h1>
+
+				<div className="form-group">
+					<label for="inputName" className="control-label">Firstname</label>
+					<input 
+						value={this.state.firstname}
+						onChange={this.onChange}
+						id="inputName"
+						type="text"
+						name="firstname"
+						className="form-control"
+						placeholder="Clara" required
+					/>
+				</div>
+
+				<div className="form-group">
+					<label for="inputName" className="control-label">Lastname</label>
+					<input 
+						value={this.state.lastname}
+						onChange={this.onChange}
+						type="text"
+						name="lastname"
+						className="form-control"
+						placeholder="Bell" required
+					/>
+				</div>
 
 				<div className="form-group">
 					<label className="control-label">Username</label>
@@ -37,30 +72,39 @@ class SignupForm extends React.Component {
 						onChange={this.onChange}
 						type="text"
 						name="username"
-						className="form-control"
+						placeholder="Mike123"
+						className="form-control" unique required
 					/>
 				</div>
 
 				<div className="form-group">
-					<label className="control-label">Email</label>
+					<label for="inputEmail" className="control-label">Email</label>
 					<input 
 						value={this.state.email}
 						onChange={this.onChange}
-						type="text"
+						type="email"
+						id="inputEmail"
 						name="email"
+						placeholder="Email" 
 						className="form-control"
-					/>
+						data-error="Bruh, that email address is invalid" 
+				    required />
+				    <div className="help-block with-errors"></div>
 				</div>
 
-				<div className="form-group">
-					<label className="control-label">Password</label>
+				{/*<div className="form-group">
+					<label for="inputPassword" className="control-label">Password</label>
 					<input 
 						value={this.state.password}
 						onChange={this.onChange}
 						type="password"
+						data-minlength="6"
 						name="password"
 						className="form-control"
+						id="inputPassword" 
+						placeholder="Password" required
 					/>
+					<div className="help-block">Minimum of 6 characters</div>
 				</div>
 
 				<div className="form-group">
@@ -72,7 +116,7 @@ class SignupForm extends React.Component {
 						name="passwordConfirmation"
 						className="form-control"
 					/>
-				</div>
+				</div>*/}
 
 				<div className="form-group">
 					<button className="btn btn-primary btn-lg">
@@ -87,5 +131,9 @@ class SignupForm extends React.Component {
 SignupForm.propTypes = {
 
 	userSignupRequest: React.PropTypes.func.isRequired 
+}
+
+SignupForm.contextTypes = {
+	router: React.PropTypes.object.isRequired
 }
 export default SignupForm;

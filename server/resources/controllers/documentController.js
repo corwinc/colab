@@ -1,5 +1,6 @@
 var Document = require('../../../db/Models/Document');
 var UserDocument = require('../../../db/Models/UserDocument');
+var UserDocController = require('./userDocumentController.js');
 
 /**
  * Gets documents for a given user or a document given a doc_id
@@ -15,9 +16,28 @@ exports.getDocuments = function(req, res) {
     res.send(doc);
   })
   .catch((doc) => {
-    res.status(500).send('Error getting document.');
+    res.status(500).send('Error getting documents.');
   });
 };
+
+/**
+ * Gets single document given a doc_id
+ * @param {Object} req
+ * @param {Object} res
+ * @return undefined
+ */
+ exports.getDocument = function(req, res, next) {
+  Document.findOne({
+    where: req.query
+  })
+  .then((doc) => {
+    req.body.doc = doc;
+    res.send(doc);
+  })
+  .catch((doc) => {
+    res.status(500).send('Error getting document.');
+  });
+ };
 
 /**
  * Creates a document
@@ -27,10 +47,9 @@ exports.getDocuments = function(req, res) {
  */
 
 /**
- * Need to modify later to enforce many-many relationship
- * http://docs.sequelizejs.com/en/latest/docs/associations/
+ * Need to modify later to pass in user/userId in order to create UserDoc model
  */
-exports.createDocument = function(req, res) {
+exports.createDocument = function(req, res, next) {
   Document.findAndCountAll({
     where: { sharelink: req.body.sharelink }
   })
@@ -38,7 +57,9 @@ exports.createDocument = function(req, res) {
     if (result.count === 0) {
       Document.create(req.body)
       .then((doc) => {
-        res.send(doc);
+        req.body.docId = doc.id;
+        return next();
+        // res.send(doc);
       })
       .catch((error) => {
         res.status(500).send('Error creating the document.');
