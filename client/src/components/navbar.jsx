@@ -12,9 +12,11 @@ const NavBar = () =>
           <div className="userCircle"></div>
           <div className="userCircle"></div>
         </div>
-        <button id="callNavButton">Call</button>
-        <button className="btn-info">Share</button>
-        <a href="http://localhost:8000/" className="logout">logout</a>
+        <div className="nav-bar-buttons">
+          <img id="call-nav-button" src="public/images/makecall.png"></img>
+          <button>Share</button>
+          <a href="http://localhost:8000/">logout</a>
+        </div>
       </div>
     </div>
   );

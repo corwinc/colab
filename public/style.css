@@ -97,19 +97,34 @@ img.call-icon{
   display: none;
   display: inline-block;
 }
-button#callNavButton {
-  position: relative;
-  display: inline-block;
-  margin-left: 80%;
-  width: 10%;
-  top: -15px;
-  text-align: center;
+
+
+
+div.nav-bar-buttons{
+  margin-left: 70%;
+  height: auto;
+  width: 30%;
+  display: block;
+  padding: .2em;
 }
 
+div.nav-bar-buttons * {
+  position: relative;
+  display: inline-block;
+  width: 25%;
+  margin-left: 12.5%;
+}
 
+div.nav-bar-buttons img {
+  margin-left: 0%;
+}
 
+div.nav-bar-buttons button {
+  border-radius: 5px;
+}
 
-
+div.nav-bar-buttons a {
+}
 
 
 .NavBar {
