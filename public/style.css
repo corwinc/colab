@@ -172,3 +172,7 @@ div.nav-bar-buttons a {
   display: inline-block;
   transform: translate(-50%, -50%);
 }
+
+#newdoc {
+  margin-top:50px;
+}
