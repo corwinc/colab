@@ -23,16 +23,11 @@ exports.createUserDoc = function(req, res, next) {
 
 // USE CASE: on Text Component / NavBar Component load, get shared users
 // note: may want to modularize to be 1. getUserDocs, 2. Get sharedUsers
-// 1. get UserDoc entries
-// 2. Get userIds for each entry
-// 3. get userobject for each userId
-// 4. modify objects before sending back in the response
-
-// TODO: FE connection needs to pass in docId & current userId
-
 exports.getSharedUsers = function(req, res, next) {
   var docId = req.query.docId;
   var curUserId = req.query.userId;
+  console.log('inside controller getSharedUsers');
+  console.log('docId, curUserId:', docId, curUserId);
 
   // 1. Find all UserDoc entries
   UserDoc.findAll({where: {documentId: docId}})
