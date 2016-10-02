@@ -12,7 +12,7 @@ export default class NavBar extends React.Component {
     // this is probably going to have asynchronous issues => refactor to cbs or promises
     var sharedUsers = this.props.getSharedUsers(docId, userId);
     console.log('shared users have been had:', sharedUsers);
-    // this.props.setSharedUsersState(sharedUsers);
+    this.props.setSharedUsersState(sharedUsers);
   }
 
   render() {
