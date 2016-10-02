@@ -126,13 +126,14 @@ $('#stopButton').on('click', function(){
   signalingChannel.emit('disconnect call');
 })
 
-// User circles initiate the call on click
-$('.userCircle').on('click', function(){
-  $('.call-alerts-outgoing').show();
-  $('.call-views').show();
-  start(true);
-  animateIcon();
-})
+/* THIS LOGIC IS NOW IN THE VIDEO COMPONENT */
+// // User circles initiate the call on click
+// $('.userCircle').on('click', function(){
+//   $('.call-alerts-outgoing').show();
+//   $('.call-views').show();
+//   start(true);
+//   animateIcon();
+// })
 
 // $('#startButton').on('click', function(){
 //   navigator.getUserMedia({ "audio": true, "video": true }, 
