@@ -19,6 +19,8 @@
 }
 
 .call-views {
+  margin-left: 85%;
+  width: auto;
   position: fixed;
   z-index: 10;
   top: 25%;
@@ -38,8 +40,8 @@ img.call-icon{
 .call-message {
   display: block;
 }
+
 #acceptIcon {
-  margin-left: 40%;
 }
 #rejectIcon {
   margin-left: 10%;
@@ -100,12 +102,15 @@ img.call-icon{
   height: 200%;
   width: 200%
 }
-.call-alerts-incoming {
-  display: none;
-}
+
 .call-alerts-outgoing {
-  display: none;
   display: inline-block;
+}
+
+.call-alerts-incoming,
+.call-incoming-notifications, 
+.call-incoming-options{
+  display: none;
 }
 
 
@@ -184,25 +189,25 @@ div.nav-bar-buttons a {
 .icon-spin {
   /* Firefox */
   -moz-animation-name: spinIcon;
-  -moz-animation-iteration-count: 10;
+  -moz-animation-iteration-count: infinite;
   -moz-animation-timing-function: ease;
   -moz-animation-duration: 5s;
 
   /* WebKit */
   -webkit-animation-name: spinIcon;
-  -webkit-animation-iteration-count: 10;
+  -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: ease;
   -webkit-animation-duration: 5s;
 
   /* Opera */
   -o-animation-name: spinIcon;
-  -o-animation-iteration-count: 10;
+  -o-animation-iteration-count: infinite;
   -o-animation-timing-function: ease;
   -o-animation-duration: 5s;
 
   /* Standard */
   animation-name: spinIcon;
-  animation-iteration-count: 10;
+  animation-iteration-count: infinite;
   animation-timing-function: ease;
   animation-duration: 5s;
 }
@@ -240,7 +245,91 @@ div.nav-bar-buttons a {
   }
 }
 
+.icon-flash {
+  /* Firefox */
+  -moz-animation-name: flashIcon;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: ease;
+  -moz-animation-duration: 1s;
 
+  /* WebKit */
+  -webkit-animation-name: flashIcon;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-duration: 1s;
+
+  /* Opera */
+  -o-animation-name: flashIcon;
+  -o-animation-iteration-count: infinite;
+  -o-animation-timing-function: ease;
+  -o-animation-duration: 1s;
+
+  /* Standard */
+  animation-name: flashIcon;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  animation-duration: 1s;
+}
+
+@-moz-keyframes flashIcon {
+  0% {
+    opacity: .75;
+    -moz-transform: scale(1);
+    -moz-transform: rotate(85deg);    
+  }
+  50% {
+    opacity: 1;
+    -moz-transform: scale(1.15);
+    -moz-transform: rotate(95deg);  
+  }
+  100% {
+    opacity: .75;
+    -moz-transform: scale(1);
+    -moz-transform: rotate(85deg);  
+  }
+}
+@-webkit-keyframes flashIcon {
+  0% {
+    opacity: .75;
+    -webkit-transform: scale(1) rotate(85deg);  
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(1.15) rotate(95deg);  
+  }
+  100% {
+    opacity: .75;
+    -webkit-transform: scale(1) rotate(85deg);  
+  }
+}
+@-o-keyframes flashIcon {
+  0% {
+    opacity: .75;
+    -o-transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    -o-transform: scale(1.15);
+  }
+  100% {
+    opacity: .75;
+    -o-transform: scale(1);
+  }
+}
+@keyframes flashIcon {
+  0% {
+    opacity: .75;
+    transform: scale(1) rotate(85deg);  
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(95deg);  
+  }
+  100% {
+    opacity: .75;
+    transform: scale(1) rotate(85deg);  
+  }
+}
 
 #newdoc {
   margin-top:50px;

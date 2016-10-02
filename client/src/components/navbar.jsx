@@ -28,13 +28,12 @@ export default class NavBar extends React.Component {
                   $('.call-alerts-outgoing').show();
                   $('.call-views').show();
                   start(true);
-                  animateIcon();
+                  animateIcon('#callIcon', 'icon-spin');
                 }} 
               >{initials}</div>)
           })}
           </div>
           <div className="nav-bar-buttons">
-            <img id="call-nav-button" src="public/images/makecall.png"></img>
             <button>Share</button>
             <a href="http://localhost:8000/">logout</a>
           </div>
