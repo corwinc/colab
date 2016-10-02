@@ -6,51 +6,40 @@ import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
 
 // /* COMPONENT WITHOUT CHAT */
-var dummyUsers = [  {
-    "id": 2,
-    "firstname": "Corwin",
-    "lastname": "Crownover###",
-    "email": "crwozzzzz@gmail.com"
-  },
-  {
-    "id": 6,
-    "firstname": null,
-    "lastname": null,
-    "email": null
-  },
-  {
-    "id": 7,
-    "firstname": "Brandon",
-    "lastname": "Tiqui",
-    "email": "btiqui@gmail.com"
-  }]
-
 export default class TextVideoPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      curUser: 2,
+      curUser: 18,
       curDoc: 2,
-      curSharedUsers: dummyUsers
+      curSharedUsers: []
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
-    this.setSharedUsersState = this.setSharedUsersState.bind(this);
   };
 
   getSharedUsers (docId, userId) {
     // send request to server
     console.log('inside FE getSharedUsers');
-    return [
-      {
-        "id": 111,
-        "firstname": "HEYITWORKS",
-        "lastname": "BAM",
-        "email": "yooooo@gmail.com"
+    $.ajax({
+      method: 'GET',
+      url: '/userdocs',
+      dataType: 'json',
+      data: {
+        docId: docId,
+        userId: userId
+      },
+      success: (data) => {
+        console.log('getSharedUsers success:', data);
+        this.setState({curSharedUsers: data});
+        console.log('state sharedusers:', this.state.curSharedUsers);
+      },
+      error: (err) => {
+        console.log('getSharedUsers error:', err);
       }
-    ];
+    })
   }
 
   getInitials (user) {
@@ -69,11 +58,6 @@ export default class TextVideoPage extends React.Component {
     return firstInit + lastInit;
   }
 
-  setSharedUsersState(users) {
-    this.setState({curSharedUsers: users});
-    console.log('current shared users:', this.state.curSharedUsers);
-  }
-
   render() {
     return (
       <div>
@@ -83,15 +67,13 @@ export default class TextVideoPage extends React.Component {
             curUser={this.state.curUser}
             curSharedUsers={this.state.curSharedUsers} 
             getSharedUsers={this.getSharedUsers}
-            getInitials={this.getInitials}
-            setSharedUsersState={this.setSharedUsersState} />
+            getInitials={this.getInitials} />
         </div>
         <div id="editor">
           <p>Type here...</p>
         </div>
         <div className="Video">
           <AppVideo />
-          <Chat />
         </div>
       </div>
     );

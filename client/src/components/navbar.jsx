@@ -6,13 +6,13 @@ export default class NavBar extends React.Component {
     super(props);
   };
 
+// Probably, the logic for getting shared users should be an effect of textEditor mounting
   componentWillMount() {
+    console.log('inside NavBar componentWillMount');
     var docId = this.props.curDoc;
     var userId = this.props.curUser;
-    // this is probably going to have asynchronous issues => refactor to cbs or promises
-    var sharedUsers = this.props.getSharedUsers(docId, userId);
-    console.log('shared users have been had:', sharedUsers);
-    this.props.setSharedUsersState(sharedUsers);
+    this.props.getSharedUsers(docId, userId);
+    // this.props.setSharedUsersState(sharedUsers);
   }
 
   render() {
