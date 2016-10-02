@@ -15,20 +15,23 @@ const AppVideo = () => {
             <span className="call-message"> Incoming call... </span>
           </div>
           <div className="call-incoming-options">
-            <img id="acceptIcon" className="call-icon" src="public/images/call2.png"></img>
-            <img id="rejectIcon" className="call-icon" src="public/images/rejectcall.png"></img>
+            <div id="acceptIcon">
+              <img className="call-mini-icon" src="public/images/call.png"></img>
+              Accept
+            </div>
+            <div id="rejectIcon">
+              <img className="call-mini-icon" src="public/images/rejectcall.png"></img>
+              Reject
+            </div>
           </div>
         </div>
       </div>   
 
       <div className="vid-box">
         <video id="remoteVideo" className="video-element" autoPlay="true" muted></video>
-        <div className="player-button-row">
+        <div className="player-button-row"> 
           <div className="button-box">
-            <button id="startButton" className="left-bottom-curve">Start</button>
-          </div>  
-          <div className="button-box">
-            <button id="stopButton" className="right-bottom-curve">Hang Up</button>
+            <img id="stopButton" src="public/images/hangup.png"></img>
           </div>  
         </div>
       </div>

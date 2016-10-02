@@ -126,9 +126,13 @@ function showIncomingCallAlerts(pc, signalingChannel, successCallback, errorCall
 
   animateIcon('#seeOptionsIcon', 'icon-flash');
 
-  $('#seeOptionsIcon').on('click', function(){
-    $('.call-incoming-notifications').hide();
-    $('.call-incoming-options').show();
+  $('#seeOptionsIcon').on('mouseover', function(){
+    $('.call-incoming-notifications').css('display', 'inline-block');
+
+    //$('#seeOptionsIcon').removeClass('icon-flash');
+    //animateIcon('#seeOptionsIcon', 'icon-slide');
+    //$('.call-incoming-notifications').hide();
+    $('.call-incoming-options').css('display', 'inline-block');
   })
 
   $('#acceptIcon').on('click', function(){
