@@ -25,12 +25,16 @@
   border: 3px solid #f4fafe;
   border-radius: 5em;
   padding: 1em;
-
 }
+
 img.call-icon{
-  height: 50px;
-  width: 50px;
+  height: 75px;
+  width: 75px;
   display: inline-block;
+}
+
+.call-message {
+  display: block;
 }
 #acceptIcon {
   margin-left: 40%;
@@ -90,6 +94,10 @@ img.call-icon{
   border-radius: 0 0 5em 0;
 }
 
+.call-alerts {
+  height: 200%;
+  width: 200%
+}
 .call-alerts-incoming {
   display: none;
 }
@@ -101,9 +109,9 @@ img.call-icon{
 
 
 div.nav-bar-buttons{
-  margin-left: 70%;
+  margin-left: 80%;
   height: auto;
-  width: 30%;
+  width: 20%;
   display: block;
   padding: .2em;
 }
@@ -111,15 +119,13 @@ div.nav-bar-buttons{
 div.nav-bar-buttons * {
   position: relative;
   display: inline-block;
-  width: 25%;
-  margin-left: 12.5%;
+  width: 40%;
+  margin-left: 20%;
 }
 
-div.nav-bar-buttons img {
-  margin-left: 0%;
-}
 
 div.nav-bar-buttons button {
+  margin-left: 0%;
   border-radius: 5px;
 }
 
@@ -172,3 +178,65 @@ div.nav-bar-buttons a {
   display: inline-block;
   transform: translate(-50%, -50%);
 }
+
+.icon-spin {
+  /* Firefox */
+  -moz-animation-name: spinIcon;
+  -moz-animation-iteration-count: 10;
+  -moz-animation-timing-function: ease;
+  -moz-animation-duration: 5s;
+
+  /* WebKit */
+  -webkit-animation-name: spinIcon;
+  -webkit-animation-iteration-count: 10;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-duration: 5s;
+
+  /* Opera */
+  -o-animation-name: spinIcon;
+  -o-animation-iteration-count: 10;
+  -o-animation-timing-function: ease;
+  -o-animation-duration: 5s;
+
+  /* Standard */
+  animation-name: spinIcon;
+  animation-iteration-count: 10;
+  animation-timing-function: ease;
+  animation-duration: 5s;
+}
+
+@-moz-keyframes spinIcon {
+  0% {
+    -moz-transform: rotate(-180deg);
+  }
+  100% {
+    -moz-transform: rotate(180deg);
+  }
+}
+@-webkit-keyframes spinIcon {
+  0% {
+    -webkit-transform: rotate(-180deg);
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+  }
+}
+@-o-keyframes spinIcon {
+  0% {
+    -webkit-transform: rotate(-180deg);
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+  }
+}
+@keyframes spinIcon {
+  0% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+
+

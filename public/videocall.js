@@ -126,15 +126,23 @@ $('#stopButton').on('click', function(){
   signalingChannel.emit('disconnect call');
 })
 
-$('#call-nav-button').on('click', function(){
+// User circles initiate the call on click
+$('.userCircle').on('click', function(){
   $('.call-alerts-outgoing').show();
   $('.call-views').show();
   start(true);
+  animateIcon();
 })
 
-$('#startButton').on('click', function(){
-  navigator.getUserMedia({ "audio": true, "video": true }, 
-    function(stream){ /*localVideo.src = window.URL.createObjectURL(stream); */ }, 
-    function(error){ console.log("ERROR: ", error); });
-});
+// $('#startButton').on('click', function(){
+//   navigator.getUserMedia({ "audio": true, "video": true }, 
+//     function(stream){ /*localVideo.src = window.URL.createObjectURL(stream); */ }, 
+//     function(error){ console.log("ERROR: ", error); });
+// });
+
+function animateIcon(){
+  $('#callIcon').addClass('icon-spin').prop('disabled','false');
+};
+
+
 

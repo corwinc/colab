@@ -5,11 +5,12 @@ const AppVideo = () => {
     <div className="call-views">
       <div className="call-alerts"> 
         <div className="call-alerts-outgoing">
-          <img id="callIcon" className="call-icon" src="public/images/callwaiting.svg"></img>
+          <img id="callIcon" className="call-icon" src="public/images/callwaiting.svg" disabled="true"></img>
+          <span className="call-message"> Waiting for a response... </span>
         </div> 
         <div className="call-alerts-incoming">
-          <img id="acceptIcon" className="call-icon" src="public/images/call2.png"></img>
-          <img id="rejectIcon" className="call-icon" src="public/images/rejectcall.png"></img>
+          <img id="acceptIcon" className="call-icon" src="public/images/call2.png" disabled="true"></img>
+          <img id="rejectIcon" className="call-icon" src="public/images/rejectcall.png" disabled="true"></img>
         </div>
       </div>   
       <div className="vid-box">
