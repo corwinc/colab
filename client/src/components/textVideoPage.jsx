@@ -30,12 +30,28 @@ export default class TextVideoPage extends React.Component {
     super(props);
 
     this.state = {
+      curUser: 2,
       curDoc: 2,
       curSharedUsers: dummyUsers
     };
 
+    this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
+    this.setSharedUsersState = this.setSharedUsersState.bind(this);
   };
+
+  getSharedUsers (docId, userId) {
+    // send request to server
+    console.log('inside FE getSharedUsers');
+    return [
+      {
+        "id": 111,
+        "firstname": "HEYITWORKS",
+        "lastname": "BAM",
+        "email": "yooooo@gmail.com"
+      }
+    ];
+  }
 
   getInitials (user) {
     if (user.firstname !== null) {
@@ -53,11 +69,22 @@ export default class TextVideoPage extends React.Component {
     return firstInit + lastInit;
   }
 
+  setSharedUsersState(users) {
+    this.setState({curSharedUsers: users});
+    console.log('current shared users:', this.state.curSharedUsers);
+  }
+
   render() {
     return (
       <div>
         <div className="NavBar">
-          <NavBar curDoc={this.state.curDoc} curSharedUsers={this.state.curSharedUsers} getInitials={this.getInitials} />
+          <NavBar 
+            curDoc={this.state.curDoc} 
+            curUser={this.state.curUser}
+            curSharedUsers={this.state.curSharedUsers} 
+            getSharedUsers={this.getSharedUsers}
+            getInitials={this.getInitials}
+            setSharedUsersState={this.setSharedUsersState} />
         </div>
         <div id="editor">
           <p>Type here...</p>
