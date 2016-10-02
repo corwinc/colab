@@ -1,7 +1,9 @@
 .ql-toolbar,
 .ql-snow,
 #editor {
-  width: 50vw;
+  width: 75vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .video-and-chat{
