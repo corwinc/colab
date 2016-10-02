@@ -24,15 +24,14 @@ exports.createUserDoc = function(req, res, next) {
 // USE CASE: on Text Component / NavBar Component load, get shared users
 // note: may want to modularize to be 1. getUserDocs, 2. Get sharedUsers
 exports.getSharedUsers = function(req, res, next) {
-  var docId = req.query.docId;
-  var curUserId = req.query.userId;
-  console.log('inside controller getSharedUsers');
-  console.log('docId, curUserId:', docId, curUserId);
+  var docId = Number(req.query.docId);
+  var curUserId = Number(req.query.userId);
 
   // 1. Find all UserDoc entries
   UserDoc.findAll({where: {documentId: docId}})
     .then(function(userDocs) {
       // 2. Get all userIds associated with doc
+      // res.send(userDocs);
       var sharedUserIds = userDocs.map(function(userDoc) {
         return userDoc.userId;
       });
