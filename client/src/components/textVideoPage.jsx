@@ -61,7 +61,7 @@ export default class TextVideoPage extends React.Component {
   render() {
     return (
       <div>
-        <div className="NavBar">
+        <div>
           <NavBar 
             curDoc={this.state.curDoc} 
             curUser={this.state.curUser}

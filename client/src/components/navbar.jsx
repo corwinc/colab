@@ -17,24 +17,38 @@ export default class NavBar extends React.Component {
 
   render() {
     return (
-      <div className="NavBarWrapper">
-        <div className="NavBarContainer">
-          <div className="userCircles">
-          {this.props.curSharedUsers.map((user, i) => {
-            var initials = this.props.getInitials(user); 
-            return <div key={i} className='userCircle'>{initials}</div>
-          })}
-          </div>
-          <div className="nav-bar-buttons">
-            <img id="call-nav-button" src="public/images/makecall.png"></img>
-            <button>Share</button>
-            <a href="http://localhost:8000/">logout</a>
+      <div className="navbar-container">
+        <div className="navbar">
+          <div className="navbar-right">
+            <div className="chathead-container">
+              <ul className="chathead-list">
+                {this.props.curSharedUsers.map((user, i) => {
+                  var initials = this.props.getInitials(user); 
+                  return (
+                    <li key={i}>
+                      <span className="chathead-initials">{initials}</span>
+                    </li> 
+                  )             
+                })}
+              </ul>
+            </div>
+            <div className="navbar-button-container">
+                <div className="call-button"><img id="call-nav-button" src="public/images/makecall.png"></img></div>
+                <div className="share-button"><button>Share</button></div>
+                <div className="logout-link"><a href="http://localhost:8000/">logout</a></div>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 };
+
+
+
+
+
+
 
 
 // STATELESS VERSION
@@ -57,4 +71,7 @@ export default class NavBar extends React.Component {
 //     </div>
 //   );
 // export default NavBar;
+
+
+
 
