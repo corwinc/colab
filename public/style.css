@@ -349,23 +349,6 @@ div.nav-bar-buttons a {
   }
 }
 
-.icon-slide {
-  -moz-transition: all 3s ease;
-  -webkit-transition: all 3s ease;
-  -o-transition: all 3s ease;
-  transition: all 3s ease;
-}
-
-.icon-slide:hover {
-  opacity: .5;
-  -moz-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-
-}
-
-
 #newdoc {
   margin-top:50px;
 }
