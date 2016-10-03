@@ -19,7 +19,7 @@
 }
 
 .call-views {
-  margin-left: 85%;
+  margin-left: 80%;
   height: auto;
   width: auto;
   padding: 1em;  
@@ -86,10 +86,10 @@ img.call-icon{
 }
 
 .button-box img {
-  top: -50px;
+  top: -35px;
   position: relative;
-  margin-left: 12.5%;
-  width: 75%;
+  margin-left: 25%;
+  width: 50%;
   text-align: center;
 }
 
