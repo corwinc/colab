@@ -7,7 +7,7 @@ var connection = new Sequelize(connectionString, {
   pool: {
     max: 50,
     min: 1,
-    idle: 1000000
+    idle: 10000
   },
 });
 
