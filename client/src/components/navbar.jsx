@@ -17,31 +17,45 @@ export default class NavBar extends React.Component {
 
   render() {
     return (
-      <div className="NavBarWrapper">
-        <div className="NavBarContainer">
-          <div className="userCircles">
-          {this.props.curSharedUsers.map((user, i) => {
-            var initials = this.props.getInitials(user); 
-            return (
-              <div key={i} className='userCircle' 
-                onClick={ ()=>{ 
-                  $('.call-alerts-outgoing').show();
-                  $('.call-views').show();
-                  start(true);
-                  animateIcon('#callIcon', 'icon-spin');
-                }} 
-              >{initials}</div>)
-          })}
-          </div>
-          <div className="nav-bar-buttons">
-            <button>Share</button>
-            <a href="http://localhost:8000/">logout</a>
+      <div className="navbar-container">
+        <div className="navbar">
+          <div className="navbar-title">ColLab</div>
+          <div className="navbar-right">
+            <div className="chathead-container">
+              <ul className="chathead-list">
+                {this.props.curSharedUsers.map((user, i) => {
+                  var initials = this.props.getInitials(user); 
+                  return (
+                    <li key={i}
+                      onClick={ ()=>{ 
+                        $('.call-alerts-outgoing').show();
+                        $('.call-views').show();
+                        start(true);
+                        animateIcon('#callIcon', 'icon-spin');
+                      }} 
+                    >
+                      <span className="chathead-initials">{initials}</span>
+                    </li> 
+                  )             
+                })}
+              </ul>
+            </div>
+            <div className="navbar-button-container">
+                <div className="share-button"><button>Share</button></div>
+                <div className="logout-link"><a href="http://localhost:8000/">logout</a></div>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 };
+
+
+
+
+
+
 
 
 // STATELESS VERSION
@@ -64,4 +78,7 @@ export default class NavBar extends React.Component {
 //     </div>
 //   );
 // export default NavBar;
+
+
+
 
