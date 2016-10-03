@@ -19,23 +19,30 @@
 }
 
 .call-views {
+  margin-left: 80%;
+  height: auto;
+  width: auto;
+  padding: 1em;  
   position: fixed;
-  z-index: 10;
-  top: 25%;
-  display: none;
   background-color: #f4fdff; 
   border: 3px solid #f4fafe;
   border-radius: 5em;
-  padding: 1em;
-
+  z-index: 10;
+  top: 25%;
+  display: none;
 }
+
 img.call-icon{
-  height: 50px;
-  width: 50px;
+  height: 75px;
+  width: 75px;
   display: inline-block;
 }
+
+.call-message {
+  display: block;
+}
+
 #acceptIcon {
-  margin-left: 40%;
 }
 #rejectIcon {
   margin-left: 10%;
@@ -70,42 +77,68 @@ img.call-icon{
   margin-left: 5%;
   width: 90%;
   border-radius: 0 0 5em 5em;
-
-}
-
-.button-box button {
-  position: relative;
-  width: 100%;
-  text-align: center;
 }
 
 .button-box {
-  display: inline-block;
+  display: block;
+  margin-left: 25%;
   width: 50%;
 }
 
-.left-bottom-curve {
-  border-radius: 0 0 0 5em;
-
+.button-box img {
+  top: -35px;
+  position: relative;
+  margin-left: 25%;
+  width: 50%;
+  text-align: center;
 }
-.right-bottom-curve {
-  border-radius: 0 0 5em 0;
-}
 
+.call-alerts {
+  height: 100%;
+}
+.call-alerts-outgoing {
+  display: inline-block;
+}
+.call-incoming-notifications, 
+.call-incoming-options,
 .call-alerts-incoming {
   display: none;
 }
-.call-alerts-outgoing {
-  display: none;
+
+.call-alerts-outgoing{
   display: inline-block;
 }
 
+.call-alerts-incoming, 
+.call-alerts-outgoing {
+  width: 100%;
+}
 
+.call-incoming-notifications, 
+.call-incoming-options {
+  width: 50%;
+  height: 100%;
+}
+
+.call-incoming-notifications span,
+.call-incoming-options div {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 2em;
+  margin: 1em;
+  text-align: center;
+}
+
+.call-mini-icon{
+  position: relative;
+  width: 33%;
+}
 
 div.nav-bar-buttons{
-  margin-left: 70%;
+  margin-left: 80%;
   height: auto;
-  width: 30%;
+  width: 20%;
   display: block;
   padding: .2em;
 }
@@ -113,15 +146,13 @@ div.nav-bar-buttons{
 div.nav-bar-buttons * {
   position: relative;
   display: inline-block;
-  width: 25%;
-  margin-left: 12.5%;
+  width: 40%;
+  margin-left: 20%;
 }
 
-div.nav-bar-buttons img {
-  margin-left: 0%;
-}
 
 div.nav-bar-buttons button {
+  margin-left: 0%;
   border-radius: 5px;
 }
 
@@ -173,6 +204,149 @@ div.nav-bar-buttons a {
   float: right;
   display: inline-block;
   transform: translate(-50%, -50%);
+}
+
+.icon-spin {
+  /* Firefox */
+  -moz-animation-name: spinIcon;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: ease;
+  -moz-animation-duration: 5s;
+
+  /* WebKit */
+  -webkit-animation-name: spinIcon;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-duration: 5s;
+
+  /* Opera */
+  -o-animation-name: spinIcon;
+  -o-animation-iteration-count: infinite;
+  -o-animation-timing-function: ease;
+  -o-animation-duration: 5s;
+
+  /* Standard */
+  animation-name: spinIcon;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  animation-duration: 5s;
+}
+
+@-moz-keyframes spinIcon {
+  0% {
+    -moz-transform: rotate(-180deg);
+  }
+  100% {
+    -moz-transform: rotate(180deg);
+  }
+}
+@-webkit-keyframes spinIcon {
+  0% {
+    -webkit-transform: rotate(-180deg);
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+  }
+}
+@-o-keyframes spinIcon {
+  0% {
+    -webkit-transform: rotate(-180deg);
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+  }
+}
+@keyframes spinIcon {
+  0% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.icon-flash {
+
+  /* Firefox */
+  -moz-animation-name: flashIcon;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: ease;
+  -moz-animation-duration: 1s;
+
+  /* WebKit */
+  -webkit-animation-name: flashIcon;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-duration: 1s;
+
+  /* Opera */
+  -o-animation-name: flashIcon;
+  -o-animation-iteration-count: infinite;
+  -o-animation-timing-function: ease;
+  -o-animation-duration: 1s;
+
+  /* Standard */
+  animation-name: flashIcon;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  animation-duration: 1s;
+}
+
+@-moz-keyframes flashIcon {
+  0% {
+    opacity: .75;
+    -moz-transform: scale(1) rotate(85deg);    
+  }
+  50% {
+    opacity: 1;
+    -moz-transform: scale(1.15) rotate(95deg);  
+  }
+  100% {
+    opacity: .75;
+    -moz-transform: scale(1) rotate(85deg);  
+  }
+}
+@-webkit-keyframes flashIcon {
+  0% {
+    opacity: .75;
+    -webkit-transform: scale(1) rotate(85deg);  
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(1.15) rotate(95deg);  
+  }
+  100% {
+    opacity: .75;
+    -webkit-transform: scale(1) rotate(85deg);  
+  }
+}
+@-o-keyframes flashIcon {
+  0% {
+    opacity: .75;
+    -o-transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    -o-transform: scale(1.15);
+  }
+  100% {
+    opacity: .75;
+    -o-transform: scale(1);
+  }
+}
+@keyframes flashIcon {
+  0% {
+    opacity: .75;
+    transform: scale(1) rotate(85deg);  
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(95deg);  
+  }
+  100% {
+    opacity: .75;
+    transform: scale(1) rotate(85deg);  
+  }
 }
 
 #newdoc {

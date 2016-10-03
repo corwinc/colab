@@ -73,9 +73,7 @@ export default class TextVideoPage extends React.Component {
         <div id="editor">
           <p>Type here...</p>
         </div>
-        <div className="Video">
-          <AppVideo />
-        </div>
+        <AppVideo />
       </div>
     );
   }

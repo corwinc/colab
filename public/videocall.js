@@ -18,12 +18,7 @@ function start(isCaller) {
 
   // setRemoteDescription fires this. 
   pc.onaddstream = function (evt) {
-    remoteVideo.src = window.URL.createObjectURL(evt.stream);
-    $('.call-alerts-outgoing').hide();
-    $('.call-views').show();
-    if (isCaller) {
-      $('.vid-box').show();
-    }
+    showRemoteVideo(evt, isCaller);
   };
 
   // This is one of the inputs into navigator.getUserMedia. It takes the stream from the user's webcam, sets it to the
@@ -37,19 +32,7 @@ function start(isCaller) {
     if (isCaller) {
       pc.createOffer(gotDescription, errorGettingDescription);
     } else {
-      $('.call-views').show();
-      $('.call-alerts-incoming').show();
-
-      $('#acceptIcon').on('click', function(){
-        $('.call-alerts-incoming').hide();
-        pc.createAnswer(gotDescription, errorGettingDescription);
-        $('.vid-box').show();
-      });
-
-      $('#rejectIcon').on('click', function(){
-        $('.call-alerts-incoming').hide();
-        signalingChannel.emit('disconnect call');
-      });
+      showIncomingCallAlerts(pc, signalingChannel, gotDescription, errorGettingDescription);
     }
 
     function gotDescription(desc) {
@@ -120,21 +103,65 @@ signalingChannel.on('disconnect call', function(){
   remoteVideo.src = undefined;
   $('.vid-box').hide();
   $('.call-views').hide();
+  $('.call-incoming-options').hide();
 });
 
 $('#stopButton').on('click', function(){
   signalingChannel.emit('disconnect call');
 })
 
-$('#call-nav-button').on('click', function(){
-  $('.call-alerts-outgoing').show();
-  $('.call-views').show();
-  start(true);
-})
+/* THIS LOGIC IS NOW IN THE VIDEO COMPONENT */
+// // User circles initiate the call on click
+// $('.userCircle').on('click', function(){
+//   $('.call-alerts-outgoing').show();
+//   $('.call-views').show();
+//   start(true);
+//   animateIcon();
+// })
 
-$('#startButton').on('click', function(){
-  navigator.getUserMedia({ "audio": true, "video": true }, 
-    function(stream){ /*localVideo.src = window.URL.createObjectURL(stream); */ }, 
-    function(error){ console.log("ERROR: ", error); });
-});
+function showIncomingCallAlerts(pc, signalingChannel, successCallback, errorCallback){
+  $('.call-views').show();
+  $('.call-alerts-incoming').show();
+  $('.call-incoming-notifications').show();
+
+  animateIcon('#seeOptionsIcon', 'icon-flash');
+
+  $('#seeOptionsIcon').on('mouseover', function(){
+    $('.call-incoming-notifications').css('display', 'inline-block');
+
+    //$('#seeOptionsIcon').removeClass('icon-flash');
+    //animateIcon('#seeOptionsIcon', 'icon-slide');
+    //$('.call-incoming-notifications').hide();
+    $('.call-incoming-options').css('display', 'inline-block');
+  })
+
+  $('#acceptIcon').on('click', function(){
+    $('.call-alerts-incoming').hide();
+    pc.createAnswer(successCallback, errorCallback);
+    $('.vid-box').show();
+  });
+
+  $('#rejectIcon').on('click', function(){
+    $('.call-alerts-incoming').hide();
+    $('.call-incoming-options').hide();
+    signalingChannel.emit('disconnect call');
+  });
+}
+
+function showRemoteVideo(evt, isCaller){
+  remoteVideo.src = window.URL.createObjectURL(evt.stream);
+  $('.call-alerts-outgoing').hide();
+  $('.call-views').show();
+  if (isCaller) {
+    $('.vid-box').show();
+  }
+}
+
+function animateIcon(iconId, iconClass){
+  $(iconId).addClass(iconClass);
+};
+
+
+
+
 
