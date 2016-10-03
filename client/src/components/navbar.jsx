@@ -27,6 +27,7 @@ export default class NavBar extends React.Component {
                   var initials = this.props.getInitials(user); 
                   return (
                     <li key={i}
+                      id={user.id}
                       onClick={ ()=>{ 
                         $('.call-alerts-outgoing').show();
                         $('.call-views').show();
