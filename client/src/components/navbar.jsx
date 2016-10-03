@@ -19,6 +19,7 @@ export default class NavBar extends React.Component {
     return (
       <div className="navbar-container">
         <div className="navbar">
+          <div className="navbar-title">ColLab</div>
           <div className="navbar-right">
             <div className="chathead-container">
               <ul className="chathead-list">
