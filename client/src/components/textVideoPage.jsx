@@ -69,10 +69,7 @@ export default class TextVideoPage extends React.Component {
             getSharedUsers={this.getSharedUsers}
             getInitials={this.getInitials} />
         </div>
-        <button id="newdoc">New Document</button>
-        <div id="editor">
-          <p>Type here...</p>
-        </div>
+        <TextEditor />
         <AppVideo />
       </div>
     );

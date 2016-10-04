@@ -1,7 +1,8 @@
 import React from 'react';
+import LoginForm from './loginForm.jsx';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as loginActionCreators from '../actions/signupActions.jsx'; 
+// import { bindActionCreators } from 'redux';
+import {userLoginRequest} from '../actions/loginAction.jsx'; 
 // import * as loginActionCreators from '../../src/actions/index.jsx'; 
 
 class Login extends React.Component {
@@ -9,14 +10,18 @@ class Login extends React.Component {
 		super(props)
 	}
 
-	login() {
-	   // this.props.loginActions.login(username, password)
-	}
+	// login() {
+	//    // this.props.loginActions.login(username, password)
+	// }
 
 	render() {
-
+		const {userLoginRequest} = this.props;
 		return (
-			<p>Hello this is Login</p>
+			<div className="row">
+		        <div className="col-md-4 col-md-offset-4">
+		    		<LoginForm userLoginRequest={userLoginRequest}/> 
+		        </div>
+	        </div>
 		)
 	}
 
@@ -24,11 +29,15 @@ class Login extends React.Component {
 }
 
 
-const mapDispatchToProps = (dispatch) => {
-	loginActions : bindActionCreators(loginActionCreators, dispatch) 
-}
+// const mapDispatchToProps = (dispatch) => {
+// 	loginActions : bindActionCreators(loginActionCreators, dispatch) 
+// }
 
+Login.propTypes = {
+
+	userLoginRequest: React.PropTypes.func.isRequired 
+}
 
 export default connect(
 	null, 
-	mapDispatchToProps)(Login);
+	{userLoginRequest})(Login);

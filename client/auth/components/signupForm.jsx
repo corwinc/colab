@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import {Link} from 'react-router'
 
 
 class SignupForm extends React.Component {
@@ -38,10 +39,10 @@ class SignupForm extends React.Component {
 				role="form"
 				onSubmit={this.onSubmit}>
 
-				<h1>Welcome to our COlLab</h1>
+				<h1>Welcome to ColLab</h1>
 
 				<div className="form-group">
-					<label for="inputName" className="control-label">Firstname</label>
+					<label className="control-label">Firstname</label>
 					<input 
 						value={this.state.firstname}
 						onChange={this.onChange}
@@ -54,7 +55,7 @@ class SignupForm extends React.Component {
 				</div>
 
 				<div className="form-group">
-					<label for="inputName" className="control-label">Lastname</label>
+					<label className="control-label">Lastname</label>
 					<input 
 						value={this.state.lastname}
 						onChange={this.onChange}
@@ -73,12 +74,12 @@ class SignupForm extends React.Component {
 						type="text"
 						name="username"
 						placeholder="Mike123"
-						className="form-control" unique required
+						className="form-control" required
 					/>
 				</div>
 
 				<div className="form-group">
-					<label for="inputEmail" className="control-label">Email</label>
+					<label className="control-label">Email</label>
 					<input 
 						value={this.state.email}
 						onChange={this.onChange}
@@ -92,8 +93,8 @@ class SignupForm extends React.Component {
 				    <div className="help-block with-errors"></div>
 				</div>
 
-				{/*<div className="form-group">
-					<label for="inputPassword" className="control-label">Password</label>
+				<div className="form-group">
+					<label className="control-label">Password</label>
 					<input 
 						value={this.state.password}
 						onChange={this.onChange}
@@ -107,7 +108,7 @@ class SignupForm extends React.Component {
 					<div className="help-block">Minimum of 6 characters</div>
 				</div>
 
-				<div className="form-group">
+				{/*<div className="form-group">
 					<label className="control-label">Password Confirmation</label>
 					<input 
 						value={this.state.passwordConfirmation}
@@ -123,6 +124,12 @@ class SignupForm extends React.Component {
 					Sign up
 					</button>
 				</div>
+				<div className="form-group">
+		          Already have an account? <Link to="/login">Sign in</Link>
+		        </div>
+		        <div className="form-group">
+		          <a className="btn btn-danger btn-lg" href="/auth/google">Sign Up With Google</a>
+		        </div>
 			</form>
 		);
 	}
