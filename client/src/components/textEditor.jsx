@@ -29,7 +29,7 @@ class TextEditor extends React.Component {
     // setSate is async
     this.setState({ quill: quill }, () => { 
       console.log('async quill', this.state.quill)
-      var socket = io();
+      var socket = io('/editor');
 
       var change = new Delta();
       quill.on('text-change', function(delta, olddelta, source) {
