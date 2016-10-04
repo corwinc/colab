@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import {Link} from 'react-router'
 
 
 class SignupForm extends React.Component {
@@ -92,7 +93,7 @@ class SignupForm extends React.Component {
 				    <div className="help-block with-errors"></div>
 				</div>
 
-				{/*<div className="form-group">
+				<div className="form-group">
 					<label for="inputPassword" className="control-label">Password</label>
 					<input 
 						value={this.state.password}
@@ -107,7 +108,7 @@ class SignupForm extends React.Component {
 					<div className="help-block">Minimum of 6 characters</div>
 				</div>
 
-				<div className="form-group">
+				{/*<div className="form-group">
 					<label className="control-label">Password Confirmation</label>
 					<input 
 						value={this.state.passwordConfirmation}
@@ -123,6 +124,12 @@ class SignupForm extends React.Component {
 					Sign up
 					</button>
 				</div>
+				<div className="form-group">
+		          Already have an account? <Link to="/login">Sign in</Link>
+		        </div>
+		        <div className="form-group">
+		          <a className="btn btn-danger btn-lg" href="/auth/google">Sign Up With Google</a>
+		        </div>
 			</form>
 		);
 	}
