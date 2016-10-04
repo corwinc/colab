@@ -412,3 +412,8 @@ img.call-icon{
   margin-top:50px;
 }
 
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
