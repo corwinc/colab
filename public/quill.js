@@ -9,7 +9,7 @@ console.log(user + ' logged on.');
 
 var $editor = $('#editor');
 
-var socket = io();
+var socket = io('/editor');
 
 var quill = new Quill('#editor', {
   theme: 'snow'
