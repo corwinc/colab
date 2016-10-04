@@ -4,6 +4,7 @@ import TextEditor from './textEditor.jsx';
 import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
+import CommentArea from './commentArea.jsx';
 
 // /* COMPONENT WITHOUT CHAT */
 export default class TextVideoPage extends React.Component {
@@ -71,6 +72,7 @@ export default class TextVideoPage extends React.Component {
         </div>
         <TextEditor />
         <AppVideo />
+        <CommentArea />
       </div>
     );
   }
