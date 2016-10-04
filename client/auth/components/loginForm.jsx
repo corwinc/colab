@@ -30,13 +30,16 @@ class LoginForm extends React.Component {
 		);
 	}
 
+	
 	render() {
 		return (
 			<form data-toggle="validator" 
 				role="form"
-				onSubmit={this.onSubmit}>
+				onSubmit={this.onSubmit}
+				
+				>
 
-				<h1>Welcome to our COlLab</h1>
+				<h1>Welcome to COlLab</h1>
 
 				<div className="form-group">
 					<label className="control-label">Username</label>
@@ -46,14 +49,14 @@ class LoginForm extends React.Component {
 						type="text"
 						name="username"
 						placeholder="username"
-						className="form-control" unique required
+						className="form-control" required
 					/>
 				</div>
 
 				
 
 				<div className="form-group">
-					<label for="inputPassword" className="control-label">Password</label>
+					<label className="control-label">Password</label>
 					<input 
 						value={this.state.password}
 						onChange={this.onChange}

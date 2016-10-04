@@ -39,10 +39,10 @@ class SignupForm extends React.Component {
 				role="form"
 				onSubmit={this.onSubmit}>
 
-				<h1>Welcome to our COlLab</h1>
+				<h1>Welcome to ColLab</h1>
 
 				<div className="form-group">
-					<label for="inputName" className="control-label">Firstname</label>
+					<label className="control-label">Firstname</label>
 					<input 
 						value={this.state.firstname}
 						onChange={this.onChange}
@@ -55,7 +55,7 @@ class SignupForm extends React.Component {
 				</div>
 
 				<div className="form-group">
-					<label for="inputName" className="control-label">Lastname</label>
+					<label className="control-label">Lastname</label>
 					<input 
 						value={this.state.lastname}
 						onChange={this.onChange}
@@ -74,12 +74,12 @@ class SignupForm extends React.Component {
 						type="text"
 						name="username"
 						placeholder="Mike123"
-						className="form-control" unique required
+						className="form-control" required
 					/>
 				</div>
 
 				<div className="form-group">
-					<label for="inputEmail" className="control-label">Email</label>
+					<label className="control-label">Email</label>
 					<input 
 						value={this.state.email}
 						onChange={this.onChange}
@@ -94,7 +94,7 @@ class SignupForm extends React.Component {
 				</div>
 
 				<div className="form-group">
-					<label for="inputPassword" className="control-label">Password</label>
+					<label className="control-label">Password</label>
 					<input 
 						value={this.state.password}
 						onChange={this.onChange}
