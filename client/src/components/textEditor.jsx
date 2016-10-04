@@ -17,7 +17,7 @@ class TextEditor extends React.Component {
       theme: 'snow'
     });
 
-    var socket = io();
+    var socket = io('/editor');
 
     var change = new Delta();
     quill.on('text-change', function(delta, olddelta, source) {

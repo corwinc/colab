@@ -12,15 +12,6 @@ var commentsRouter = require('./resources/routers/commentsRouter');
 var userDocumentRouter = require('./resources/routers/userDocumentRouter');
 var db = require('../db/config.js');
 
-/* VB EDIT FOR VIDEO CALLING: Add socket module, use an http server to host socket. 
-   Note that this means the app.listen(port) becomes server.listen(port) to start 
-   the server. This does not conflict with the RESTful API handling its requests. */
-
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-
-/* END VIDEO CALL EDITS #1 */
-
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,33 +24,9 @@ const rootPath = path.join(__dirname + '/../')
    Added socket for text editor
 */
 
-io.on('connection', function(socket){ 
+var server = require('http').Server(app);
+require('./sockets/socketRouter')(server);
 
-  console.log("SOCKET CONNECTED");
-
-  socket.on('send candidate', function(candidate){
-    io.emit('message', candidate);
-  });
-
-  socket.on('send offer', function(stream){
-    io.emit('message', stream);
-  });
-
-  socket.on('disconnect call', function() {
-    console.log('A user disconnected.');
-    io.emit('disconnect call');
-  });
-
-  socket.on('disconnect', function() {
-    console.log('A user disconnected.');
-  });
-
-  socket.on('change', function(msg) {
-    console.log('text:' + msg)
-    io.emit('change', msg);
-  });
-  
-});
 
 /* END VIDEO CALLING EDITS #2 */
 

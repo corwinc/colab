@@ -1,4 +1,4 @@
-var signalingChannel = io();
+var signalingChannel = io('/video');
 var pc;
 var configuration = {'iceServers': [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]};
 //var localVideo = document.querySelector("#localVideo");
