@@ -4,6 +4,7 @@ import TextEditor from './textEditor.jsx';
 import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
+import CommentArea from './commentArea.jsx';
 
 // /* COMPONENT WITHOUT CHAT */
 export default class TextVideoPage extends React.Component {
@@ -13,11 +14,14 @@ export default class TextVideoPage extends React.Component {
     this.state = {
       curUser: 18,
       curDoc: 2,
-      curSharedUsers: []
+      curSharedUsers: [],
+      selectionLoc: null
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
+    this.setSelectionLoc = this.setSelectionLoc.bind(this);
+    this.expandCommentEntryView = this.expandCommentEntryView.bind(this);
   };
 
   getSharedUsers (docId, userId) {
@@ -58,6 +62,17 @@ export default class TextVideoPage extends React.Component {
     return firstInit + lastInit;
   }
 
+  //////// COMMENT FUNCTIONS /////////
+
+  setSelectionLoc (loc) {
+    this.setState({selectionLoc: loc});
+  }
+
+  expandCommentEntryView () {
+    console.log('expand comment entry view!');
+    // change .comment height and add post/cancel links!!
+  }
+
   render() {
     return (
       <div>
@@ -69,8 +84,9 @@ export default class TextVideoPage extends React.Component {
             getSharedUsers={this.getSharedUsers}
             getInitials={this.getInitials} />
         </div>
-        <TextEditor />
+        <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
+        <CommentArea selectionLoc={this.state.selectionLoc} expandCommentEntryView={this.expandCommentEntryView} />
       </div>
     );
   }
