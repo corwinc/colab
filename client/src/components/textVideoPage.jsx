@@ -24,7 +24,6 @@ export default class TextVideoPage extends React.Component {
     this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
     this.setSelectionLoc = this.setSelectionLoc.bind(this);
-    this.expandCommentEntryView = this.expandCommentEntryView.bind(this);
     this.handleCommentInput = this.handleCommentInput.bind(this);
   };
 
@@ -72,24 +71,16 @@ export default class TextVideoPage extends React.Component {
     this.setState({selectionLoc: loc});
   }
 
-  expandCommentEntryView () {
-    console.log('inside expandCommentEntryView!');
-    // change .comment height and add post/cancel links!!
-    if (input.value) {
-      console.log('the input has value!');
-    } else {
-      console.log('the input DOESNOT have value');
-    }
-  }
-
   handleCommentInput (e) {
     console.log('inside handleCommentInput');
     e.preventDefault();
     this.setState({commentInput: e.target.value}, () => {
       if (this.state.commentInput !== '') {
         console.log('the input has value!:', this.state.commentInput);
+        this.setState({commentEntryHeight: 70}, () => (console.log('commentheight:', this.state.commentEntryHeight)));
       } else {
         console.log('the input DOESNOT have value');
+        this.setState({commentEntryHeight: 50});
       }
     });
   }
@@ -110,9 +101,9 @@ export default class TextVideoPage extends React.Component {
         <AppVideo />
         <CommentArea 
           selectionLoc={this.state.selectionLoc} 
-          expandCommentEntryView={this.expandCommentEntryView} 
           handleCommentInput={this.handleCommentInput}
-          commentInput={this.state.commentInput} />
+          commentInput={this.state.commentInput}
+          commentEntryHeight={this.state.commentEntryHeight} />
       </div>
     );
   }

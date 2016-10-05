@@ -9,9 +9,9 @@ const CommentArea = (props) =>
           if (props.selectionLoc !== null) {
             return (<Comment 
                       selectionLoc={props.selectionLoc} 
-                      expandCommentEntryView={props.expandCommentEntryView}
                       handleCommentInput={props.handleCommentInput}
-                      commentInput={props.commentInput} />);
+                      commentInput={props.commentInput}
+                      commentEntryHeight={props.commentEntryHeight} />);
           }})()}
       </div>;
 
