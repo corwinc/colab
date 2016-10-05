@@ -4,22 +4,15 @@ import { render } from 'react-dom';
 // TEMP DUMMY DATA
 var initials = 'CC';
 
-class Comment extends React.Component {
-
-  render () {
-    return (
+const Comment = (props) =>
       <div className="comment-container">
-        <div className="comment">
+        <div className="comment" style={{top: props.selectionLoc - 16}}>
           <div className="comment-chathead">
             <span className="comment-initials">{initials}</span>
             <input className="comment-input" placeholder="New comment" />
-
           </div>
         </div>
       </div>
-  );
-  }
-} 
 
 export default Comment;
 

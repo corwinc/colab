@@ -24,6 +24,7 @@ class TextEditor extends React.Component {
     var urldocId = window.location.search.split('').splice(11).join('');
     var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
     var context = this;
+    var setSelectionLoc = this.props.setSelectionLoc;
 
     this.setState({ user: user });
 
@@ -51,8 +52,6 @@ class TextEditor extends React.Component {
       });
 
       // GET SELECTION LOCATION
-      // var boundSetState = this.setState.bind(this);
-      // var boundState = this.state.bind(this);
       quill.on('selection-change', function(range, oldRange, source) {
         if (range) {
           if (range.length == 0) {
@@ -68,7 +67,7 @@ class TextEditor extends React.Component {
 
         var bounds = quill.getBounds(range.index);
         console.log('bounds:', bounds);
-        context.setState({selectionLoc: bounds.top});
+        setSelectionLoc(bounds.top);
       });
 
 

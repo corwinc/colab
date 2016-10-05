@@ -14,11 +14,13 @@ export default class TextVideoPage extends React.Component {
     this.state = {
       curUser: 18,
       curDoc: 2,
-      curSharedUsers: []
+      curSharedUsers: [],
+      selectionLoc: 67
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
+    this.setSelectionLoc = this.setSelectionLoc.bind(this);
   };
 
   getSharedUsers (docId, userId) {
@@ -59,6 +61,10 @@ export default class TextVideoPage extends React.Component {
     return firstInit + lastInit;
   }
 
+  setSelectionLoc (loc) {
+    this.setState({selectionLoc: loc});
+  }
+
   render() {
     return (
       <div>
@@ -70,9 +76,9 @@ export default class TextVideoPage extends React.Component {
             getSharedUsers={this.getSharedUsers}
             getInitials={this.getInitials} />
         </div>
-        <TextEditor />
+        <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
-        <CommentArea />
+        <CommentArea selectionLoc={this.state.selectionLoc} />
       </div>
     );
   }
