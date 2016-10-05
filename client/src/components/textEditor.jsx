@@ -13,12 +13,18 @@ class TextEditor extends React.Component {
       user: null
     };
 
+
+    this.setState = this.setState.bind(this);
+
   };
 
   componentDidMount () {
     var Delta = Quill.import('delta');
     var urldocId = window.location.search.split('').splice(11).join('');
     var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    var context = this;
+    var setSelectionLoc = this.props.setSelectionLoc;
+
     this.setState({ user: user });
 
     console.log(user + ' logged on.');
@@ -31,7 +37,7 @@ class TextEditor extends React.Component {
       theme: 'snow'
     });
 
-    // setSate is async
+    // setState is async
     this.setState({ quill: quill }, () => { 
       console.log('async quill', this.state.quill)
       var socket = io('/editor');
@@ -43,6 +49,32 @@ class TextEditor extends React.Component {
           socket.emit('change', {'sharelinkId': sharelinkId, 'who': user, 'delta': JSON.stringify(delta)});
         }
       });
+
+      // GET SELECTION LOCATION
+      quill.on('selection-change', function(range, oldRange, source) {
+        if (range) {
+          if (range.length == 0) {
+            console.log('User cursor is on', range.index);
+          } else {
+            var text = quill.getText(range.index, range.length);
+            console.log('User has highlighted', text);
+            console.log('range index:', range.index);
+          }
+        } else {
+          console.log('Cursor not in the editor');
+        }
+
+        var bounds = quill.getBounds(range.index);
+        console.log('bounds:', bounds);
+        if (range.length !== 0) {
+          setSelectionLoc(bounds.top);          
+        }
+
+        if (range.length === 0) {
+          setSelectionLoc(null);
+        }
+      });
+
 
       socket.on('change', function(msg){
         if(msg.who !== user && sharelinkId === msg.sharelinkId) { // prevent infinite loop; user who emitted msg should not receive it
@@ -83,9 +115,6 @@ class TextEditor extends React.Component {
 
       // this.setState({ saveInterval: saveInterval });
     });
-
-    
-
   }
 
   makeDoc (quill, user) {

@@ -64,6 +64,7 @@
   text-align: center;
   vertical-align: middle;
   margin-top: 16px;
+  font-family: arial;
 }
 
 .navbar-button-container {
@@ -79,24 +80,6 @@
 
 .call-button {
   vertical-align: middle;
-}
-
-.call-button img {
-
-}
-
-.share-button {
-}
-
-.share-button button {
-
-}
-
-.logout-link {
-}
-
-.logout-link a {
-
 }
 
 .navbar-button-container ul {
@@ -130,7 +113,7 @@
 .ql-toolbar,
 .ql-snow,
 #editor {
-  width: 75vw;
+  width: 60vw;
   margin-left: auto;
   margin-right: auto;
 }
@@ -417,3 +400,83 @@ img.call-icon{
   justify-content: center;
   align-items: center;
 }
+
+/* COMMENTS */
+.comment-area-container {
+  width: 20vw;
+  height: 1000px;
+  position: absolute;
+  top: 206px;
+  right: 0px;
+  background: white;
+  border: none;
+}
+
+.comment-container {
+  font-family: arial;
+}
+
+.comment {
+  position: absolute;
+  height: 50px;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background: #f4fdff;
+  border-style: solid;
+  border-width: 0.5px;
+  border-radius: 5px;
+  border-color: gray;
+}
+
+.comment-chathead {
+  position: absolute;
+  vertical-align: top;
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background: #F1F0F0;
+  list-style-type: none;
+  text-align: center;
+  margin-left: 12px;
+  margin-top: 12px;
+}
+
+.comment-chathead li {
+  list-style-type: none;
+}
+
+.comment-initials {
+  position: absolute;
+  display: inline-block;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  right: 2px;
+  margin-top: 5px;
+  font-size: 13px;
+  font-family: arial;
+}
+
+.comment-placeholder {
+  position: absolute;
+  font-size: 13;
+  color: lightgray;
+  margin-left: 18px;
+  margin-top: 6px;
+  vertical-align: middle;
+  width: 100px;
+}
+
+.comment-input {
+  position: absolute;
+  margin-left: 18px;
+  margin-top: -2px;
+  width: 200px;
+  height: 30px;
+  font-size: 13px;
+  background: transparent;
+  border: none;
+}
+
