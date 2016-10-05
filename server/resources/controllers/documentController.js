@@ -14,6 +14,7 @@ exports.getDocuments = function(req, res) {
   // use username to get userid
   // look in join table to get all documentIds for userid
   // look in documents table to get list of matching docIds
+
   User.findOne({
     where: req.query
   })
@@ -25,22 +26,32 @@ exports.getDocuments = function(req, res) {
       }
     })
     .then(function(userDocs) {
-      // using documentIds in userDocs, get all documents
-      res.send(userDocs);
+      // get all document id's in array
+      var docids = userDocs.map(function(userDoc) {
+        return userDoc.documentId;
+      });
+
+      // then search Document table using array as a filter
+      Document.findAll({
+        where: { 
+          id: docids
+        }
+      })
+      .then(function(docs) {
+        res.send(docs);
+      })
+      .catch(function(err) {
+        res.send('Error finding documents:', err);
+      });
     })
+    .catch(function(err) {
+      res.send('Error finding userdoc records:', err);
+    });
+  })
+  .catch(function(err) {
+    res.send('Error finding the user:', err);
   });
 
-
-
-  // Document.findOne({
-  //   where: req.query
-  // })
-  // .then((doc) => {
-  //   res.send(doc);
-  // })
-  // .catch((doc) => {
-  //   res.status(500).send('Error getting documents.');
-  // });
 };
 
 /**
