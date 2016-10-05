@@ -26,6 +26,7 @@ export default class TextVideoPage extends React.Component {
     this.getInitials = this.getInitials.bind(this);
     this.setSelectionLoc = this.setSelectionLoc.bind(this);
     this.handleCommentInput = this.handleCommentInput.bind(this);
+    this.postEntry = this.postEntry.bind(this);
     this.cancelEntry = this.cancelEntry.bind(this);
   };
 
@@ -87,6 +88,30 @@ export default class TextVideoPage extends React.Component {
     });
   }
 
+  postEntry () {
+    // send POST req to db w/ input data
+    var comment = {
+      text: this.state.commentInput,
+      block: 1,
+      user: this.state.curUser,
+      location: this.state.selectionLoc,
+      document: this.state.curDoc
+    }
+
+    $.ajax({
+      method: 'POST',
+      url: '/comments',
+      data: comment,
+      success: (data) => {
+        console.log('Success posting comment!:', data);
+      },
+      error: (err) => {
+        console.log('error posting entry:', err);
+      }
+    })
+    // on success: remove comment entry and show rendered unfocused comment
+  }
+
   cancelEntry () {
     // remove DOM ==> create activeCommentEntry state?
     this.setState({commentInput: '', activeCommentStatus: false, commentEntryHeight: 50, selectionLoc: null});
@@ -112,6 +137,7 @@ export default class TextVideoPage extends React.Component {
           commentInput={this.state.commentInput}
           commentEntryHeight={this.state.commentEntryHeight}
           activeCommentStatus={this.state.activeCommentStatus}
+          postEntry={this.postEntry}
           cancelEntry={this.cancelEntry} />
       </div>
     );

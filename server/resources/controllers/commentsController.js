@@ -1,3 +1,6 @@
+var db = require('../../../db/config.js');
+var Comment = require('../../../db/Models/Comment');
+
 /**
  * Gets comments
  * @param {Object} req
@@ -15,5 +18,9 @@ exports.getComments = function(req, res) {
  * @return undefined
  */
 exports.createComment = function(req, res) {
-  res.send('create a comment');
+  console.log('comment req.body:', req.body);
+  var comment = req.body;
+
+  Comment.create(comment)
+    .then(res.send('created a comment'))
 };

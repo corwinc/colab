@@ -24,7 +24,7 @@ const Comment = (props) =>
               onChange={(e) => props.handleCommentInput(e)} />
             {(() => {
               if (props.activeCommentStatus === true) {
-                return <CommentEntryLinks cancelEntry={props.cancelEntry} />;
+                return <CommentEntryLinks cancelEntry={props.cancelEntry} postEntry={props.postEntry} />;
               }
             })()}
           </div>

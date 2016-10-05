@@ -13,6 +13,7 @@ const CommentArea = (props) =>
                       commentInput={props.commentInput}
                       commentEntryHeight={props.commentEntryHeight}
                       activeCommentStatus={props.activeCommentStatus}
+                      postEntry={props.postEntry}
                       cancelEntry={props.cancelEntry} />);
           }})()}
       </div>;
