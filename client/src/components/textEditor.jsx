@@ -167,7 +167,6 @@ class TextEditor extends React.Component {
         <button id="newdoc" onClick={ () => { this.makeDoc(this.state.quill, this.state.user) } }>New Document</button>
         <button onClick={ () => { this.saveDoc(this.state.quill, this.state.sharelinkId) } }>Save</button>
         <div id="editor">
-          <p>Type here...</p>
         </div>
       </div>
   );
