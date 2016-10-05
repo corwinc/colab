@@ -144,9 +144,6 @@ signalingChannel.on('message', function(evt) {
       start(false, signal.pcKey);
     } 
 
-    // Store the pcKey as data in the vidbox so that the stop button will know which connection to cancel.
-    //$('#remoteVideo___' + signal.pcKey).closest('.vid-box').data('pcKey', signal.pcKey);
-
     // If the sdp description is present, set the remote description. This puts the remote peer's
     // media stream into the local peer's client.
     // If the candidate is present, the ICE connection protocol is still underway; add the candidate
@@ -158,13 +155,6 @@ signalingChannel.on('message', function(evt) {
     }
   } 
 });
-var newData = [];
-// On the disconnect call event (which can come from either caller or callee) terminates the p2p connection. 
-signalingChannel.on('incoming data', function(evt){
-  if (newData[0] === undefined) {newData[0] = evt} else {newData[1] = evt}
-  console.log(evt);
-});
-
 
 // On the disconnect call event (which can come from either caller or callee) terminates the p2p connection. 
 signalingChannel.on('disconnect call', function(evt){
@@ -175,7 +165,6 @@ signalingChannel.on('disconnect call', function(evt){
   remoteVideo.src = undefined;
 
   $('#vidBox___' + signal.pcKey).remove();
-  //$('.call-views').hide();
   $('.call-incoming-options').hide();
 });
 
