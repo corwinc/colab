@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
-import AuthReducer from './auth/reducers/authReducer.jsx';
+// import AuthReducer from './auth/reducers/authReducer.jsx';
+import flashMessage from './auth/reducers/flashMessage.jsx';
 // import Comment from './comment/reducers/commentReducer.jsx';
 
 const rootReducer = combineReducers({
-	user : AuthReducer,  
+	flashMessage: flashMessage,
+	//user : AuthReducer,  
 	// comment : Comment,
 	// text : Text,	
 });

@@ -10,9 +10,9 @@ class SignupForm extends React.Component {
 			firstname:'',
 			lastname:'',
 			username:'',
-			errors:''
-			// password:'',
-			// passwordConfirmation:''
+			email:'',
+			password:'',
+
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -25,28 +25,35 @@ class SignupForm extends React.Component {
 	}
 
 	onSubmit(e) {
+		this.setState({errors: {} });
 		e.preventDefault();
 		this.props.userSignupRequest(this.state).then(
 			() => {
+				this.props.addFlashMessage({
+					type: 'success',
+					text: 'you signed up successfully. Welcome'
+				})
 				this.context.router.push('/');
-			}
+			},
+				
+
 		);
 	}
 
 	render() {
+		const {errors} = this.state;
 		return (
-			<form data-toggle="validator" 
+			<form  
 				role="form"
 				onSubmit={this.onSubmit}>
 
 				<h1>Welcome to ColLab</h1>
 
-				<div className="form-group">
+				<div className="form-group" >
 					<label className="control-label">Firstname</label>
 					<input 
 						value={this.state.firstname}
 						onChange={this.onChange}
-						id="inputName"
 						type="text"
 						name="firstname"
 						className="form-control"
@@ -83,13 +90,12 @@ class SignupForm extends React.Component {
 					<input 
 						value={this.state.email}
 						onChange={this.onChange}
-						type="email"
-						id="inputEmail"
+						type="text"
 						name="email"
 						placeholder="Email" 
-						className="form-control"
-						data-error="Bruh, that email address is invalid" 
-				    required />
+						className="form-control" required
+						
+				    />
 				    <div className="help-block with-errors"></div>
 				</div>
 
@@ -101,23 +107,11 @@ class SignupForm extends React.Component {
 						type="password"
 						data-minlength="6"
 						name="password"
-						className="form-control"
-						id="inputPassword" 
+						className="form-control" 
 						placeholder="Password" required
 					/>
 					<div className="help-block">Minimum of 6 characters</div>
 				</div>
-
-				{/*<div className="form-group">
-					<label className="control-label">Password Confirmation</label>
-					<input 
-						value={this.state.passwordConfirmation}
-						onChange={this.onChange}
-						type="password"
-						name="passwordConfirmation"
-						className="form-control"
-					/>
-				</div>*/}
 
 				<div className="form-group">
 					<button className="btn btn-primary btn-lg">
@@ -137,7 +131,8 @@ class SignupForm extends React.Component {
 
 SignupForm.propTypes = {
 
-	userSignupRequest: React.PropTypes.func.isRequired 
+	userSignupRequest: React.PropTypes.func.isRequired, 
+	addFlashMessage: React.PropTypes.func.isRequired 
 }
 
 SignupForm.contextTypes = {
