@@ -77,7 +77,7 @@ export default class TextVideoPage extends React.Component {
     this.setState({commentInput: e.target.value}, () => {
       if (this.state.commentInput !== '') {
         console.log('the input has value!:', this.state.commentInput);
-        this.setState({commentEntryHeight: 70}, () => (console.log('commentheight:', this.state.commentEntryHeight)));
+        this.setState({commentEntryHeight: 70});
       } else {
         console.log('the input DOESNOT have value');
         this.setState({commentEntryHeight: 50});

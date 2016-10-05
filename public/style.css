@@ -480,3 +480,12 @@ img.call-icon{
   border: none;
 }
 
+.entry-links-container {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.entry-links-container * {
+  margin-right: 10px;
+}
