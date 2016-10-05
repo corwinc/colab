@@ -20,15 +20,8 @@ app.use('/public', express.static(path.join(__dirname, '/../public')));
 
 const rootPath = path.join(__dirname + '/../')
 
-/* VB EDIT FOR VIDEO CALLING #2: Add socket listeners/emitters 
-   Added socket for text editor
-*/
-
 var server = require('http').Server(app);
 require('./sockets/socketRouter')(server);
-
-
-/* END VIDEO CALLING EDITS #2 */
 
 app.use('/document', documentRouter);
 app.use('/users', usersRouter);

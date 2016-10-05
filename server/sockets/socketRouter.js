@@ -16,9 +16,9 @@ module.exports = function(server) {
       videoSocket.emit('message', stream);
     });
 
-    socket.on('disconnect call', function() {
+    socket.on('disconnect call', function(callInfo) {
       console.log('A user disconnected.');
-      videoSocket.emit('disconnect call');
+      videoSocket.emit('disconnect call', callInfo);
     });
 
     socket.on('disconnect', function() {
@@ -37,6 +37,10 @@ module.exports = function(server) {
       console.log('text:' + msg)
       editorSocket.emit('change', msg);
     });  
+
+    socket.on('disconnect', function() {
+      console.log('A user disconnected.');
+    });
 
   });
 
