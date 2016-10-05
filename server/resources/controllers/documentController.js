@@ -1,6 +1,8 @@
 var Document = require('../../../db/Models/Document');
 var UserDocument = require('../../../db/Models/UserDocument');
 var UserDocController = require('./userDocumentController.js');
+var User = require('../../../db/Models/User');
+var UserDoc = require('../../../db/Models/UserDocument.js');
 
 /**
  * Gets documents for a given user or a document given a doc_id
@@ -9,15 +11,36 @@ var UserDocController = require('./userDocumentController.js');
  * @return undefined
  */
 exports.getDocuments = function(req, res) {
-  Document.findOne({
+  // use username to get userid
+  // look in join table to get all documentIds for userid
+  // look in documents table to get list of matching docIds
+  User.findOne({
     where: req.query
   })
-  .then((doc) => {
-    res.send(doc);
-  })
-  .catch((doc) => {
-    res.status(500).send('Error getting documents.');
+  .then(function(user) {
+    UserDoc.findAll({
+      attributes: ['documentId'],
+      where: {
+        userId: user.id
+      }
+    })
+    .then(function(userDocs) {
+      // using documentIds in userDocs, get all documents
+      res.send(userDocs);
+    })
   });
+
+
+
+  // Document.findOne({
+  //   where: req.query
+  // })
+  // .then((doc) => {
+  //   res.send(doc);
+  // })
+  // .catch((doc) => {
+  //   res.status(500).send('Error getting documents.');
+  // });
 };
 
 /**
