@@ -68,7 +68,11 @@ class TextEditor extends React.Component {
         console.log('bounds:', bounds);
         if (range.length !== 0) {
           setSelectionLoc(bounds.top);          
-        };
+        }
+
+        if (range.length === 0) {
+          setSelectionLoc(null);
+        }
       });
 
 
