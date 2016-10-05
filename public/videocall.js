@@ -87,21 +87,9 @@ signalingChannel.on('message', function(evt) {
   }
 
   if (myId == users[0].toString() || myId == users[1].toString()){
-    console.log("YEP! Signal is: ", signal);
-    // Abort if the sender's signal is sent back to the sender.
-    if (signal.sdp !== undefined) {
-      if ((globalIsCaller && signal.sdp.type === 'offer') || (!globalIsCaller && signal.sdp.type === 'answer' )) {
-        console.log('Detecting call from your own outgoing call signal.');
-        return;
-      }
-    }
 
-    // Abort if the sender's candidate signal is sent back to the sender.
-    if (signal.candidate !== undefined) { 
-      if ((globalIsCaller && signal.isCaller || !globalIsCaller && !signal.isCaller)) {
-        console.log('Detecting your own candidate offer signal.');          
-        return;
-      }
+    if (areYouSignalingYourself(signal)){
+      return;
     }
 
     // If the peer connection hasn't been made yet, invoke the start method to set up the 
@@ -193,6 +181,23 @@ function showRemoteVideo(evt, isCaller, video, pcKey){
 function animateIcon(iconId, iconClass){
   $(iconId).addClass(iconClass);
 };
+
+function areYouSignalingYourself(signal){
+  // Abort if the sender's signal is sent back to the sender.
+  if (signal.sdp !== undefined) {
+    if ((globalIsCaller && signal.sdp.type === 'offer') || (!globalIsCaller && signal.sdp.type === 'answer' )) {
+      console.log('Detecting call from your own outgoing call signal.');
+      return true;
+    }
+  }
+  // Abort if the sender's candidate signal is sent back to the sender.
+  if (signal.candidate !== undefined) { 
+    if ((globalIsCaller && signal.isCaller || !globalIsCaller && !signal.isCaller)) {
+      console.log('Detecting your own candidate offer signal.');          
+      return true;
+    }
+  }
+}
 
 function isConnectionAlreadyMade(pcKey){
   var users = pcKey.split("---");
