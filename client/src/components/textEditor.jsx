@@ -10,8 +10,7 @@ class TextEditor extends React.Component {
       quill: null,
       saveInterval: null,
       sharelinkId: null,
-      user: null,
-      selectionLoc: null
+      user: null
     };
 
 
@@ -67,7 +66,9 @@ class TextEditor extends React.Component {
 
         var bounds = quill.getBounds(range.index);
         console.log('bounds:', bounds);
-        setSelectionLoc(bounds.top);
+        if (range.length !== 0) {
+          setSelectionLoc(bounds.top);          
+        };
       });
 
 

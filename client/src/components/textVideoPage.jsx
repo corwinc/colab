@@ -15,7 +15,7 @@ export default class TextVideoPage extends React.Component {
       curUser: 18,
       curDoc: 2,
       curSharedUsers: [],
-      selectionLoc: 67
+      selectionLoc: null
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);

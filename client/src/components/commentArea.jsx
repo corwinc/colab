@@ -4,7 +4,16 @@ import Comment from './comment.jsx';
 
 const CommentArea = (props) =>
       <div className="comment-area-container">
-        <Comment selectionLoc={props.selectionLoc} />
+        {(() => {
+          console.log('onload slectionLoc:', props.selectionLoc);
+          if (props.selectionLoc !== null) {
+            return (<Comment selectionLoc={props.selectionLoc} />);
+          }})()}
       </div>;
 
 export default CommentArea;
+
+
+// {if (props.selectionLoc !== null) {
+//     return <Comment selectionLoc={props.selectionLoc} />;
+//   }}
