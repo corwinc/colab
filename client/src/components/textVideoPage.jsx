@@ -19,16 +19,25 @@ export default class TextVideoPage extends React.Component {
       selectionLoc: null,
       commentEntryHeight: 50,
       activeCommentStatus: false,
-      commentInput: ''
+      commentInput: '',
+      comments: []
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
+    this.getComments = this.getComments.bind(this);
     this.setSelectionLoc = this.setSelectionLoc.bind(this);
     this.handleCommentInput = this.handleCommentInput.bind(this);
     this.postEntry = this.postEntry.bind(this);
     this.cancelEntry = this.cancelEntry.bind(this);
   };
+
+  componentDidMount () {
+    console.log('componentDidMount');
+    this.getComments();
+    // render comments from this.state.comments
+    // => for each comment, create a jsx element and attach it to DOM
+  }
 
   getSharedUsers (docId, userId) {
     // send request to server
@@ -68,7 +77,28 @@ export default class TextVideoPage extends React.Component {
     return firstInit + lastInit;
   }
 
-  //////// COMMENT FUNCTIONS /////////
+  //////// COMMENT METHODS /////////
+  getComments () {
+    // send request to server
+    // on success: setState w/ comments
+    // componentDidMount: render comments
+    console.log('inside getComments');
+    $.ajax({
+      method: 'GET',
+      url: '/comments',
+      dataType: 'json',
+      data: {docId: this.state.curDoc},
+      success: (data) => {
+        console.log('Success getting comments!:', data);
+        this.setState({comments: data}, () => {
+          console.log('state comments:', this.state.comments);
+        });  
+      },
+      error: (err) => {
+        console.log('error getting comments:', err);
+      }
+    })
+  }
 
   setSelectionLoc (loc) {
     this.setState({selectionLoc: loc});

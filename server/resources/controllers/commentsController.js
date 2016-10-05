@@ -8,7 +8,13 @@ var Comment = require('../../../db/Models/Comment');
  * @return undefined
  */
 exports.getComments = function(req, res) {
-  res.send('get comments');
+  console.log('inside controller\'s get comments');
+  var docId = req.query.docId;
+
+  Comment.findAll({where: {document: docId}})
+    .then((comments) => {
+      res.send(comments);
+    })
 };
 
 /**
@@ -18,7 +24,6 @@ exports.getComments = function(req, res) {
  * @return undefined
  */
 exports.createComment = function(req, res) {
-  console.log('comment req.body:', req.body);
   var comment = req.body;
 
   Comment.create(comment)
