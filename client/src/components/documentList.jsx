@@ -55,6 +55,20 @@ class DocumentList extends React.Component {
 	  });
   }
 
+  deleteDoc (sharelinkId, index, title) {
+  	if (confirm('The document "' + title + '" will be deleted.')) {
+
+	  	axios.delete('/document?sharelink=' + sharelinkId)
+	  	  .then(function(res) {
+	        console.log('doc deleted');
+	        console.log(this.state.documents);
+	        var docs = this.state.documents;
+	        docs.splice(index, 1);
+	        this.setState({ documents: docs });
+	  	  }.bind(this));
+	  	} 
+  }
+
   updateInputValue (event) {
   	var val = event.target.value;
 
@@ -83,7 +97,10 @@ class DocumentList extends React.Component {
 		    <ul>
 		    	{ this.state.documents.length > 0 ? this.state.documents.map( (doc, index) => {
 		    		  return ( 
-		    		  	<li key={ index }><a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a></li> 
+		    		  	<li key={ index }>
+		    		  	  <a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a>
+                  &nbsp;<a onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
+		    		  	</li> 
 		    		  );
 		    	  }) : 'loading...'
 		      }
