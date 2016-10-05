@@ -1,5 +1,5 @@
 import React from 'react';
-
+window.myId = Math.floor(Math.random() * 10000);
 // STATEFUL B/C ADDING COMPONENTWILLMOUNT
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -28,11 +28,21 @@ export default class NavBar extends React.Component {
                   return (
                     <li key={i}
                       id={user.id}
-                      onClick={ ()=>{ 
-                        $('.call-alerts-outgoing').show();
-                        $('.call-views').show();
-                        start(true);
-                        animateIcon('#callIcon', 'icon-spin');
+                      onClick={ ()=>{
+                        var pcKey = myId + '---' + user.id;
+                        if (isConnectionAlreadyMade(pcKey)){
+                          console.log("You're already connected to this user. Womp womp.");
+                          return;
+                        }
+                        if (user.id !== myId) { 
+                          $('.call-alerts-outgoing').show();
+                          $('.call-views').show();
+                          start(true, pcKey);
+                          console.log(pcKey);
+                          animateIcon('#callIcon', 'icon-spin');
+                        } else {
+                          console.log("You can't call yourself, silly goose!");
+                        }
                       }} 
                     >
                       <span className="chathead-initials">{initials}</span>
@@ -42,8 +52,8 @@ export default class NavBar extends React.Component {
               </ul>
             </div>
             <div className="navbar-button-container">
-                <div className="share-button"><button>Share</button></div>
-                <div className="logout-link"><a href="http://localhost:8000/">logout</a></div>
+              <div className="share-button"><button>Share</button></div>
+              <div className="logout-link"><a href="http://localhost:8000/">logout</a></div>
             </div>
           </div>
         </div>
