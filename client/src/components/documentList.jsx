@@ -11,7 +11,8 @@ class DocumentList extends React.Component {
 
   	this.state = {
   		username: 'b', // change later after auth complete
-  		documents: []
+  		documents: [],
+  		inputValue: ''
   	}
   }
 
@@ -37,7 +38,8 @@ class DocumentList extends React.Component {
 	  // pass in username
 	  axios.post('/document', {
 	  	username: username,
-	  	sharelink: sharelinkId
+	  	sharelink: sharelinkId,
+	  	title: this.state.inputValue
 	  })
 	  .then(function(res) {
 
@@ -48,10 +50,18 @@ class DocumentList extends React.Component {
 	  });
   }
 
+  updateInputValue (event) {
+  	this.setState({
+      inputValue: event.target.value
+  	});
+  }
+
 	render() {
 		return (
 		  <div>
 		    <button onClick={ () => { this.createNewDoc(this.state.username) } }>New Doc</button>
+		    <br />
+		    Title: <input value={ this.state.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
 		    <h1>Document List</h1>
 		    <ul>
 		    	{ this.state.documents.length > 0 ? this.state.documents.map( (doc, index) => {
