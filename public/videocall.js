@@ -1,36 +1,52 @@
 var signalingChannel = io('/video');
 var pc;
 var pcs = {};
-//var pcKey = 0;
 var configuration = {'iceServers': [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]};
 //var localVideo = document.querySelector("#localVideo");
-var remoteVideo = document.querySelector("#remoteVideo1");
-var globalIsCaller = false;
 
 // Invoke start(true) to initiate a call
 function start(isCaller, pcKey) {
 
-  remoteVideo.src = remoteVideo.src === "" ? document.querySelector("#remoteVideo1") : document.querySelector("#remoteVideo2");
+  makeNewVideoCard(pcKey);
 
-  globalIsCaller = isCaller; 
+    function makeNewVideoCard(pcKey) {
+      var newVidBox = $('#vidBoxTemplate').clone().attr('id', 'vidBox___' + pcKey);
+      $('.vid-scrollable-list').append(newVidBox);
+      $('#vidBox___' + pcKey + ' .video-element').attr('id', 'remoteVideo___' + pcKey);
+      $('#vidBox___' + pcKey + ' .stop-button').attr('id', 'stopButton___' + pcKey).on('click', function(){
+        signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey}));
+      });
+    };
+
+  var remoteVideo = document.querySelector("#remoteVideo___" + pcKey);
+
   pcs[pcKey] = new RTCPeerConnection(configuration);
 
   // addIceCandidate fires this.
   pcs[pcKey].onicecandidate = function (evt) {
-    signalingChannel.emit('send candidate', JSON.stringify({ "candidate": evt.candidate, "isCaller": isCaller, "pcKey": pcKey }));
+    signalingChannel.emit('send candidate', JSON.stringify({ "candidate": evt.candidate, "isCaller": isCaller, "callerId": myId, "pcKey": pcKey }));
   };
 
   // setRemoteDescription fires this. 
   pcs[pcKey].onaddstream = function (evt) {
-    showRemoteVideo(evt, isCaller, remoteVideo, pcKey);
+    showRemoteVideo(evt, isCaller, pcKey, remoteVideo);
   };
+
+    function showRemoteVideo(evt, isCaller, pcKey, video) {
+      pcs[pcKey].status = 'connected';
+      video.src = window.URL.createObjectURL(evt.stream);
+      $('.call-alerts-outgoing').hide();
+      $('.call-views').show();
+      if (isCaller) {
+        $('#vidBox___' + pcKey).show();
+      }
+    };
 
   // setRemoteDescription fires this. 
   pcs[pcKey].oniceconnectionstatechange = function (evt) {
     if (pcs[pcKey] && pcs[pcKey].iceConnectionState === 'connected' || pcs[pcKey] && pcs[pcKey].iceConnectionState === 'complete') { 
       console.log("CONNECTION STATE CHANGE: ", pcs[pcKey].iceConnectionState);
       // Reset this to false after the call is completed, so it doesn't interfere with the logic of the next call. 
-      globalIsCaller = false;
     }
   };
 
@@ -46,6 +62,8 @@ function start(isCaller, pcKey) {
   var handleVideo = function (stream) {
     //localVideo.src = window.URL.createObjectURL(stream);
     pcs[pcKey].addStream(stream);
+    console.log("Sending the following: ", stream);
+    signalingChannel.emit('send RTC stuff', stream);
 
     // If this is running inside the caller's client, creating an offer sends the description to the remote pper. 
     // If this is in the remote peer's client, the response sends back a description, but with an "answer" state. 
@@ -55,14 +73,40 @@ function start(isCaller, pcKey) {
       showIncomingCallAlerts(pc, pcKey, signalingChannel, gotDescription, errorGettingDescription);
     }
 
-    function gotDescription(desc) {
-      pcs[pcKey].setLocalDescription(desc);
-      signalingChannel.emit('send offer', JSON.stringify({ "sdp": desc, "pcKey": pcKey}));
-    };
+      function showIncomingCallAlerts(pc, pcKey, signalingChannel, successCallback, errorCallback){
+        $('.call-views').show();
+        $('.call-alerts-incoming').show();
+        $('.call-incoming-notifications').show();
 
-    function errorGettingDescription(err) {
-      console.log("There was an error getting the description. Error message: ", err);
-    };
+        animateIcon('#seeOptionsIcon', 'icon-flash');
+
+        $('#seeOptionsIcon').on('mouseover', function(){
+          $('.call-incoming-notifications').css('display', 'inline-block');
+          $('.call-incoming-options').css('display', 'inline-block');
+        })
+
+        $('#acceptIcon').on('click', function(){
+          pcs[pcKey].status = 'connected';
+          $('.call-alerts-incoming').hide();
+          pcs[pcKey].createAnswer(successCallback, errorCallback);
+          $('#vidBox___' + pcKey).show();
+        });
+
+        $('#rejectIcon').on('click', function(){
+          $('.call-alerts-incoming').hide();
+          $('.call-incoming-options').hide();
+          signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey}));
+        });
+      }
+
+      function gotDescription(desc) {
+        pcs[pcKey].setLocalDescription(desc);
+        signalingChannel.emit('send offer', JSON.stringify({ "sdp": desc, "callerId": myId, "pcKey": pcKey}));
+      };
+
+      function errorGettingDescription(err) {
+        console.log("There was an error getting the description. Error message: ", err);
+      };
   };
 
   var videoError = function (error) {
@@ -79,16 +123,17 @@ function start(isCaller, pcKey) {
 signalingChannel.on('message', function(evt) {
 
   var signal = JSON.parse(evt);
-  var users = signal.pcKey.split('---');
 
   if (isConnectionAlreadyMade(signal.pcKey)) {
     console.log("You are already connected to this user.");
     return;
   }
 
+  var users = signal.pcKey.split('---');
+
   if (myId == users[0].toString() || myId == users[1].toString()){
 
-    if (areYouSignalingYourself(signal)){
+    if (areYouSignalingYourself(signal.callerId)){
       return;
     }
 
@@ -99,8 +144,8 @@ signalingChannel.on('message', function(evt) {
       start(false, signal.pcKey);
     } 
 
-    $('.vid-box').data('pcKey', signal.pcKey);
-    //pcs[signal.pcKey].status = 'connected';
+    // Store the pcKey as data in the vidbox so that the stop button will know which connection to cancel.
+    //$('#remoteVideo___' + signal.pcKey).closest('.vid-box').data('pcKey', signal.pcKey);
 
     // If the sdp description is present, set the remote description. This puts the remote peer's
     // media stream into the local peer's client.
@@ -113,89 +158,35 @@ signalingChannel.on('message', function(evt) {
     }
   } 
 });
+var newData = [];
+// On the disconnect call event (which can come from either caller or callee) terminates the p2p connection. 
+signalingChannel.on('incoming data', function(evt){
+  if (newData[0] === undefined) {newData[0] = evt} else {newData[1] = evt}
+  console.log(evt);
+});
+
 
 // On the disconnect call event (which can come from either caller or callee) terminates the p2p connection. 
 signalingChannel.on('disconnect call', function(evt){
-
   var signal = JSON.parse(evt);
   pcs[signal.pcKey].close();
   pcs[signal.pcKey] = undefined;
-  globalIsCaller = undefined;
+  var remoteVideo = document.querySelector("#remoteVideo___" + signal.pcKey);
   remoteVideo.src = undefined;
 
-  $('.vid-box').hide();
-  $('.call-views').hide();
+  $('#vidBox___' + signal.pcKey).remove();
+  //$('.call-views').hide();
   $('.call-incoming-options').hide();
 });
-
-$('#stopButton').on('click', function(){
-  var pcKey = $(".vid-box").data('pcKey');
-  signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey}));
-})
-
-/* THIS LOGIC IS NOW IN THE VIDEO COMPONENT */
-// // User circles initiate the call on click
-// $('.userCircle').on('click', function(){
-//   $('.call-alerts-outgoing').show();
-//   $('.call-views').show();
-//   start(true);
-//   animateIcon();
-// })
-
-function showIncomingCallAlerts(pc, pcKey, signalingChannel, successCallback, errorCallback){
-  $('.call-views').show();
-  $('.call-alerts-incoming').show();
-  $('.call-incoming-notifications').show();
-
-  animateIcon('#seeOptionsIcon', 'icon-flash');
-
-  $('#seeOptionsIcon').on('mouseover', function(){
-    $('.call-incoming-notifications').css('display', 'inline-block');
-    $('.call-incoming-options').css('display', 'inline-block');
-  })
-
-  $('#acceptIcon').on('click', function(){
-    pcs[pcKey].status = 'connected';
-    $('.call-alerts-incoming').hide();
-    pcs[pcKey].createAnswer(successCallback, errorCallback);
-    $('.vid-box').show();
-  });
-
-  $('#rejectIcon').on('click', function(){
-    $('.call-alerts-incoming').hide();
-    $('.call-incoming-options').hide();
-    signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey}));
-  });
-}
-
-function showRemoteVideo(evt, isCaller, video, pcKey){
-  pcs[pcKey].status = 'connected';
-  video.src = window.URL.createObjectURL(evt.stream);
-  $('.call-alerts-outgoing').hide();
-  $('.call-views').show();
-  if (isCaller) {
-    $('.vid-box').show();
-  }
-};
 
 function animateIcon(iconId, iconClass){
   $(iconId).addClass(iconClass);
 };
 
-function areYouSignalingYourself(signal){
+function areYouSignalingYourself(callerId){
   // Abort if the sender's signal is sent back to the sender.
-  if (signal.sdp !== undefined) {
-    if ((globalIsCaller && signal.sdp.type === 'offer') || (!globalIsCaller && signal.sdp.type === 'answer' )) {
-      console.log('Detecting call from your own outgoing call signal.');
-      return true;
-    }
-  }
-  // Abort if the sender's candidate signal is sent back to the sender.
-  if (signal.candidate !== undefined) { 
-    if ((globalIsCaller && signal.isCaller || !globalIsCaller && !signal.isCaller)) {
-      console.log('Detecting your own candidate offer signal.');          
-      return true;
-    }
+  if (callerId === myId) {
+    return true;
   }
 }
 

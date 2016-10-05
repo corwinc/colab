@@ -164,6 +164,14 @@ img.call-icon{
   display: none;
 }
 
+div.vid-scrollable-list {
+  display: block;
+  width: 100%;
+  position: relative;
+  max-height: 600px;
+  overflow-y:scroll
+}
+
 .vid-box {
   background-color: #888;
   border-radius: 5em !important;

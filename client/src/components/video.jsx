@@ -26,12 +26,15 @@ const AppVideo = () => {
           </div>
         </div>
       </div>   
+      <div className="vid-scrollable-list">
 
-      <div className="vid-box">
-        <video id="remoteVideo1" className="video-element" autoPlay="true" muted></video>
+      </div>
+
+      <div id="vidBoxTemplate" className="vid-box">
+        <video id="remoteVideoTemplate" className="video-element" autoPlay="true" muted></video>
         <div className="player-button-row"> 
           <div className="button-box">
-            <img id="stopButton" src="public/images/hangup.png"></img>
+            <img id="stopButton" className='stop-button' src="public/images/hangup.png"></img>
           </div>  
         </div>
       </div>
