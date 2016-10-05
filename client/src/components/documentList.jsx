@@ -54,9 +54,9 @@ class DocumentList extends React.Component {
 		    <button onClick={ () => { this.createNewDoc(this.state.username) } }>New Doc</button>
 		    <h1>Document List</h1>
 		    <ul>
-		    	{ this.state.documents.length > 0 ? this.state.documents.map( (doc) => {
+		    	{ this.state.documents.length > 0 ? this.state.documents.map( (doc, index) => {
 		    		  return ( 
-		    		  	<li><a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.sharelink }</a></li> 
+		    		  	<li key={ index }><a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.sharelink }</a></li> 
 		    		  );
 		    	  }) : 'loading...'
 		      }
