@@ -7,7 +7,11 @@ const CommentArea = (props) =>
         {(() => {
           console.log('selectionLoc:', props.selectionLoc);
           if (props.selectionLoc !== null) {
-            return (<Comment selectionLoc={props.selectionLoc} expandCommentEntryView={props.expandCommentEntryView} />);
+            return (<Comment 
+                      selectionLoc={props.selectionLoc} 
+                      expandCommentEntryView={props.expandCommentEntryView}
+                      handleCommentInput={props.handleCommentInput}
+                      commentInput={props.commentInput} />);
           }})()}
       </div>;
 

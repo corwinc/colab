@@ -433,7 +433,7 @@ img.call-icon{
   position: absolute;
   vertical-align: top;
   display: inline-block;
-  height: 25px;
+  height: 25px !important;
   width: 25px;
   border-radius: 50%;
   background: #F1F0F0;
