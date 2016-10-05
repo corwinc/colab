@@ -80,19 +80,19 @@ function start(isCaller, pcKey) {
 
         animateIcon('#seeOptionsIcon', 'icon-flash');
 
-        $('#seeOptionsIcon').on('mouseover', function(){
+        $('#seeOptionsIcon').unbind().on('mouseover', function(){
           $('.call-incoming-notifications').css('display', 'inline-block');
           $('.call-incoming-options').css('display', 'inline-block');
         })
 
-        $('#acceptIcon').on('click', function(){
+        $('#acceptIcon').unbind().on('click', function(){
           pcs[pcKey].status = 'connected';
           $('.call-alerts-incoming').hide();
           pcs[pcKey].createAnswer(successCallback, errorCallback);
           $('#vidBox___' + pcKey).show();
         });
 
-        $('#rejectIcon').on('click', function(){
+        $('#rejectIcon').unbind().on('click', function(){
           $('.call-alerts-incoming').hide();
           $('.call-incoming-options').hide();
           signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey}));
@@ -170,7 +170,7 @@ signalingChannel.on('incoming data', function(evt){
 signalingChannel.on('disconnect call', function(evt){
   var signal = JSON.parse(evt);
   pcs[signal.pcKey].close();
-  pcs[signal.pcKey] = undefined;
+  delete pcs[signal.pcKey];
   var remoteVideo = document.querySelector("#remoteVideo___" + signal.pcKey);
   remoteVideo.src = undefined;
 

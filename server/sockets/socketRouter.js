@@ -25,10 +25,6 @@ module.exports = function(server) {
       console.log('A user disconnected.');
     });
 
-    socket.on('send RTC stuff', function(data){
-      videoSocket.emit('incoming data', data);
-    })
-
   });
 
   var editorSocket = io.of('/editor');
