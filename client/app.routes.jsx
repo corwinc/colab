@@ -7,6 +7,7 @@ import TextEditor from './src/components/textEditor.jsx';
 import Chat from './src/components/chat.jsx';
 import AppVideo from './src/components/video.jsx';
 import TextVideoPage from './src/components/textVideoPage.jsx';
+import DocumentList from './src/components/documentList.jsx';
 
 
 
@@ -20,6 +21,6 @@ module.exports = (
 		</Route>
 		<Route path='/login' component={Login} />
 		<Route path='/signup' component={Signup} />
+		<Route path='/documentlist' component={DocumentList} />
 	</Router> 
 )
-

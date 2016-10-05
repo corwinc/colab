@@ -59,7 +59,6 @@ exports.createDocument = function(req, res, next) {
       .then((doc) => {
         req.body.docId = doc.id;
         return next();
-        // res.send(doc);
       })
       .catch((error) => {
         res.status(500).send('Error creating the document.');
@@ -71,7 +70,6 @@ exports.createDocument = function(req, res, next) {
   .catch((error) => {
     res.send(error);
   });
-  // res.send('create a document');
 };
 
 /**
