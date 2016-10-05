@@ -1,4 +1,5 @@
 import React from 'react';
+import { render } from 'react-dom'; // needed?
 import axios from 'axios';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
@@ -16,7 +17,18 @@ class DocumentList extends React.Component {
 
   componentDidMount () {
   	//populate documents array with list of documents for user
+  	console.log('this:', this);
+    console.log('username on mount', this.state.username);
 
+    axios.get('document/all?username=' + this.state.username)
+      .then(function(res) {
+      	console.log('this in axios: ', this);
+        console.log('response on mount: ', res.data);
+        this.setState({ documents: res.data });
+      }.bind(this))
+      .catch(function(err) {
+        console.log('Error retrieving user documents:', err);
+      });
   }
 
   createNewDoc (username) {
@@ -42,9 +54,12 @@ class DocumentList extends React.Component {
 		    <button onClick={ () => { this.createNewDoc(this.state.username) } }>New Doc</button>
 		    <h1>Document List</h1>
 		    <ul>
-		    	<li><Link to="/?sharelink=doc1475624563132">dogs</Link></li>
-		    	<li><Link to="/?sharelink=doc1475624563199">new</Link></li>
-		    	<li>c</li>
+		    	{ this.state.documents.length > 0 ? this.state.documents.map( (doc) => {
+		    		  return ( 
+		    		  	<li><a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.sharelink }</a></li> 
+		    		  );
+		    	  }) : 'loading...'
+		      }
 		    </ul>
 		  </div>
 		);
