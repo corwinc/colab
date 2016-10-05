@@ -9,7 +9,11 @@ const Comment = (props) =>
         <div className="comment" style={{top: props.selectionLoc - 16}}>
           <div className="comment-chathead">
             <span className="comment-initials">{initials}</span>
-            <input className="comment-input" placeholder="New comment" />
+            <input 
+              className="comment-input" 
+              placeholder="New comment" 
+              onInput={() => props.expandCommentEntryView()} />
+          {/*if input has value, increase comment height + add post/cancel*/}
           </div>
         </div>
       </div>

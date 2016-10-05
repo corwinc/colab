@@ -5,9 +5,9 @@ import Comment from './comment.jsx';
 const CommentArea = (props) =>
       <div className="comment-area-container">
         {(() => {
-          console.log('onload slectionLoc:', props.selectionLoc);
+          console.log('selectionLoc:', props.selectionLoc);
           if (props.selectionLoc !== null) {
-            return (<Comment selectionLoc={props.selectionLoc} />);
+            return (<Comment selectionLoc={props.selectionLoc} expandCommentEntryView={props.expandCommentEntryView} />);
           }})()}
       </div>;
 
