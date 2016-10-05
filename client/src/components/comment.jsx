@@ -23,8 +23,8 @@ const Comment = (props) =>
               placeholder="New comment" 
               onChange={(e) => props.handleCommentInput(e)} />
             {(() => {
-              if (props.commentEntryHeight === 70) {
-                return <CommentEntryLinks />;
+              if (props.activeCommentStatus === true) {
+                return <CommentEntryLinks cancelEntry={props.cancelEntry} />;
               }
             })()}
           </div>

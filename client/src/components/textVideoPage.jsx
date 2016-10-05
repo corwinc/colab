@@ -18,6 +18,7 @@ export default class TextVideoPage extends React.Component {
       curSharedUsers: [],
       selectionLoc: null,
       commentEntryHeight: 50,
+      activeCommentStatus: false,
       commentInput: ''
     };
 
@@ -25,6 +26,7 @@ export default class TextVideoPage extends React.Component {
     this.getInitials = this.getInitials.bind(this);
     this.setSelectionLoc = this.setSelectionLoc.bind(this);
     this.handleCommentInput = this.handleCommentInput.bind(this);
+    this.cancelEntry = this.cancelEntry.bind(this);
   };
 
   getSharedUsers (docId, userId) {
@@ -77,12 +79,17 @@ export default class TextVideoPage extends React.Component {
     this.setState({commentInput: e.target.value}, () => {
       if (this.state.commentInput !== '') {
         console.log('the input has value!:', this.state.commentInput);
-        this.setState({commentEntryHeight: 70});
+        this.setState({commentEntryHeight: 70, activeCommentStatus: true});
       } else {
         console.log('the input DOESNOT have value');
-        this.setState({commentEntryHeight: 50});
+        this.setState({commentEntryHeight: 50, activeCommentStatus: false});
       }
     });
+  }
+
+  cancelEntry () {
+    // remove DOM ==> create activeCommentEntry state?
+    this.setState({commentInput: '', activeCommentStatus: false, commentEntryHeight: 50, selectionLoc: null});
   }
 
   render() {
@@ -103,7 +110,9 @@ export default class TextVideoPage extends React.Component {
           selectionLoc={this.state.selectionLoc} 
           handleCommentInput={this.handleCommentInput}
           commentInput={this.state.commentInput}
-          commentEntryHeight={this.state.commentEntryHeight} />
+          commentEntryHeight={this.state.commentEntryHeight}
+          activeCommentStatus={this.state.activeCommentStatus}
+          cancelEntry={this.cancelEntry} />
       </div>
     );
   }

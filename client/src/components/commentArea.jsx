@@ -11,11 +11,13 @@ const CommentArea = (props) =>
                       selectionLoc={props.selectionLoc} 
                       handleCommentInput={props.handleCommentInput}
                       commentInput={props.commentInput}
-                      commentEntryHeight={props.commentEntryHeight} />);
+                      commentEntryHeight={props.commentEntryHeight}
+                      activeCommentStatus={props.activeCommentStatus}
+                      cancelEntry={props.cancelEntry} />);
           }})()}
       </div>;
 
-export default CommentArea;
+export default CommentArea;  
 
 
 // {if (props.selectionLoc !== null) {
