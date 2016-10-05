@@ -7,11 +7,12 @@ var Promise = require('bluebird');
 
 // USE CASE: user selects button to create new doc
 exports.createUserDoc = function(req, res, next) {
-  var userId = 2;
+  // var userId = req.body.userId;
   var docId = req.body.docId;
   console.log('inside createUserDoc, body:', req.body);
 
-  User.findOne({where: {id: userId}})
+  // User.findOne({where: {id: userId}})
+  User.findOne({where: {username: req.body.username}})
     .then(function(user) {
       Document.find({where: {id: docId}})
         .then(function(document) {

@@ -1,6 +1,8 @@
 var Document = require('../../../db/Models/Document');
 var UserDocument = require('../../../db/Models/UserDocument');
 var UserDocController = require('./userDocumentController.js');
+var User = require('../../../db/Models/User');
+var UserDoc = require('../../../db/Models/UserDocument.js');
 
 /**
  * Gets documents for a given user or a document given a doc_id
@@ -9,15 +11,47 @@ var UserDocController = require('./userDocumentController.js');
  * @return undefined
  */
 exports.getDocuments = function(req, res) {
-  Document.findOne({
+  // use username to get userid
+  // look in join table to get all documentIds for userid
+  // look in documents table to get list of matching docIds
+
+  User.findOne({
     where: req.query
   })
-  .then((doc) => {
-    res.send(doc);
+  .then(function(user) {
+    UserDoc.findAll({
+      attributes: ['documentId'],
+      where: {
+        userId: user.id
+      }
+    })
+    .then(function(userDocs) {
+      // get all document id's in array
+      var docids = userDocs.map(function(userDoc) {
+        return userDoc.documentId;
+      });
+
+      // then search Document table using array as a filter
+      Document.findAll({
+        where: { 
+          id: docids
+        }
+      })
+      .then(function(docs) {
+        res.send(docs);
+      })
+      .catch(function(err) {
+        res.send('Error finding documents:', err);
+      });
+    })
+    .catch(function(err) {
+      res.send('Error finding userdoc records:', err);
+    });
   })
-  .catch((doc) => {
-    res.status(500).send('Error getting documents.');
+  .catch(function(err) {
+    res.send('Error finding the user:', err);
   });
+
 };
 
 /**
@@ -59,7 +93,6 @@ exports.createDocument = function(req, res, next) {
       .then((doc) => {
         req.body.docId = doc.id;
         return next();
-        // res.send(doc);
       })
       .catch((error) => {
         res.status(500).send('Error creating the document.');
@@ -71,7 +104,6 @@ exports.createDocument = function(req, res, next) {
   .catch((error) => {
     res.send(error);
   });
-  // res.send('create a document');
 };
 
 /**
