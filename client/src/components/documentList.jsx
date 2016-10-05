@@ -12,7 +12,8 @@ class DocumentList extends React.Component {
   	this.state = {
   		username: 'b', // change later after auth complete
   		documents: [],
-  		inputValue: ''
+  		inputValue: '',
+  		message: ''
   	}
   }
 
@@ -33,6 +34,10 @@ class DocumentList extends React.Component {
   }
 
   createNewDoc (username) {
+  	if (this.state.inputValue === '') {
+  		this.setState({message: 'Please enter a title.'});
+  		return;
+  	}
 	  var sharelinkId = 'doc' + Date.now();
 	  // create doc
 	  // pass in username
@@ -51,22 +56,34 @@ class DocumentList extends React.Component {
   }
 
   updateInputValue (event) {
+  	var val = event.target.value;
+
   	this.setState({
-      inputValue: event.target.value
+      inputValue: val
+  	}, () => {
+  		if (val.length > 0) {
+        this.setState({ message: '' });
+      }
   	});
   }
 
 	render() {
+		var messageStyle = {
+      color: 'red'
+		};
+
 		return (
 		  <div>
 		    <button onClick={ () => { this.createNewDoc(this.state.username) } }>New Doc</button>
 		    <br />
 		    Title: <input value={ this.state.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
+		    <br />
+		    <span style={ messageStyle }>{ this.state.message }</span>
 		    <h1>Document List</h1>
 		    <ul>
 		    	{ this.state.documents.length > 0 ? this.state.documents.map( (doc, index) => {
 		    		  return ( 
-		    		  	<li key={ index }><a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.sharelink }</a></li> 
+		    		  	<li key={ index }><a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a></li> 
 		    		  );
 		    	  }) : 'loading...'
 		      }
