@@ -4,6 +4,7 @@ import TextEditor from './textEditor.jsx';
 import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
+import FlashMessagesList from '../../auth/components/flash/flashMessagesList.jsx';
 
 // /* COMPONENT WITHOUT CHAT */
 export default class TextVideoPage extends React.Component {
@@ -69,6 +70,7 @@ export default class TextVideoPage extends React.Component {
             getSharedUsers={this.getSharedUsers}
             getInitials={this.getInitials} />
         </div>
+        <FlashMessagesList />
         <TextEditor />
         <AppVideo />
       </div>
