@@ -4,6 +4,7 @@ import TextEditor from './textEditor.jsx';
 import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
+import FlashMessagesList from '../../auth/components/flash/flashMessagesList.jsx';
 import CommentArea from './commentArea.jsx';
 
 // /* COMPONENT WITHOUT CHAT */
@@ -84,6 +85,7 @@ export default class TextVideoPage extends React.Component {
             getSharedUsers={this.getSharedUsers}
             getInitials={this.getInitials} />
         </div>
+        <FlashMessagesList />
         <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
         <CommentArea selectionLoc={this.state.selectionLoc} expandCommentEntryView={this.expandCommentEntryView} />
