@@ -415,7 +415,7 @@ div.vid-scrollable-list {
   position: absolute;
   vertical-align: top;
   display: inline-block;
-  height: 25px;
+  height: 25px !important;
   width: 25px;
   border-radius: 50%;
   background: #F1F0F0;
@@ -460,5 +460,67 @@ div.vid-scrollable-list {
   font-size: 13px;
   background: transparent;
   border: none;
+  outline: none;
 }
 
+.entry-links-container {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.entry-links-container * {
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.comment-saved-container {
+  font-family: arial;
+}
+
+.comment-saved {
+  position: absolute;
+  height: 50px;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.comment-saved-chathead {
+  position: absolute;
+  vertical-align: top;
+  display: inline-block;
+  height: 25px !important;
+  width: 25px;
+  border-radius: 50%;
+  background: #F1F0F0;
+  list-style-type: none;
+  text-align: center;
+  margin-left: 12px;
+  margin-top: 12px;
+}
+
+.comment-saved-initials {
+  position: absolute;
+  display: inline-block;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  right: 2px;
+  margin-top: 5px;
+  font-size: 13px;
+  font-family: arial;
+}
+
+.comment-saved-text {
+  font-size: 14px;
+  margin-top: 16px;
+  margin-left: 46px;
+  color: gray;
+}
+
+.comment-test {
+  background: blue;
+  width: 200px;
+  height: 50px;
+}

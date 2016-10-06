@@ -25,19 +25,27 @@ class SignupForm extends React.Component {
 	}
 
 	onSubmit(e) {
-		this.setState({errors: {} });
+		// this.setState({errors: {} });
 		e.preventDefault();
-		this.props.userSignupRequest(this.state).then(
-			() => {
-				this.props.addFlashMessage({
-					type: 'success',
-					text: 'you signed up successfully. Welcome'
-				})
-				this.context.router.push('/');
-			},
-				
 
-		);
+		this.props.userSignupRequest(this.state).then(
+			(res) => {
+				if (res !== 'A user with that username already exists.') {
+					console.log('response', res);
+					this.props.addFlashMessage({
+						type: 'success',
+						text: 'you signed up successfully. Welcome'
+					})
+					this.context.router.push('/');
+				} else {
+					console.log('fuck username is already taken');
+				}
+			},
+		).catch(
+			(err) => {
+				console.log('err ', err);
+			}
+		)
 	}
 
 	render() {
@@ -90,7 +98,7 @@ class SignupForm extends React.Component {
 					<input 
 						value={this.state.email}
 						onChange={this.onChange}
-						type="text"
+						type="email"
 						name="email"
 						placeholder="Email" 
 						className="form-control" required

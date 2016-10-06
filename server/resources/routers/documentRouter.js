@@ -9,4 +9,7 @@ documentRouter.route('/')
   .put(documentController.updateDocument)
   .delete(documentController.deleteDocument);
 
+documentRouter.route('/all')
+  .get(documentController.getDocuments);
+
 module.exports = documentRouter;
