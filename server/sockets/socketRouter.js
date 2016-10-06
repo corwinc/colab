@@ -16,6 +16,10 @@ module.exports = function(server) {
       videoSocket.emit('message', stream);
     });
 
+    socket.on('signal conference call', function(userInfo){
+      videoSocket.emit('initialize conference call', userInfo);
+    });
+
     socket.on('disconnect call', function(callInfo) {
       console.log('A user disconnected.');
       videoSocket.emit('disconnect call', callInfo);
