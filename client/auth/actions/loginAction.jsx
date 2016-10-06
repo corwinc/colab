@@ -16,10 +16,21 @@ export function userLoginFailure(err) {
 
 export function userLoginRequest(userData) {
 	return (dispatch) => {
-		return axios.post('/users', userData)
-		.then(() => {
-			dispatch(userLoginSuccess(userData)); 
-			console.log('promsie resolved');
+		return axios.get('/users?username=' + userData.username + '&password=' + userData.password)
+		.then((res) => {
+
+			if (res.data === 'User not found.') {
+				console.log('response inside user not found action', res.data);
+
+				dispatch(userLoginFailure(res.data));
+				return res.data;
+
+			} else {
+				dispatch(userLoginSuccess(userData)); 
+				console.log('userData....', userData);
+				return userData;
+			}
+				
 		})
 		.catch((err) => {
 			dispatch(userLoginFailure(err));
