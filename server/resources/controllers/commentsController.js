@@ -28,4 +28,4 @@ exports.createComment = function(req, res) {
 
   Comment.create(comment)
     .then(res.send('created a comment'))
-};
+}; 
