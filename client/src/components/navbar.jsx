@@ -35,11 +35,7 @@ export default class NavBar extends React.Component {
                           return;
                         }
                         if (user.id !== myId) { 
-                          $('.call-alerts-outgoing').show();
-                          $('.call-views').show();
-                          start(true, pcKey);
-                          console.log(pcKey);
-                          animateIcon('#callIcon', 'icon-spin');
+                          initSingleCall(pcKey, 'direct call');
                         } else {
                           console.log("You can't call yourself, silly goose!");
                         }
@@ -52,6 +48,7 @@ export default class NavBar extends React.Component {
               </ul>
             </div>
             <div className="navbar-button-container">
+              <div className="share-button"><button onClick={ ()=>{initConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
               <div className="logout-link"><a href="http://localhost:8000/">logout</a></div>
             </div>
