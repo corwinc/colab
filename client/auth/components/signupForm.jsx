@@ -36,7 +36,7 @@ class SignupForm extends React.Component {
 						type: 'success',
 						text: 'you signed up successfully. Welcome'
 					})
-					this.context.router.push('/');
+					this.context.router.push('/documentlist');
 				} else {
 					console.log('fuck username is already taken');
 				}
