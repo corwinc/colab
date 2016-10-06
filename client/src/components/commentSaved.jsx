@@ -7,13 +7,13 @@ var initials = 'CC';
 
 // NEXT::::::::::: RENDER FOCUSED VIEW
 
-var renderComment = () => {
-  if (props.savedCommentFocus) {
-    console.log('hey! it's focused);
-  } else {
-    console.log('no focus baby');
-  }
-}
+// var renderComment = () => {
+//   if (props.savedCommentFocus) {
+//     console.log('hey! it's focused);
+//   } else {
+//     console.log('no focus baby');
+//   }
+// }
 
 const CommentSaved = (props) =>
       <div className="comment-saved-container">
