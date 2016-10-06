@@ -478,6 +478,7 @@ img.call-icon{
   font-size: 13px;
   background: transparent;
   border: none;
+  outline: none;
 }
 
 .entry-links-container {
