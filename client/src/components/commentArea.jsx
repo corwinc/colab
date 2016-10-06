@@ -12,7 +12,7 @@ const CommentArea = (props) =>
             console.log('comments about to be rendered:', comments);
 
             return props.comments.map((comment, i) => {
-              return (<CommentSaved key={i} comment={comment} />);
+              return (<CommentSaved key={i} comment={comment} handleCommentClick={props.handleCommentClick} />);
             });
           })()
         }

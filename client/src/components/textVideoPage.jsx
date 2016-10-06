@@ -20,7 +20,8 @@ export default class TextVideoPage extends React.Component {
       commentEntryHeight: 50,
       activeCommentStatus: false,
       commentInput: '',
-      comments: []
+      comments: [],
+      savedCommentFocus: false
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
@@ -30,6 +31,7 @@ export default class TextVideoPage extends React.Component {
     this.handleCommentInput = this.handleCommentInput.bind(this);
     this.postEntry = this.postEntry.bind(this);
     this.cancelEntry = this.cancelEntry.bind(this);
+    this.handleCommentClick = this.handleCommentClick.bind(this);
   };
 
   componentWillMount () {
@@ -149,6 +151,11 @@ export default class TextVideoPage extends React.Component {
     this.setState({commentInput: '', activeCommentStatus: false, commentEntryHeight: 50, selectionLoc: null});
   }
 
+  handleCommentClick () {
+    this.setState({savedCommentFocus: true});
+    // => increase height, add border, add resolve link (delete)
+  }
+
   render() {
     return (
       <div>
@@ -171,7 +178,9 @@ export default class TextVideoPage extends React.Component {
           commentEntryHeight={this.state.commentEntryHeight}
           activeCommentStatus={this.state.activeCommentStatus}
           postEntry={this.postEntry}
-          cancelEntry={this.cancelEntry} />
+          cancelEntry={this.cancelEntry}
+          handleCommentClick={this.handleCommentClick}
+          savedCommentFocus={this.state.savedCommentFocus} />
       </div>
     );
   }
