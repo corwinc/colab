@@ -21,7 +21,8 @@ const Comment = (props) =>
               value={props.commentInput}
               className="comment-input" 
               placeholder="New comment" 
-              onChange={(e) => props.handleCommentInput(e)} />
+              onChange={(e) => props.handleCommentInput(e)}
+              autoFocus={true} />
             {(() => {
               if (props.activeCommentStatus === true) {
                 return <CommentEntryLinks cancelEntry={props.cancelEntry} postEntry={props.postEntry} />;

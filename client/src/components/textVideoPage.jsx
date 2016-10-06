@@ -135,6 +135,7 @@ export default class TextVideoPage extends React.Component {
       success: (data) => {
         console.log('Success posting comment!:', data);
         this.setState({selectionLoc: null});
+        this.getComments();
       },
       error: (err) => {
         console.log('error posting entry:', err);

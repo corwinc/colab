@@ -501,11 +501,6 @@ img.call-icon{
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
-  background: #f4fdff;
-  border-style: solid;
-  border-width: 0.5px;
-  border-radius: 5px;
-  border-color: gray;
 }
 
 .comment-saved-chathead {
@@ -536,6 +531,8 @@ img.call-icon{
 
 .comment-saved-text {
   font-size: 14px;
+  margin-top: 16px;
+  margin-left: 46px;
 }
 
 .comment-test {
