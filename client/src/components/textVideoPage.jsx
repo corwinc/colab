@@ -32,7 +32,7 @@ export default class TextVideoPage extends React.Component {
     this.cancelEntry = this.cancelEntry.bind(this);
   };
 
-  componentDidMount () {
+  componentWillMount () {
     console.log('componentDidMount');
     this.getComments();
     // render comments from this.state.comments
@@ -163,6 +163,7 @@ export default class TextVideoPage extends React.Component {
         <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
         <CommentArea 
+          comments={this.state.comments}
           selectionLoc={this.state.selectionLoc} 
           handleCommentInput={this.handleCommentInput}
           commentInput={this.state.commentInput}
