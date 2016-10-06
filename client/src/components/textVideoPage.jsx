@@ -16,14 +16,30 @@ export default class TextVideoPage extends React.Component {
       curUser: 18,
       curDoc: 2,
       curSharedUsers: [],
-      selectionLoc: null
+      selectionLoc: null,
+      commentEntryHeight: 50,
+      activeCommentStatus: false,
+      commentInput: '',
+      comments: [],
+      savedCommentFocus: false
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
+    this.getComments = this.getComments.bind(this);
     this.setSelectionLoc = this.setSelectionLoc.bind(this);
-    this.expandCommentEntryView = this.expandCommentEntryView.bind(this);
+    this.handleCommentInput = this.handleCommentInput.bind(this);
+    this.postEntry = this.postEntry.bind(this);
+    this.cancelEntry = this.cancelEntry.bind(this);
+    this.handleCommentClick = this.handleCommentClick.bind(this);
   };
+
+  componentWillMount () {
+    console.log('componentDidMount');
+    this.getComments();
+    // render comments from this.state.comments
+    // => for each comment, create a jsx element and attach it to DOM
+  }
 
   getSharedUsers (docId, userId) {
     // send request to server
@@ -63,15 +79,81 @@ export default class TextVideoPage extends React.Component {
     return firstInit + lastInit;
   }
 
-  //////// COMMENT FUNCTIONS /////////
+  //////// COMMENT METHODS /////////
+  getComments () {
+    // send request to server
+    // on success: setState w/ comments
+    // componentDidMount: render comments
+    console.log('inside getComments');
+    $.ajax({
+      method: 'GET',
+      url: '/comments',
+      dataType: 'json',
+      data: {docId: this.state.curDoc},
+      success: (data) => {
+        console.log('Success getting comments!:', data);
+        this.setState({comments: data}, () => {
+          console.log('state comments:', this.state.comments);
+        });  
+      },
+      error: (err) => {
+        console.log('error getting comments:', err);
+      }
+    })
+  }
 
   setSelectionLoc (loc) {
     this.setState({selectionLoc: loc});
   }
 
-  expandCommentEntryView () {
-    console.log('expand comment entry view!');
-    // change .comment height and add post/cancel links!!
+  handleCommentInput (e) {
+    console.log('inside handleCommentInput');
+    e.preventDefault();
+    this.setState({commentInput: e.target.value}, () => {
+      if (this.state.commentInput !== '') {
+        console.log('the input has value!:', this.state.commentInput);
+        this.setState({commentEntryHeight: 70, activeCommentStatus: true});
+      } else {
+        console.log('the input DOESNOT have value');
+        this.setState({commentEntryHeight: 50, activeCommentStatus: false});
+      }
+    });
+  }
+
+  postEntry () {
+    // send POST req to db w/ input data
+    var comment = {
+      text: this.state.commentInput,
+      block: 1,
+      user: this.state.curUser,
+      location: this.state.selectionLoc,
+      document: this.state.curDoc
+    }
+
+    $.ajax({
+      method: 'POST',
+      url: '/comments',
+      data: comment,
+      success: (data) => {
+        console.log('Success posting comment!:', data);
+        this.setState({selectionLoc: null});
+        this.getComments();
+      },
+      error: (err) => {
+        console.log('error posting entry:', err);
+      }
+    })
+    // on success: remove comment entry and show rendered unfocused comment
+  }
+
+  cancelEntry () {
+    // remove DOM ==> create activeCommentEntry state?
+    this.setState({commentInput: '', activeCommentStatus: false, commentEntryHeight: 50, selectionLoc: null});
+  }
+
+  handleCommentClick () {
+    this.setState({savedCommentFocus: true});
+    // => increase height, add border, add resolve link (delete)
   }
 
   render() {
@@ -88,7 +170,17 @@ export default class TextVideoPage extends React.Component {
         <FlashMessagesList />
         <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
-        <CommentArea selectionLoc={this.state.selectionLoc} expandCommentEntryView={this.expandCommentEntryView} />
+        <CommentArea 
+          comments={this.state.comments}
+          selectionLoc={this.state.selectionLoc} 
+          handleCommentInput={this.handleCommentInput}
+          commentInput={this.state.commentInput}
+          commentEntryHeight={this.state.commentEntryHeight}
+          activeCommentStatus={this.state.activeCommentStatus}
+          postEntry={this.postEntry}
+          cancelEntry={this.cancelEntry}
+          handleCommentClick={this.handleCommentClick}
+          savedCommentFocus={this.state.savedCommentFocus} />
       </div>
     );
   }
