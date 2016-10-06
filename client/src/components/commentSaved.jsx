@@ -6,7 +6,6 @@ var initials = 'CC';
 
 
 // NEXT::::::::::: RENDER FOCUSED VIEW
-
 // var renderComment = () => {
 //   if (props.savedCommentFocus) {
 //     console.log('hey! it's focused);
