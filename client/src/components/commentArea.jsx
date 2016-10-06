@@ -11,8 +11,8 @@ const CommentArea = (props) =>
             var comments = props.comments;
             console.log('comments about to be rendered:', comments);
 
-            props.comments.map((comment) => {
-              return (<CommentSaved comment={comment} />);
+            return props.comments.map((comment, i) => {
+              return (<CommentSaved key={i} comment={comment} />);
             });
           })()
         }

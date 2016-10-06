@@ -537,3 +537,9 @@ img.call-icon{
 .comment-saved-text {
   font-size: 14px;
 }
+
+.comment-test {
+  background: blue;
+  width: 200px;
+  height: 50px;
+}
