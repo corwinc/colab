@@ -15,14 +15,16 @@ export function clearMessage() {
 	}
 }
 
-// export function show(message) {
-// 	return (dispatch) => {
-// 		dispatch(showMessage(message));
-// 	}
-// }
+export function populateDocs(data) {
+	return {
+		type: 'POPULATE_DOCS',
+		documents: data
+	}
+}
 
-// export function clear(message) {
-// 	return (dispatch) => {
-// 		dispatch(clearMessage(message));
-// 	}
-// }
+export function setInputvalue(val) {
+	return {
+		type: 'SET_INPUTVALUE',
+		inputValue: val
+	}
+}
