@@ -9,8 +9,9 @@ class LoginForm extends React.Component {
 			
 			username:'',
 			password:'',
-			
 		}
+			
+			
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
@@ -21,32 +22,37 @@ class LoginForm extends React.Component {
 		});
 	}
 
+
 	onSubmit(e) {
 		e.preventDefault();
 		this.props.userLoginRequest(this.state).then(
-			() => {
-				this.context.router.push('/');
+			(res) => {
+			console.log('response inside login redirect', res);
+
+				if (res !== 'User not found.') {
+					this.context.router.push('/documentlist');
+				} else {
+					this.setState({username: 'user not found', password: 'password doesnt match'});	
+				}
 			}
 		);
 	}
 
 	
 	render() {
+		const {errors, identifier, password, isLoading} = this.state;
 		return (
-			<form data-toggle="validator" 
-				role="form"
-				onSubmit={this.onSubmit}
+			<form onSubmit={this.onSubmit}
 				
 				>
 
 				<h1>Welcome to COlLab</h1>
 
 				<div className="form-group">
-					<label className="control-label">Username</label>
+					<label className="control-label">Your username or email</label>
 					<input 
 						value={this.state.username}
 						onChange={this.onChange}
-						type="text"
 						name="username"
 						placeholder="username"
 						className="form-control" required
@@ -56,24 +62,22 @@ class LoginForm extends React.Component {
 				
 
 				<div className="form-group">
-					<label className="control-label">Password</label>
+					<label className="control-label">Your password</label>
 					<input 
 						value={this.state.password}
 						onChange={this.onChange}
 						type="password"
-						data-minlength="6"
 						name="password"
 						className="form-control"
-						id="inputPassword" 
 						placeholder="password" required
 					/>
-					<div className="help-block">Minimum of 6 characters</div>
 				</div>
 
 				
 
 				<div className="form-group">
-					<button className="btn btn-primary btn-lg">
+					<button className="btn btn-primary btn-lg"
+					disabled={isLoading}>
 					Log In
 					</button>
 				</div>

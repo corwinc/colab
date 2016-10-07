@@ -29,6 +29,7 @@ class SignupForm extends React.Component {
 		e.preventDefault();
 
 		this.props.userSignupRequest(this.state).then(
+			
 			(res) => {
 				if (res !== 'A user with that username already exists.') {
 					console.log('response', res);
@@ -38,7 +39,10 @@ class SignupForm extends React.Component {
 					})
 					this.context.router.push('/documentlist');
 				} else {
-					console.log('fuck username is already taken');
+					
+			  		this.setState({username: 'A user with that username already exists.'});
+			  		return;
+  					
 				}
 			},
 		).catch(

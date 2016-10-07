@@ -1,5 +1,4 @@
 var express = require('express');
-// var validator = require('validator');
 var Validator = require('validator');
 var isempty = require('lodash/isEmpty');
 var usersRouter = express.Router();
@@ -49,4 +48,19 @@ usersRouter.route('/')
 // 	}
 // });
 
+
+
 module.exports = usersRouter;
+
+// 	let errors = {};
+// 	if (Validator.isEmpty(data.identifier)) {
+// 		errors.identifier = 'This field is required';
+// 	}
+// 	if (Validator.isEmpty(data.password)) {
+// 		errors.password = 'This field is required';
+// 	}
+// 	return {
+// 		errors,
+// 		isValid: isempty(errors)
+// 	};
+// }
