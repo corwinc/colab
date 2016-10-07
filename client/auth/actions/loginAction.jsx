@@ -18,7 +18,9 @@ export function userLoginRequest(userData) {
 	return (dispatch) => {
 		return axios.get('/users?username=' + userData.username + '&password=' + userData.password)
 		.then((res) => {
-
+			// const token = res.data.token;
+			// localStorage.setItem('jstToken', token);
+			
 			if (res.data === 'User not found.') {
 				console.log('response inside user not found action', res.data);
 
