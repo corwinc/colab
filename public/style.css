@@ -190,17 +190,13 @@ div.vid-scrollable-list {
 .call-alerts {
   height: 100%;
 }
-.call-alerts-outgoing {
-  display: inline-block;
-}
-.call-incoming-notifications, 
-.call-incoming-options,
-.call-alerts-incoming {
-  display: none;
-}
 
-.call-alerts-outgoing{
-  display: inline-block;
+.call-alerts, 
+.call-alerts-incoming,
+.call-alerts-outgoing,
+.call-incoming-notifications, 
+.call-incoming-options{
+  display: none;
 }
 
 .call-alerts-incoming, 

@@ -27,7 +27,7 @@ const AppVideo = () => {
         </div>
       </div>   
       <div className="vid-scrollable-list">
-        
+      
       </div>
       <div id="vidBoxTemplate" className="vid-box">
         <video id="remoteVideoTemplate" className="video-element" autoPlay="true" muted></video>

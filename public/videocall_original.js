@@ -50,21 +50,6 @@ function start(isCaller, pcKey, mode) {
     }
   };
 
-  // setRemoteDescription fires this. 
-  pcs[pcKey].oniceconnectionstatechange = function (evt) {
-    if (pcs[pcKey] && pcs[pcKey].iceConnectionState === 'connected' || pcs[pcKey] && pcs[pcKey].iceConnectionState === 'complete') { 
-      console.log("CONNECTION STATE CHANGE: ", pcs[pcKey].iceConnectionState);
-      // Reset this to false after the call is completed, so it doesn't interfere with the logic of the next call. 
-    }
-  };
-
-  pcs[pcKey].onsignalingstatechange = function (evt) {
-    if (pcs[pcKey] && pcs[pcKey].signalingState === 'stable') { 
-      console.log("signalingState CHANGE: ", pcs[pcKey].signalingState);
-      //pcKey++;
-    }
-  };
-
   // This is one of the inputs into navigator.getUserMedia. It takes the stream from the user's webcam, sets it to the
   // local video view, 
   var handleVideo = function (stream) {
@@ -124,7 +109,6 @@ function start(isCaller, pcKey, mode) {
     console.log("ERROR! ", error)
   };
 
-  // get the local stream, show it in the local video element and send it
   navigator.getUserMedia({ "audio": true, "video": true }, handleVideo, videoError);
 
 };
