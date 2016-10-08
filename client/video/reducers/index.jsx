@@ -1,10 +1,15 @@
+// import React from 'react'
+// import { render } from 'react-dom'
+// import { Provider } from 'react-redux'
+// import { createStore } from 'redux'
+// import todoApp from './reducers'
+// import App from './components/App'
+
 import { combineReducers } from 'redux'
 import peerConnections from './peerConnections'
-import alerts from './alerts'
 
 const vidApp = combineReducers({
-  peerConnections,
-  alerts
+  peerConnections
 });
 
 export default todoApp

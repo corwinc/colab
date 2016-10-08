@@ -1,10 +1,10 @@
 import React from 'react';
 import VideoCard from './videoCard';
 
-const VideoCardList = ({connections}) => {
+const VideoCardList = ({connections, streams}) => {
   <div className="vid-scrollable-list">
     {connections.map( (connection) => {
-      <VideoCard src={connection.stream} pcKey={connection.pcKey} key={connection.id}/>
+      <VideoCard stream={streams[connection.pcKey]} pcKey={connection.pcKey} key={connection.id}/>
     })};
   </div>  
 };

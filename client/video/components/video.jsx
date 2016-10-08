@@ -12,10 +12,16 @@ export default class AppVideo extends React.Component {
     this.userIds = {};
     this.streams = {};
     this.signalingChannel = io('/video'); 
+  }  
 
+  componentDidMount(){
+    this.setSignalingChannel();
+  }
+
+  setSignalingChannel(){
     this.signalingChannel.on('message', function(evt) {
       var signal = JSON.parse(evt);
-      if (isConnectionAlreadyMade(signal.pcKey)) {
+      if (this.isConnectionAlreadyMade(signal.pcKey)) {
         console.log("You are already connected to this user.");
         return;
       }
@@ -26,20 +32,20 @@ export default class AppVideo extends React.Component {
         if (areYouSignalingYourself(signal.callerId)){
           return;
         }
-        if (!pcs[signal.pcKey]) {
+        if (!this.pcs[signal.pcKey]) {
           start(false, signal.pcKey, signal.mode);
         } 
         if (signal.sdp) {
-          pcs[signal.pcKey].setRemoteDescription(new RTCSessionDescription(signal.sdp));
+          this.pcs[signal.pcKey].setRemoteDescription(new RTCSessionDescription(signal.sdp));
         } else if (signal.candidate) {
-          pcs[signal.pcKey].addIceCandidate(new RTCIceCandidate(signal.candidate));
+          this.pcs[signal.pcKey].addIceCandidate(new RTCIceCandidate(signal.candidate));
         }
       } 
     });
 
     this.signalingChannel.on('disconnect call', function(evt){
       var signal = JSON.parse(evt);
-      pcs[signal.pcKey].close();
+      this.pcs[signal.pcKey].close();
       var remoteVideo = document.querySelector("#remoteVideo___" + signal.pcKey);
       remoteVideo.src = undefined;
       $('#vidBox___' + signal.pcKey).remove();
@@ -62,15 +68,14 @@ export default class AppVideo extends React.Component {
         });
       }
     });
-  }  
+  }
 
-
-  function start(isCaller, pcKey, mode) {
+  start(isCaller, pcKey, mode) {
     $('.call-views').show();
 
-    pcs[pcKey] = new RTCPeerConnection(configuration);
+    this.pcs[pcKey] = new RTCPeerConnection(configuration);
 
-    pcs[pcKey].onicecandidate = function (evt) {
+    this.pcs[pcKey].onicecandidate = function (evt) {
       signalingChannel.emit('send candidate', JSON.stringify({ "candidate": evt.candidate, 
                                                                 "isCaller": isCaller, 
                                                                 "callerId": myId, 
@@ -78,15 +83,15 @@ export default class AppVideo extends React.Component {
                                                                 "mode": mode }));
     };
 
-    pcs[pcKey].onaddstream = function (evt) {
+    this.pcs[pcKey].onaddstream = function (evt) {
       this.streams[pcKey] = evt.stream;
     };
 
-    pcs[pcKey].oniceconnectionstatechange = function(evt) {
+    this.pcs[pcKey].oniceconnectionstatechange = function(evt) {
    
-      if (pcs[pcKey] && pcs[pcKey].iceConnectionState === 'connected') {
+      if (this.pcs[pcKey] && this.pcs[pcKey].iceConnectionState === 'connected') {
 
-        pcs[pcKey].status = 'connected';
+        this.pcs[pcKey].status = 'connected';
 
         if (mode === 'direct call') {
           toggleAlertViewState(isCaller, pcKey);
@@ -109,29 +114,29 @@ export default class AppVideo extends React.Component {
 
     };
 
-    pcs[pcKey].onsignalingstatechange = function(evt) {
-      if (pcs[pcKey] && (pcs[pcKey].signalingState === 'have-local-offer' || pcs[pcKey].signalingState === 'have-remote-offer')) {
+    this.pcs[pcKey].onsignalingstatechange = function(evt) {
+      if (this.pcs[pcKey] && (this.pcs[pcKey].signalingState === 'have-local-offer' || this.pcs[pcKey].signalingState === 'have-remote-offer')) {
         if (mode === 'direct call') {
           toggleAlertViewState(isCaller, pcKey);
         }
       }
-      if (pcs[pcKey] && pcs[pcKey].signalingState === 'closed') {
-        delete pcs[pcKey];
+      if (this.pcs[pcKey] && this.pcs[pcKey].signalingState === 'closed') {
+        delete this.pcs[pcKey];
       }
     };
 
-    navigator.getUserMedia({ "audio": true, "video": true }, handleVideo, videoError);
+    navigator.getUserMedia({ "audio": true, "video": true }, this.handleVideo, this.videoError);
 
-    function handleVideo(stream) {
-      pcs[pcKey].addStream(stream);
+    handleVideo(stream) {
+      this.pcs[pcKey].addStream(stream);
       if (isCaller) {
-        pcs[pcKey].createOffer(setDescription, errorGettingDescription);
+        this.pcs[pcKey].createOffer(setDescription, errorGettingDescription);
       } else {
         if (mode === 'direct call') {
           showIncomingCallAlerts(pc, pcKey, signalingChannel, setDescription, errorGettingDescription);
         } 
         if (mode === 'conference call') {
-          pcs[pcKey].createAnswer(setDescription, errorGettingDescription);
+          this.pcs[pcKey].createAnswer(setDescription, errorGettingDescription);
         }
       }
 
@@ -139,7 +144,7 @@ export default class AppVideo extends React.Component {
         console.log("showIncomingCallAlerts happens at: ", new Date());
 
         $('#acceptIcon').unbind().on('click', function(){
-          pcs[pcKey].createAnswer(successCallback, errorCallback);
+          this.pcs[pcKey].createAnswer(successCallback, errorCallback);
         });
 
         $('#rejectIcon').unbind().on('click', function(){
@@ -148,7 +153,7 @@ export default class AppVideo extends React.Component {
       }
 
       function setDescription(desc) {
-        pcs[pcKey].setLocalDescription(desc);
+        this.pcs[pcKey].setLocalDescription(desc);
         signalingChannel.emit('send offer', JSON.stringify({ "sdp": desc, "callerId": myId, "pcKey": pcKey, "mode": mode}));
       };
 
@@ -157,7 +162,7 @@ export default class AppVideo extends React.Component {
       };
     };
 
-    function videoError(error) {
+    videoError(error) {
       console.log("ERROR! ", error)
     };
   };
@@ -176,13 +181,13 @@ export default class AppVideo extends React.Component {
 
   function isConnectionAlreadyMade(pcKey){
     var users = pcKey.split("---");
-    if (pcs[users[0] + '---' + users[1]]) {
-      if (pcs[users[0] + '---' + users[1]].status === 'connected') {
+    if (this.pcs[users[0] + '---' + users[1]]) {
+      if (this.pcs[users[0] + '---' + users[1]].status === 'connected') {
         return true;
       }
     }
-    if ( pcs[users[1] + '---' + users[0]]) {
-      if (pcs[users[1] + '---' + users[0]].status === 'connected') {
+    if ( this.pcs[users[1] + '---' + users[0]]) {
+      if (this.pcs[users[1] + '---' + users[0]].status === 'connected') {
         return true;
       }
     }
@@ -239,12 +244,12 @@ export default class AppVideo extends React.Component {
     };
 
   }
-  
+
   render(){
   	return (
       <div className="call-views">
         <CallAlerts />  
-        <VideoCardList />
+        <VideoCardList connections={this.pcs} streams={this.streams}/>
       </div>
   	);
   }
