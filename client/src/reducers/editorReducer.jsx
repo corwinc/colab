@@ -1,7 +1,7 @@
 const initialState = {
   quill: null,
   saveInterval: null,
-  sharelinkId: 'test',
+  sharelinkId: '',
   user: null
 }
 
