@@ -4,15 +4,12 @@ var pcs = {};
 var userIds = {};
 var streams = {};
 var configuration = {'iceServers': [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]};
-//var localVideo = document.querySelector("#localVideo");
 
-// Invoke start(true) to initiate a call
 function start(isCaller, pcKey, mode) {
   $('.call-views').show();
 
   pcs[pcKey] = new RTCPeerConnection(configuration);
 
-  // addIceCandidate fires this.
   pcs[pcKey].onicecandidate = function (evt) {
     signalingChannel.emit('send candidate', JSON.stringify({ "candidate": evt.candidate, 
                                                               "isCaller": isCaller, 
@@ -21,7 +18,6 @@ function start(isCaller, pcKey, mode) {
                                                               "mode": mode }));
   };
 
-  // setRemoteDescription fires this. 
   pcs[pcKey].onaddstream = function (evt) {
     streams[pcKey] = evt.stream;
   };
