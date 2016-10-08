@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
 			console.log('response inside login redirect', res);
 
 				if (res !== 'User not found.') {
-					this.context.router.push('/documentlist');
+				 this.context.router.push('/documentlist');
 				} else {
 					this.setState({username: 'user not found', password: 'password doesnt match'});	
 				}
@@ -85,7 +85,7 @@ class LoginForm extends React.Component {
 		          Don't have an account? <Link to="/signup">Register</Link>
 		        </div>
 		        <div className="form-group">
-		          <a className="btn btn-danger btn-lg" href="https://mail.google.com">Sign In With Google</a>
+		          <a className="btn btn-danger btn-lg" href="/auth/google">Sign In With Google</a>
 		        </div>
 		    </form>
 		);

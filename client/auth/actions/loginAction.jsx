@@ -18,9 +18,6 @@ export function userLoginRequest(userData) {
 	return (dispatch) => {
 		return axios.get('/users?username=' + userData.username + '&password=' + userData.password)
 		.then((res) => {
-			// const token = res.data.token;
-			// localStorage.setItem('jstToken', token);
-			
 			if (res.data === 'User not found.') {
 				console.log('response inside user not found action', res.data);
 
@@ -28,9 +25,15 @@ export function userLoginRequest(userData) {
 				return res.data;
 
 			} else {
-				dispatch(userLoginSuccess(userData)); 
-				console.log('userData....', userData);
-				return userData;
+				console.log('res.data.user', res.data.username);
+				const token = res.data.username;
+				const username = res.data.username;
+				localStorage.setItem('userToken', token);
+				localStorage.setItem('user', JSON.stringify(username));
+      			browserHistory.push('/');
+				dispatch(userLoginSuccess(username)); 
+				console.log('userData....', username);
+				return username;
 			}
 				
 		})
