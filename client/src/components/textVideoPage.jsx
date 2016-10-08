@@ -35,7 +35,7 @@ export default class TextVideoPage extends React.Component {
   };
 
   componentWillMount () {
-    console.log('componentDidMount');
+    console.log('componentWillMount');
     this.getComments();
     // render comments from this.state.comments
     // => for each comment, create a jsx element and attach it to DOM

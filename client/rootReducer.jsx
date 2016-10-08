@@ -8,6 +8,7 @@ import callAlertReducer from './src/reducers/callAlertReducer.jsx';
 
 
 // import Comment from './comment/reducers/commentReducer.jsx';
+import Comment from './comments/reducers/commentReducers.jsx';
 
 const rootReducer = combineReducers({
 	flashMessages: flashMessages,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   alertList: callAlertReducer
 
 	// comment : Comment,
+	comment : Comment,
 	// text : Text,	
 });
 
