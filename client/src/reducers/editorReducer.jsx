@@ -1,37 +1,31 @@
 const initialState = {
   quill: null,
   saveInterval: null,
-  sharelinkId: null,
+  sharelinkId: 'test',
   user: null
 }
 
 export default function(state = initialState, action) {
 	switch(action.type) {
 		case 'SET_QUILL': {
-			state = Object.assign({}, state, {
-				quill: action.payload // may need to change to action.quill
+			return Object.assign({}, state, {
+				quill: action.quill 
 			});
-			// state = {...state, quill: action.payload};
-      // state.quill = action.payload;
-			break;
 		}
 		case 'SET_INTERVAL': {
-			state = Object.assign({}, state, {
-				saveInterval: action.payload
+			return Object.assign({}, state, {
+				saveInterval: action.saveInterval
 			});
-			break;
 		}
 		case 'SET_LINK': {
-			state = Object.assign({}, state, {
-				sharelinkId: action.payload
+			return Object.assign({}, state, {
+				sharelinkId: action.sharelinkId
 			});
-			break;
 		}
 		case 'SET_USER': {
-			state = Object.assign({}, state, {
-				user: action.payload
+			return Object.assign({}, state, {
+				user: action.user
 			});
-			break;
 		}
 		default:
 		  return state;

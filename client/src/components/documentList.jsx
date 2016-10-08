@@ -3,7 +3,6 @@ import { render } from 'react-dom'; // needed?
 import axios from 'axios';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
-
 import { connect } from 'react-redux';
 import * as doclist from '../actions/documentlistActions.jsx';
 

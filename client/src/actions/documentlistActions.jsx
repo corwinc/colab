@@ -1,5 +1,3 @@
-// import {SHOW_MESSAGE} from '../types.jsx';
-
 export function showMessage(message) {
 	return {
 		type: 'SHOW_MESSAGE',
