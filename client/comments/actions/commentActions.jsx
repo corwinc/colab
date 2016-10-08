@@ -6,6 +6,13 @@ export function addComment(comment) {
   }
 }
 
+export function addCommentToComments(comment) {
+  return {
+    type: 'ADD_COMMENT_TO_COMMENTS',
+    comment
+  }
+}
+
 // ADD COMMENTS TO STATE ON GETCOMMENTS SUCCESS
 
 export function getComments() {

@@ -1,26 +1,52 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
 
-class CommentList extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(commentActions.addComment('adding a comment!'));
-    console.log(commentActions.addComment);
-  }
+class CommentDemo extends React.Component {
 
   render() {
+    const {comment} = this.props;
+    console.log('inside render', comment);
     return (
       <div>
-        {this.props.comment}
+        {console.log(this.props)}
+
+        {comment.comment}
+        {comment.comments}
+        <div>
+          <a onClick={() => this.props.addCommentToComments('heyo')}>click me to add to comments</a>
+        </div>
       </div>
+
     )
   }
 }
 
-export default connect((store) => {
-  console.log('string', store.comment);
+function mapStateToProps(state) {
   return {
-    comment: store.comment.comment
+    comment: state.comment,
+    comments: state.comments
   }
-})(CommentList);
+}
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    addComment: commentActions.addComment,
+    addCommentToComments: commentActions.addCommentToComments
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentDemo);
+
+
+// export default connect((store) => {
+//   console.log('string', store.comment);
+//   return {
+//     comment: store.comment.comment
+//   }
+// })(CommentList);
+
+
+
+        // {this.props.comments.comment}
