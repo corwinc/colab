@@ -12,7 +12,7 @@ exports.getUser = function(req, res) {
       if (user !== null) {
         res.send(user);
       } else {
-        res.status(404).send('User not found.');
+        res.send('User not found.');
       }
     })
     .catch(function(error){
