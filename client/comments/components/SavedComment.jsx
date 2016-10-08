@@ -24,12 +24,6 @@ class SavedComment extends React.Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     // enter states
-//   }
-// }
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     handleCommentClick: commentActions.handleCommentClick

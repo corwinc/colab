@@ -5,7 +5,8 @@ import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
 import FlashMessagesList from '../../auth/components/flash/flashMessagesList.jsx';
-import CommentArea from './commentArea.jsx';
+import CommentArea from '../../comments/components/CommentArea.jsx';
+// import CommentArea from './commentArea.jsx'; // PRE-REDUX HOOKUP
 
 // /* COMPONENT WITHOUT CHAT */
 export default class TextVideoPage extends React.Component {

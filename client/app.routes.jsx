@@ -8,7 +8,7 @@ import Chat from './src/components/chat.jsx';
 //import AppVideo from './src/components/video.jsx';
 import TextVideoPage from './src/components/textVideoPage.jsx';
 import DocumentList from './src/components/documentList.jsx';
-import CommentDemo from './comments/containers/DemoCommentContainer.jsx';
+import CommentDemo from './comments/components/DemoComment.jsx';
 
 const requireAuth = (nextState, replace) => {
   const token = localStorage.getItem('userToken');

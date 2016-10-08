@@ -3,12 +3,38 @@ import {render} from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
-import CommentEntryLinks from './CommentEntryLinksContainer.jsx';
+import CommentEntryLinks from './CommentEntryLinks.jsx';
 
 var initials = 'CC';
 
 class NewComment extends React.Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+
+    this.handleCommentInput = this.handleCommentInput.bind(this);
+    this.updateCommentHeight = this.updateCommentHeight.bind(this);
+  }
+
+  handleCommentInput (e) {
+    console.log('inside handleCommentInput');
+    e.preventDefault();
+    this.props.handleCommentInput(e);
+  }
+
+  updateCommentHeight() {
+    if (this.state.commentInput !== '') {
+      console.log('the input has value!:', this.state.commentInput);
+      this.props.updateCommentHeight(70);
+      this.props.activeCommentStatus(true);
+    } else {
+      console.log('the input DOESNOT have value');
+      this.props.updateCommentHeight(50);
+      this.props.activeCommentStatus(false);
+    }
+  }
+
+  toggleLinks() {
+    // TODO: refactor to call this below in place of the anonymous function: move updateCommentHeight, etc.
   }
 
   render() {
@@ -18,10 +44,10 @@ class NewComment extends React.Component {
           <div className="comment-chathead">
             <span className="comment-initials">{initials}</span>
             <input 
-              value={props.commentInput}
+              value={this.props.commentInput}
               className="comment-input" 
               placeholder="New comment" 
-              onChange={(e) => this.props.handleCommentInput(e)}
+              onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
               autoFocus={true} />
             {(() => {
               if (this.props.activeCommentStatus === true) {
@@ -45,7 +71,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    handleCommentInput: commentActions.handleCommentInput
+    handleCommentInput: commentActions.handleCommentInput,
+    updateCommentHeight: commentActions.updateCommentHeight,
+    activeCommentStatus: commentActions.activeCommentStatus
   }, dispatch);
 }
 
