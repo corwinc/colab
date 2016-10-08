@@ -43,6 +43,7 @@ class SignupForm extends React.Component {
 			  		this.setState({username: 'A user with that username already exists.'});
 			  		return;
   					
+
 				}
 			},
 		).catch(

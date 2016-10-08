@@ -12,25 +12,25 @@ import promise from 'redux-promise';
 // //into the browser console then these three lines of code.
 //   //@Redux-logger
   
-//   import createLogger from 'redux-logger';
+  import createLogger from 'redux-logger';
 
 
 
-//   const logger = createLogger();
+  const logger = createLogger();
 
-//   const createStoreWithMiddleware = applyMiddleware(thunk, promise, logger)(createStore);
+  const createStoreWithMiddleware = applyMiddleware(thunk, promise, logger)(createStore);
   
-//   //@
+  //@
 
 
 //if you want to use redux devtool then use these 4 lines of code below:-
 
 //@Redux-devtool
 
-const createStoreWithMiddleware = compose(
-	applyMiddleware(thunk),
-	window.devToolsExtension ? window.devToolsExtension() : f => f
-	)(createStore);
+// const createStoreWithMiddleware = compose(
+// 	applyMiddleware(thunk),
+// 	window.devToolsExtension ? window.devToolsExtension() : f => f
+// 	)(createStore);
 
 //@
 

@@ -4,90 +4,98 @@ import axios from 'axios';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 
+import { connect } from 'react-redux';
+import * as doclist from '../actions/documentlistActions.jsx';
+
+// import { bindActionCreators } from 'redux'; // ?
+// import { show } from '../actions/documentlistActions.jsx'; // ?
+
 class DocumentList extends React.Component {
 
   constructor(props) {
   	super(props);
 
-  	this.state = {
-  		username: 'b', // change later after auth complete
-  		documents: [],
-  		inputValue: '',
-  		message: ''
-  	}
+  	// this.state = {
+  	// 	// username: 'b', // change later after auth complete
+  	// 	// documents: [],
+  	// 	// inputValue: '',
+  	// 	message: 'test'
+  	// }
+  }
+
+  componentWillMount () {
+    // this.props.dispatch( showMessage('waaaaa') );
+    this.props.dispatch( doclist.showMessage('cool') );
   }
 
   componentDidMount () {
   	//populate documents array with list of documents for user
-  	console.log('this:', this);
-    console.log('username on mount', this.state.username);
+  	// console.log('this:', this);
+   //  console.log('username on mount', this.state.username);
 
-    axios.get('document/all?username=' + this.state.username)
-      .then(function(res) {
-      	console.log('this in axios: ', this);
-        console.log('response on mount: ', res.data);
-        this.setState({ documents: res.data });
-      }.bind(this))
-      .catch(function(err) {
-        console.log('Error retrieving user documents:', err);
-      });
+   //  axios.get('document/all?username=' + this.state.username)
+   //    .then(function(res) {
+   //    	console.log('this in axios: ', this);
+   //      console.log('response on mount: ', res.data);
+   //      this.setState({ documents: res.data });
+   //    }.bind(this))
+   //    .catch(function(err) {
+   //      console.log('Error retrieving user documents:', err);
+   //    });
   }
 
-  createNewDoc (username) {
-  	if (this.state.inputValue === '') {
-  		this.setState({message: 'Please enter a title.'});
-  		return;
-  	}
-	  var sharelinkId = 'doc' + Date.now();
-	  // create doc
-	  // pass in username
-	  axios.post('/document', {
-	  	username: username,
-	  	sharelink: sharelinkId,
-	  	title: this.state.inputValue
-	  })
-	  .then(function(res) {
+  // createNewDoc (username) {
+  // 	if (this.state.inputValue === '') {
+  // 		this.setState({message: 'Please enter a title.'});
+  // 		return;
+  // 	}
+	 //  var sharelinkId = 'doc' + Date.now();
+	 //  // create doc
+	 //  // pass in username
+	 //  axios.post('/document', {
+	 //  	username: username,
+	 //  	sharelink: sharelinkId,
+	 //  	title: this.state.inputValue
+	 //  })
+	 //  .then(function(res) {
 
-		  browserHistory.push('/?sharelink=' + sharelinkId);
-	  })
-	  .catch(function(err) {
-      console.log('Error creating the document:', err);
-	  });
-  }
+		//   browserHistory.push('/?sharelink=' + sharelinkId);
+	 //  })
+	 //  .catch(function(err) {
+  //     console.log('Error creating the document:', err);
+	 //  });
+  // }
 
-  deleteDoc (sharelinkId, index, title) {
-  	if (confirm('The document "' + title + '" will be deleted.')) {
+  // deleteDoc (sharelinkId, index, title) {
+  // 	if (confirm('The document "' + title + '" will be deleted.')) {
 
-	  	axios.delete('/document?sharelink=' + sharelinkId)
-	  	  .then(function(res) {
-	        console.log('doc deleted');
-	        console.log(this.state.documents);
-	        var docs = this.state.documents;
-	        docs.splice(index, 1);
-	        this.setState({ documents: docs });
-	  	  }.bind(this));
-	  	} 
-  }
+	 //  	axios.delete('/document?sharelink=' + sharelinkId)
+	 //  	  .then(function(res) {
+	 //        console.log('doc deleted');
+	 //        console.log(this.state.documents);
+	 //        var docs = this.state.documents;
+	 //        docs.splice(index, 1);
+	 //        this.setState({ documents: docs });
+	 //  	  }.bind(this));
+	 //  	} 
+  // }
 
-  updateInputValue (event) {
-  	var val = event.target.value;
+  // updateInputValue (event) {
+  // 	var val = event.target.value;
 
-  	this.setState({
-      inputValue: val
-  	}, () => {
-  		if (val.length > 0) {
-        this.setState({ message: '' });
-      }
-  	});
-  }
+  // 	this.setState({
+  //     inputValue: val
+  // 	}, () => {
+  // 		if (val.length > 0) {
+  //       this.setState({ message: '' });
+  //     }
+  // 	});
+  // }
 
-	render() {
-		var messageStyle = {
-      color: 'red'
-		};
 
-		return (
-		  <div>
+  /***
+
+<div>
 		    <button onClick={ () => { this.createNewDoc(this.state.username) } }>New Doc</button>
 		    <br />
 		    Title: <input value={ this.state.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
@@ -106,8 +114,48 @@ class DocumentList extends React.Component {
 		      }
 		    </ul>
 		  </div>
-		);
+
+
+
+  ***/
+
+	render() {
+		var messageStyle = {
+      color: 'red'
+		};
+
+		return (
+			<div>
+		    <span style={ messageStyle }>{ this.props.message }</span>
+		    <br />
+		    <span style={ messageStyle }>{ this.props.username }</span>
+      </div>
+		  		);
 	}
 }
 
-export default DocumentList;
+// DocumentList.propTypes = {
+// 	// message: React.PropTypes.string.isRequired
+// 	show: React.PropTypes.func.isRequired
+// }
+
+// function mapStateToProps(state) {
+// 	return {
+// 		showMessage: state.documentlist
+// 	}
+// }
+
+// function mapDispatchToProps(dispatch) {
+// 	return 
+// 		bindActionCreators({show: showMessage}, dispatch);
+	
+// }
+
+// export default DocumentList;
+// export default connect(null, { show })(DocumentList);
+export default connect((store) => {
+	return {
+		message: store.documentlist.message,
+		username: store.documentlist.username
+	}
+})(DocumentList);
