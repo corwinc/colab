@@ -21,6 +21,19 @@ exports.getUser = function(req, res) {
 };
 
 /**
+ * Oauth
+ * @param {Object} req
+ * @param {Object} res
+ * @return undefined
+ */
+ exports.oauthSuccess = function(req, res) {
+  if (!req.user) { return res.status(404).send({ message: 'Login failed' }); }
+  const user = req.user;
+  const token = req.user;
+  return res.redirect(`/oauthsuccess?token=${token}&firstname=${user.firstname}&lastname=${user.lastname}&username=${user.username}&email=${user.email}`);
+}
+
+/**
  * Create user
  * @param {Object} req
  * @param {Object} res

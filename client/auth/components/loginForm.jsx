@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
 			console.log('response inside login redirect', res);
 
 				if (res !== 'User not found.') {
-					this.context.router.push('/documentlist');
+				 this.context.router.push('/documentlist');
 				} else {
 					this.setState({username: 'user not found', password: 'password doesnt match'});	
 				}

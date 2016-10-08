@@ -29,7 +29,7 @@ class SignupForm extends React.Component {
 		e.preventDefault();
 
 		this.props.userSignupRequest(this.state).then(
-			
+
 			(res) => {
 				if (res !== 'A user with that username already exists.') {
 					console.log('response', res);
