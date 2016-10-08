@@ -50,7 +50,7 @@ export default class NavBar extends React.Component {
             <div className="navbar-button-container">
               <div className="share-button"><button onClick={ ()=>{initConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
-              <div className="logout-link"><a href="/login">logout</a></div>
+              <div className="logout-link"><a href="/logout">logout</a></div>
             </div>
           </div>
         </div>

@@ -29,7 +29,7 @@ export function userSignupRequest(userData) {
 				const username = res.data.username;
 				localStorage.setItem('userToken', token);
 				localStorage.setItem('user', JSON.stringify(username));
-      			//browserHistory.push('/');
+      			browserHistory.push('/documentlist');
 				
 				dispatch(userSignupSuccess(userData)); 
 				console.log('inside else ', res.data);

@@ -30,7 +30,7 @@ export function userLoginRequest(userData) {
 				const username = res.data.username;
 				localStorage.setItem('userToken', token);
 				localStorage.setItem('user', JSON.stringify(username));
-      			browserHistory.push('/');
+      			browserHistory.push('/documentlist');
 				dispatch(userLoginSuccess(username)); 
 				console.log('userData....', username);
 				return username;
