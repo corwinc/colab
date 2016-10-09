@@ -16,29 +16,29 @@ class CommentArea extends React.Component {
   }
 
   componentWillMount() {
-    // this.getComments();
+    this.getComments();
   }
 
   getComments () {
-    console.log('inside CommentArea getComments, current props:', this.props);
+    console.log('COMMENT getComments, current props:', this.props);
     $.ajax({
       method: 'GET',
       url: '/comments',
       dataType: 'json',
       data: {docId: this.props.curDoc},
       success: (data) => {
-        console.log('Success getting comments!:', data);
+        console.log('COMMENT Success getting comments!:', data);
         this.props.getCommentsSuccess(data); // reducer should update state w/ this once hooked up
       },
       error: (err) => {
-        console.log('error getting comments:', err);
+        console.log('COMMENT error getting comments:', err);
       }
     })
   }
 
   renderComments() {
-    console.log('inside renderComments');
-    console.log('renderComments current props:', this.props);
+    console.log('COMMENT inside renderComments');
+    console.log('COMMENT renderComments current props:', this.props);
     return this.props.comments.map((comment, i) => {
               return (
                 <SavedComment key={i} comment={comment} />
@@ -47,7 +47,7 @@ class CommentArea extends React.Component {
   }
 
   renderNewComment() {
-    console.log('inside renderNewComment');
+    console.log('COMMENT inside renderNewComment');
     // return <NewComment />;
   }
 
@@ -55,11 +55,29 @@ class CommentArea extends React.Component {
     return (
       <div className="comment-area-container">hello!
         {
-          (() => {
-            this.renderComments();
+          // (() => {
+          //   this.renderComments();
 
+          //   if (this.props.selectionLoc !== null) {
+          //     this.renderNewComment();
+          //   }
+          // })()
+        }
+        {
+          (() => {
+            console.log('COMMENT comments about to be rendered:', this.props.comments);
+
+            return this.props.comments.map((comment, i) => {
+              return (<SavedComment key={i} comment={comment} />);
+            });
+          })()
+        }
+
+        {
+          (() => {
+            console.log('selectionLoc:', this.props.selectionLoc);
             if (this.props.selectionLoc !== null) {
-              this.renderNewComment();
+              return (<NewComment />);
             }
           })()
         }

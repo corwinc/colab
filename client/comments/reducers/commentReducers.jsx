@@ -57,9 +57,9 @@ export default function (state=initialState, action) {
         comment: action.postEntry
       })
     case 'CANCEL_ENTRY':
-      return // something
+      return state
     case 'HANDLE_COMMENT_CLICK':
-      return // something
+      return state
     default:
       return state
   }
