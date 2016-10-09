@@ -7,8 +7,6 @@ import * as commentActions from '../actions/commentActions.jsx';
 var initials = 'CC';
 
 class SavedComment extends React.Component {
-  componentDidMount() {
-  }
 
   render() {
     return (

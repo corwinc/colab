@@ -7,18 +7,25 @@ import NewComment from './NewComment.jsx';
 import {connect} from 'react-redux';
 
 class CommentArea extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.getComments = this.getComments.bind(this);
+    this.renderComments = this.renderComments.bind(this);
+    this.renderNewComment = this.renderNewComment.bind(this);
+  }
+
   componentWillMount() {
     // this.getComments();
-
   }
 
   getComments () {
-    console.log('inside getComments');
+    console.log('inside CommentArea getComments, current props:', this.props);
     $.ajax({
       method: 'GET',
       url: '/comments',
       dataType: 'json',
-      data: {docId: this.state.curDoc},
+      data: {docId: this.props.curDoc},
       success: (data) => {
         console.log('Success getting comments!:', data);
         this.props.getCommentsSuccess(data); // reducer should update state w/ this once hooked up
@@ -30,6 +37,8 @@ class CommentArea extends React.Component {
   }
 
   renderComments() {
+    console.log('inside renderComments');
+    console.log('renderComments current props:', this.props);
     return this.props.comments.map((comment, i) => {
               return (
                 <SavedComment key={i} comment={comment} />
@@ -38,7 +47,8 @@ class CommentArea extends React.Component {
   }
 
   renderNewComment() {
-    return <NewComment />;
+    console.log('inside renderNewComment');
+    // return <NewComment />;
   }
 
   render() {
@@ -46,11 +56,11 @@ class CommentArea extends React.Component {
       <div className="comment-area-container">hello!
         {
           (() => {
-            // this.renderComments();
+            this.renderComments();
 
-            // if (props.selectionLoc !== null) {
-            //   this.renderNewComment();
-            // }
+            if (this.props.selectionLoc !== null) {
+              this.renderNewComment();
+            }
           })()
         }
       </div>
@@ -58,9 +68,12 @@ class CommentArea extends React.Component {
   }
 }
 
+// 1st 'comment' = root reducer, 2nd is props
 function mapStateToProps(state) {
   return {
-    comments: state.comments
+    comments: state.comment.comments,
+    selectionLoc: state.comment.selectionLoc,
+    curDoc: state.comment.curDoc
   }
 }
 

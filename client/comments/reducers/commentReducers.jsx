@@ -1,16 +1,33 @@
+// FOR DEMO
+// const initialState = {
+//   comment: 'initialComment',
+//   comments: ['initialComments1', 'initialComments2']
+// }
+
+// WHAT BELONGS TO LARGER APP (TAKE THESE OUT);
 const initialState = {
-  comment: 'initialComment',
-  comments: ['initialComments1', 'initialComments2']
+  curUser: null,
+  curDoc: 2,
+  comments: [{
+    text: 'TESTESTEST',
+    block: 1,
+    user: 18,
+    location: 100,
+    document: 1475969919062
+  }],
+  selectionLoc: 20
 }
 
 export default function (state=initialState, action) {
   switch (action.type) {
-    // DEMO FOR UPDATING SINGLE STATE
+
+    // DEMOS
+    // UPDATING SINGLE STATE
     case 'ADD_COMMENT': // DEMO
       return Object.assign({}, state, {
         comment: action.comment
       })
-    // DEMO FOR DEALING WITH ARRAY
+    // DEALING WITH ARRAY
     case 'ADD_COMMENT_TO_COMMENTS': // DEMO
     return Object.assign({}, state, {
       comments: [
@@ -18,13 +35,19 @@ export default function (state=initialState, action) {
         action.comment
       ]
     })
-    case 'GET_COMMENTS':
-      return // something
+
+    // REDUCERS
     case 'GET_COMMENTS_SUCCESS':
       //need to handle array of data
       console.log('Success getting comments!! Fill out reducer now');
+      // check comments format: array is correct
+      return Object.assign({}, state, {
+        comments: action.comments
+      })
     case 'SET_SELECTION_LOC':
-     return // something
+     return Object.assign({}, state, {
+        selectionLoc: action.loc
+     })
     case 'HANDLE_COMMENT_INPUT':
       return Object.assign({}, state, {
         commentInput: action.commentInput

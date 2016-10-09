@@ -38,15 +38,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentDemo);
-
-
-// export default connect((store) => {
-//   console.log('string', store.comment);
-//   return {
-//     comment: store.comment.comment
-//   }
-// })(CommentList);
-
-
-
-        // {this.props.comments.comment}
