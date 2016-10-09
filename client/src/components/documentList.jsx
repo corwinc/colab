@@ -13,9 +13,10 @@ class DocumentList extends React.Component {
   }
 
   componentDidMount () {
-
+  	
+    console.log('local:', 'document/all?username=' + window.localStorage.user[1]);
   	//populate documents array with list of documents for user
-    axios.get('document/all?username=' + this.props.username)
+    axios.get('document/all?username=' + window.localStorage.user[1])
       .then(function(res) {
         this.props.dispatch( doclist.populateDocs(res.data));
       }.bind(this))
@@ -83,7 +84,7 @@ class DocumentList extends React.Component {
 
 		return (
 			<div>
-		    <button onClick={ () => { this.createNewDoc(this.props.username) } }>New Doc</button>
+		    <button onClick={ () => { this.createNewDoc(window.localStorage.user[1]) } }>New Doc</button>
 		    <br />
 		    Title: <input value={ this.props.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
 		    <span style={ messageStyle }>{ this.props.message }</span>
