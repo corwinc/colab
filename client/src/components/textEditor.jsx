@@ -44,6 +44,7 @@ class TextEditor extends React.Component {
 
       var change = new Delta();
       quill.on('text-change', function(delta, olddelta, source) {
+        console.log( 'get text method: ', quill.getText().slice( 0, quill.getText().indexOf('\n') ));
         if (source === 'user') {
           change = change.compose(delta); // for saving partial changes
           socket.emit('change', {'sharelinkId': sharelinkId, 'who': user, 'delta': JSON.stringify(delta)});
@@ -119,7 +120,8 @@ class TextEditor extends React.Component {
   saveDoc(quill, sharelinkId) {
     axios.put('/document', {
       sharelink: sharelinkId,
-      textS3: JSON.stringify(quill.getContents())
+      textS3: JSON.stringify(quill.getContents()),
+      title: quill.getText().slice( 0, quill.getText().indexOf('\n') )
     })
    .then(function(result) {
      console.log('data saved:', result);
