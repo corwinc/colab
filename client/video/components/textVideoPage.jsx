@@ -185,3 +185,25 @@ export default class TextVideoPage extends React.Component {
     );
   }
 }
+
+
+
+// /* COMPONENT WITH CHAT */
+// export default class TextVideoPage extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <div className="NavBar">
+//           <NavBar />
+//         </div>
+//         <div id="editor">
+//           <p>Type here...</p>
+//         </div>
+//         <div className="video-and-chat">
+//           <AppVideo className="Video"/>
+//           <Chat className="Chat"/>
+//         </div>
+//       </div>
+//     );
+//   }
+// }

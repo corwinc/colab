@@ -42,26 +42,12 @@ function start(isCaller, pcKey, mode) {
 
   function showRemoteVideo(evt, isCaller, pcKey, video) {
     pcs[pcKey].status = 'connected';
+    console.log("******** evt.stream is:  ", evt.stream);
     video.src = window.URL.createObjectURL(evt.stream);
     $('.call-alerts-outgoing').hide();
     $('.call-views').show();
     if (isCaller) {
       $('#vidBox___' + pcKey).show();
-    }
-  };
-
-  // setRemoteDescription fires this. 
-  pcs[pcKey].oniceconnectionstatechange = function (evt) {
-    if (pcs[pcKey] && pcs[pcKey].iceConnectionState === 'connected' || pcs[pcKey] && pcs[pcKey].iceConnectionState === 'complete') { 
-      console.log("CONNECTION STATE CHANGE: ", pcs[pcKey].iceConnectionState);
-      // Reset this to false after the call is completed, so it doesn't interfere with the logic of the next call. 
-    }
-  };
-
-  pcs[pcKey].onsignalingstatechange = function (evt) {
-    if (pcs[pcKey] && pcs[pcKey].signalingState === 'stable') { 
-      console.log("signalingState CHANGE: ", pcs[pcKey].signalingState);
-      //pcKey++;
     }
   };
 
@@ -124,7 +110,6 @@ function start(isCaller, pcKey, mode) {
     console.log("ERROR! ", error)
   };
 
-  // get the local stream, show it in the local video element and send it
   navigator.getUserMedia({ "audio": true, "video": true }, handleVideo, videoError);
 
 };
