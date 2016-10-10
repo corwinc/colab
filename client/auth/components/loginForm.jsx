@@ -9,6 +9,8 @@ class LoginForm extends React.Component {
 			
 			username:'',
 			password:'',
+			usernameMsg:'',
+			passwordMsg: '',
 		}
 			
 			
@@ -17,6 +19,8 @@ class LoginForm extends React.Component {
 	}
 
 	onChange(e) {
+
+		
 		this.setState({
 			[e.target.name]: e.target.value
 		});
@@ -32,7 +36,7 @@ class LoginForm extends React.Component {
 				if (res !== 'User not found.') {
 				 this.context.router.push('/documentlist');
 				} else {
-					this.setState({username: 'user not found', password: 'password doesnt match'});	
+					this.setState({usernameMsg: 'user not found',passwordMsg: 'wrong password' });	
 				}
 			}
 		);
@@ -40,10 +44,10 @@ class LoginForm extends React.Component {
 
 	
 	render() {
-		const {errors, identifier, password, isLoading} = this.state;
 		return (
-			<form onSubmit={this.onSubmit}
-				
+			<form 
+				role="form"
+				onSubmit={this.onSubmit}
 				>
 
 				<h1>Welcome to COlLab</h1>
@@ -57,6 +61,7 @@ class LoginForm extends React.Component {
 						placeholder="username"
 						className="form-control" required
 					/>
+					<span >{this.state.usernameMsg}</span>
 				</div>
 
 				
@@ -71,16 +76,29 @@ class LoginForm extends React.Component {
 						className="form-control"
 						placeholder="password" required
 					/>
+					<span >{this.state.passwordMsg}</span>
 				</div>
+
+				<div className="form-group">
+					<label className="checkbox control-label">
+				        <input type="checkbox" value="remember-me" name="rememberMe" className="form-level" 
+				        /> Remember me
+				        
+			        </label>
+			    </div>
+				
+
+
 
 				
 
 				<div className="form-group">
 					<button className="btn btn-primary btn-lg"
-					disabled={isLoading}>
+					>
 					Log In
 					</button>
 				</div>
+
 				<div className="form-group">
 		          Don't have an account? <Link to="/signup">Register</Link>
 		        </div>
