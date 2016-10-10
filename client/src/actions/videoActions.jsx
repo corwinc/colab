@@ -25,7 +25,6 @@ export function showIncomingAlerts(pcKey, username, acceptOnclick, rejectOnclick
 };
 
 export function showOutgoingAlerts(pcKey, username) {
-  console.log("reached action for show outgoing alert.");
   return {
     type: 'SHOW_OUTGOING_ALERTS', 
     pcKey: pcKey, 
@@ -36,7 +35,6 @@ export function showOutgoingAlerts(pcKey, username) {
 };
 
 export function deleteOutgoingAlert(pcKey) {
-  console.log("reached action for outgoing alert.");
   return {
     type: 'DELETE_OUTGOING_ALERT', 
     pcKey: pcKey
@@ -44,7 +42,6 @@ export function deleteOutgoingAlert(pcKey) {
 };
 
 export function deleteIncomingAlert(pcKey) {
-  console.log("reached action for incoming alert.");
   return {
     type: 'DELETE_INCOMING_ALERT', 
     pcKey: pcKey
