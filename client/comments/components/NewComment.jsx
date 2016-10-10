@@ -18,16 +18,17 @@ class NewComment extends React.Component {
   handleCommentInput (e) {
     console.log('inside handleCommentInput');
     e.preventDefault();
-    this.props.handleCommentInput(e);
+    this.props.handleCommentInput(e.target.value);
   }
 
   updateCommentHeight() {
-    if (this.state.commentInput !== '') {
-      console.log('the input has value!:', this.state.commentInput);
+    console.log('inside updateCommentHeight');
+    if (this.props.commentInput !== '') {
+      console.log('the input has value!:', this.props.commentInput);
       this.props.updateCommentHeight(70);
       this.props.activeCommentStatus(true);
     } else {
-      console.log('the input DOESNOT have value');
+      console.log('the input DOESNOT have value', this.props.commentInput);
       this.props.updateCommentHeight(50);
       this.props.activeCommentStatus(false);
     }
@@ -38,6 +39,7 @@ class NewComment extends React.Component {
   }
 
   render() {
+
     return (
       <div className="comment-container">
         <div className="comment" style={{top: this.props.selectionLoc - 16, height: this.props.commentEntryHeight}}>
@@ -50,7 +52,9 @@ class NewComment extends React.Component {
               onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
               autoFocus={true} />
             {(() => {
-              if (this.props.activeCommentStatus === true) {
+              console.log('ACTIVECOMMENT?:', this.props.activeComment);
+              if (this.props.activeComment === true) {
+                console.log('active comment here!');
                 return <CommentEntryLinks />;
               }
             })()}
@@ -62,10 +66,10 @@ class NewComment extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    selectionLoc: state.selectionLoc,
-    commentInput: state.commentInput,
-    commentEntryHeight: state.commentEntryHeight,
-    activeCommentStatus: state.activeCommentStatus
+    selectionLoc: state.comment.selectionLoc,
+    commentInput: state.comment.commentInput,
+    commentEntryHeight: state.comment.commentEntryHeight,
+    activeComment: state.comment.activeCommentStatus
   }
 }
 

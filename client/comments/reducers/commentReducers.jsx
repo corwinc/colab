@@ -8,14 +8,11 @@
 const initialState = {
   curUser: null,
   curDoc: 2,
-  comments: [{
-    text: 'TESTESTEST',
-    block: 1,
-    user: 18,
-    location: 100,
-    document: 1475969919062
-  }],
-  selectionLoc: 20
+  comments: [],
+  commentInput: '',
+  activeCommentStatus: false,
+  commentEntryHeight: 50,
+  selectionLoc: 100
 }
 
 export default function (state=initialState, action) {
@@ -50,7 +47,15 @@ export default function (state=initialState, action) {
      })
     case 'HANDLE_COMMENT_INPUT':
       return Object.assign({}, state, {
-        commentInput: action.commentInput
+        commentInput: action.input
+      })
+    case 'ACTIVE_COMMENT_STATUS':
+      return Object.assign({}, state, {
+        activeCommentStatus: action.bool
+      })
+    case 'UPDATE_COMMENT_HEIGHT':
+      return Object.assign({}, state, {
+        commentEntryHeight: action.height
       })
     case 'POST_ENTRY':
       return Object.assign({}, state, {

@@ -50,8 +50,10 @@ export function handleCommentInput(input) {
 }
 
 export function updateCommentHeight(height) {
-  type: 'UPDATE_COMMENT_HEIGHT',
-  height
+  return {
+    type: 'UPDATE_COMMENT_HEIGHT',
+    height
+  }
 }
 
 export function activeCommentStatus(bool) {

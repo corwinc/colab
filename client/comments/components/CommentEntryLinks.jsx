@@ -5,7 +5,11 @@ import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
 
 class CommentEntryLinks extends React.Component {
-  componentDidMount() {
+
+  constructor(props) {
+    super(props);
+
+    this.getComments = this.getComments.bind(this);
   }
 
   postEntry () {
@@ -40,13 +44,31 @@ class CommentEntryLinks extends React.Component {
     this.props.activeCommentStatus(false);
     this.props.updateCommentHeight(50);
     this.props.setSelectionLoc(null);
+
+  }
+
+  getComments () {
+    console.log('COMMENT getComments, current props:', this.props);
+    $.ajax({
+      method: 'GET',
+      url: '/comments',
+      dataType: 'json',
+      data: {docId: this.props.curDoc},
+      success: (data) => {
+        console.log('COMMENT Success getting comments!:', data);
+        this.props.getCommentsSuccess(data);
+      },
+      error: (err) => {
+        console.log('COMMENT error getting comments:', err);
+      }
+    })
   }
 
   render() {
     return (
       <div className="entry-links-container">
-        <a className="entry-link-post" onClick={() => this.props.postEntry()}>post</a>
-        <a className="entry-link-cancel" onClick={() => this.props.cancelEntry()}>cancel</a>
+        <a className="entry-link-post" onClick={() => this.postEntry()}>post</a>
+        <a className="entry-link-cancel" onClick={() => this.cancelEntry()}>cancel</a>
       </div>
     );
   }
@@ -54,10 +76,10 @@ class CommentEntryLinks extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    selectionLoc: state.selectionLoc,
-    commentInput: state.commentInput,
-    curUser: state.curUser,
-    curDoc: state.curDoc
+    selectionLoc: state.comment.selectionLoc,
+    commentInput: state.comment.commentInput,
+    curUser: state.comment.curUser,
+    curDoc: state.comment.curDoc
   }
 }
 
@@ -68,7 +90,8 @@ function mapDispatchToProps(dispatch) {
     setSelectionLoc: commentActions.setSelectionLoc,
     handleCommentInput: commentActions.handleCommentInput,
     activeCommentStatus: commentActions.activeCommentStatus,
-    updateCommentHeight: commentActions.updateCommentHeight
+    updateCommentHeight: commentActions.updateCommentHeight,
+    getCommentsSuccess: commentActions.getCommentsSuccess
   }, dispatch);
 }
 
