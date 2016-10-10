@@ -25,6 +25,7 @@ export function showIncomingAlerts(pcKey, username, acceptOnclick, rejectOnclick
 };
 
 export function showOutgoingAlerts(pcKey, username) {
+  console.log("reached action for show outgoing alert.");
   return {
     type: 'SHOW_OUTGOING_ALERTS', 
     pcKey: pcKey, 

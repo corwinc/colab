@@ -4,6 +4,7 @@ import CallAlertIncoming from './callAlertIncoming.jsx';
 
 
 const CallAlertList = ({isCaller, outgoingAlerts, incomingAlerts}) => {
+  console.log("In call alert list, isCaller is ", isCaller);
   if (isCaller){ 
     return (
       <div className="call-alerts">

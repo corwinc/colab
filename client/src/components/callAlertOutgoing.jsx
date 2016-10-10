@@ -1,6 +1,7 @@
 import React from 'react';
 
 const OutgoingCallAlert = ({username, acceptOnclick}) => {
+  console.log("MAKE OutgoingCallAlert")
   return (
     <div className="call-alerts-outgoing">
       <img id="callIcon" className="call-icon icon-spin" src="public/images/callwaiting.svg"></img>

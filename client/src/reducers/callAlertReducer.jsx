@@ -33,7 +33,7 @@ export default function(state = {}, action) {
   switch (action.type) {
     case 'SHOW_OUTGOING_ALERTS':
       var prevAlerts = state.outgoingAlerts || [];
-      console.log("STATE: ", state);
+      console.log("STATE in show outgoing: ", state);
       return Object.assign({}, state, {
         outgoingAlerts: [...prevAlerts, callAlert(null, action)]
       });
@@ -63,7 +63,7 @@ export default function(state = {}, action) {
       //   }
       // }
       return Object.assign({}, state, {
-        outgoingAlerts: deleteAlert(alertsCopy, action.pcKey)
+        incomingAlerts: deleteAlert(alertsCopy, action.pcKey)
       }); 
     default:
       return state;
