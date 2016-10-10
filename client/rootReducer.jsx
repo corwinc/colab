@@ -20,7 +20,6 @@ const rootReducer = combineReducers({
 
 	// comment : Comment,
 	comment : Comment,
-	// text : Text,	
 });
 
 export default rootReducer;
