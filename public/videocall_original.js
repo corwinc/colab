@@ -42,6 +42,7 @@ function start(isCaller, pcKey, mode) {
 
   function showRemoteVideo(evt, isCaller, pcKey, video) {
     pcs[pcKey].status = 'connected';
+    console.log("******** evt.stream is:  ", evt.stream);
     video.src = window.URL.createObjectURL(evt.stream);
     $('.call-alerts-outgoing').hide();
     $('.call-views').show();

@@ -126,7 +126,7 @@
   border: 3px solid #f4fafe;
   z-index: 10;
   top: 10%;
-  display: none;
+  display: block;
 }
 
 img.call-icon{
@@ -146,7 +146,7 @@ img.call-icon{
 }
 
 .vid-alerts {
-  display: none;
+  display: block;
 }
 
 div.vid-scrollable-list {
@@ -164,7 +164,6 @@ div.vid-scrollable-list {
   width: 100%;
   resize: both !important;
   padding: .3em .3em 0 .3em;
-  display: none;
 }
 
 .video-element {  
@@ -191,12 +190,13 @@ div.vid-scrollable-list {
   height: 100%;
 }
 
+.vid-box,
 .call-alerts, 
 .call-alerts-incoming,
 .call-alerts-outgoing,
 .call-incoming-notifications, 
 .call-incoming-options{
-  display: none;
+  display: block;
 }
 
 .call-alerts-incoming, 

@@ -186,6 +186,34 @@ export default class TextVideoPage extends React.Component {
   }
 }
 
+// render() {
+//     return (
+//       <div>
+//         <div>
+//           <NavBar 
+//             curDoc={this.state.curDoc} 
+//             curUser={this.state.curUser}
+//             curSharedUsers={this.state.curSharedUsers} 
+//             getSharedUsers={this.getSharedUsers}
+//             getInitials={this.getInitials} />
+//         </div>
+//         <FlashMessagesList />
+//         <TextEditor setSelectionLoc={this.setSelectionLoc} />
+//         <AppVideo />
+//         <CommentArea 
+//           comments={this.state.comments}
+//           selectionLoc={this.state.selectionLoc} 
+//           handleCommentInput={this.handleCommentInput}
+//           commentInput={this.state.commentInput}
+//           commentEntryHeight={this.state.commentEntryHeight}
+//           activeCommentStatus={this.state.activeCommentStatus}
+//           postEntry={this.postEntry}
+//           cancelEntry={this.cancelEntry}
+//           handleCommentClick={this.handleCommentClick}
+//           savedCommentFocus={this.state.savedCommentFocus} />
+//       </div>
+//     );
+//   }
 
 
 // /* COMPONENT WITH CHAT */
