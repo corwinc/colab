@@ -31,7 +31,7 @@ class DocumentList extends React.Component {
   	// 	return;
   	// }
   	// this.props.dispatch(doclist.clearMessage());
-	  var sharelinkId = 'doc' + Date.now();
+	  var sharelinkId = username + Date.now();
 
 	  axios.post('/document', {
 	  	username: username,
