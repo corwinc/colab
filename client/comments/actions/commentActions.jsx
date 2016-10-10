@@ -35,13 +35,6 @@ export function getCommentsError(error) {
   }
 }
 
-export function setSelectionLoc(loc) {
-  return {
-    type: 'SET_SELECTION_LOC',
-    loc
-  }
-}
-
 export function handleCommentInput(input) {
   return {
     type: 'HANDLE_COMMENT_INPUT',

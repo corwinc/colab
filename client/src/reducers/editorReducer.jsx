@@ -2,7 +2,8 @@ const initialState = {
   quill: null,
   saveInterval: null,
   sharelinkId: '',
-  user: null
+  user: null,
+  selectionLoc: null
 }
 
 export default function(state = initialState, action) {
@@ -27,6 +28,10 @@ export default function(state = initialState, action) {
 				user: action.user
 			});
 		}
+		case 'SET_SELECTION_LOC':
+		 return Object.assign({}, state, {
+		    selectionLoc: action.loc
+		 })
 		default:
 		  return state;
 	}

@@ -60,7 +60,7 @@ class CommentArea extends React.Component {
 function mapStateToProps(state) {
   return {
     comments: state.comment.comments,
-    selectionLoc: state.comment.selectionLoc,
+    selectionLoc: state.editor.selectionLoc,
     curDoc: state.comment.curDoc
   }
 }

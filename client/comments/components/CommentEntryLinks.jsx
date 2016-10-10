@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
+import * as editorActions from '../../src/actions/editorActions.jsx';
 
 class CommentEntryLinks extends React.Component {
 
@@ -81,7 +82,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     postEntry: commentActions.postEntry,
     cancelEntry: commentActions.cancelEntry,
-    setSelectionLoc: commentActions.setSelectionLoc,
+    setSelectionLoc: editorActions.setSelectionLoc,
     handleCommentInput: commentActions.handleCommentInput,
     activeCommentStatus: commentActions.activeCommentStatus,
     updateCommentHeight: commentActions.updateCommentHeight,

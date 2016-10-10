@@ -11,8 +11,7 @@ const initialState = {
   comments: [],
   commentInput: '',
   activeCommentStatus: false,
-  commentEntryHeight: 50,
-  selectionLoc: 180
+  commentEntryHeight: 50
 }
 
 export default function (state=initialState, action) {
@@ -38,10 +37,6 @@ export default function (state=initialState, action) {
       return Object.assign({}, state, {
         comments: action.comments
       })
-    case 'SET_SELECTION_LOC':
-     return Object.assign({}, state, {
-        selectionLoc: action.loc
-     })
     case 'HANDLE_COMMENT_INPUT':
       return Object.assign({}, state, {
         commentInput: action.input

@@ -9,10 +9,6 @@ import * as editor from '../actions/editorActions.jsx';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-
-    // ?
-    // this.setState = this.setState.bind(this);
-
   };
 
   componentDidMount () {
@@ -20,15 +16,9 @@ class TextEditor extends React.Component {
     var urldocId = window.location.search.split('').splice(11).join('');
     var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
     
-    // may need setSelectionLoc in store
-    var context = this;
-    var setSelectionLoc = this.props.setSelectionLoc;
-    
-
     console.log(user + ' logged on.');
 
     var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
-    
 
     this.props.dispatch(editor.setLink(sharelinkId));
 
@@ -52,27 +42,29 @@ class TextEditor extends React.Component {
       });
 
       // GET SELECTION LOCATION
+      var context = this;
       quill.on('selection-change', function(range, oldRange, source) {
-        if (range) {
-          if (range.length == 0) {
-            console.log('User cursor is on', range.index);
-          } else {
-            var text = quill.getText(range.index, range.length);
-            console.log('User has highlighted', text);
-            console.log('range index:', range.index);
-          }
-        } else {
-          console.log('Cursor not in the editor');
-        }
+        // if (range) {
+        //   if (range.length == 0) {
+        //     console.log('User cursor is on', range.index);
+        //   } else {
+        //     var text = quill.getText(range.index, range.length);
+        //     console.log('User has highlighted', text);
+        //     console.log('range index:', range.index);
+        //   }
+        // } else {
+        //   console.log('Cursor not in the editor');
+        // }
 
         var bounds = quill.getBounds(range.index);
         console.log('bounds:', bounds);
+        console.log('PROPS:', context.props);
         if (range.length !== 0) {
-          setSelectionLoc(bounds.top);          
+          context.props.dispatch(editor.setSelectionLoc(bounds.top));          
         }
 
         if (range.length === 0) {
-          setSelectionLoc(null);
+          context.props.dispatch(editor.setSelectionLoc(null));
         }
       });
 
@@ -148,6 +140,7 @@ export default connect((store) => {
     quill: store.editor.quill,
     saveInterval: null,
     sharelinkId: store.editor.sharelinkId,
-    user: null
+    user: null,
+    // selectionLoc: store.editor.selectionLoc
   }
 })(TextEditor);

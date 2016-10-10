@@ -171,18 +171,43 @@ export default class TextVideoPage extends React.Component {
         <FlashMessagesList />
         <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
-        <CommentArea 
-          comments={this.state.comments}
-          selectionLoc={this.state.selectionLoc} 
-          handleCommentInput={this.handleCommentInput}
-          commentInput={this.state.commentInput}
-          commentEntryHeight={this.state.commentEntryHeight}
-          activeCommentStatus={this.state.activeCommentStatus}
-          postEntry={this.postEntry}
-          cancelEntry={this.cancelEntry}
-          handleCommentClick={this.handleCommentClick}
-          savedCommentFocus={this.state.savedCommentFocus} />
+        <CommentArea />
       </div>
     );
   }
 }
+
+
+
+// /* COMPONENT WITH CHAT */
+// export default class TextVideoPage extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <div className="NavBar">
+//           <NavBar />
+//         </div>
+//         <div id="editor">
+//           <p>Type here...</p>
+//         </div>
+//         <div className="video-and-chat">
+//           <AppVideo className="Video"/>
+//           <Chat className="Chat"/>
+//         </div>
+//       </div>
+//     );
+//   }
+// }
+
+
+// <CommentArea 
+//   comments={this.state.comments}
+//   selectionLoc={this.state.selectionLoc} 
+//   handleCommentInput={this.handleCommentInput}
+//   commentInput={this.state.commentInput}
+//   commentEntryHeight={this.state.commentEntryHeight}
+//   activeCommentStatus={this.state.activeCommentStatus}
+//   postEntry={this.postEntry}
+//   cancelEntry={this.cancelEntry}
+//   handleCommentClick={this.handleCommentClick}
+//   savedCommentFocus={this.state.savedCommentFocus} />

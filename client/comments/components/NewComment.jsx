@@ -34,6 +34,7 @@ class NewComment extends React.Component {
 
     return (
       <div className="comment-container">
+      {console.log('BEFORE NC RENDER selectionLoc:', this.props.selectionLoc)}
         <div className="comment" style={{top: this.props.selectionLoc - 16, height: this.props.commentEntryHeight}}>
           <div className="comment-chathead">
             <span className="comment-initials">{initials}</span>
