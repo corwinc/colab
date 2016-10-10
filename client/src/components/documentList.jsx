@@ -91,7 +91,7 @@ class DocumentList extends React.Component {
   		result += Math.round( diff / 60 );
   		result === '1' ? result += ' minute' : result += ' minutes';
   	} else if ( diff < 86400 ) {
-  		result += Math.round( diff / 3600 ) + ' hours';
+  		result += Math.round( diff / 3600 );
   		result === '1' ? result += ' hour' : result += ' hours';
   	} else {
   		result += Math.round( diff / 86400 );
