@@ -23,6 +23,14 @@ export function userSignupRequest(userData) {
 				console.log('inside if ', res.data);
 				return res.data;
 			} else {
+				console.log('res.data.user', res.data.username);
+				
+				const token = res.data.username;
+				const username = res.data.username;
+				localStorage.setItem('userToken', token);
+				localStorage.setItem('user', JSON.stringify(username));
+      			browserHistory.push('/documentlist');
+				
 				dispatch(userSignupSuccess(userData)); 
 				console.log('inside else ', res.data);
 

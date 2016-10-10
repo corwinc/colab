@@ -10,17 +10,34 @@ import TextVideoPage from './src/components/textVideoPage.jsx';
 import DocumentList from './src/components/documentList.jsx';
 
 
+const requireAuth = (nextState, replace) => {
+  const token = localStorage.getItem('userToken');
+  if (!token) {
+    replace({
+      pathname: '/login',
+    });
+  }
+};
+
+const logout = (nextState, replace) => {
+	console.log('inside logout in route.jsx')
+  localStorage.removeItem('userToken');
+  localStorage.removeItem('user');
+  replace({ pathname: '/login' });
+};
 
 module.exports = (
 
-	<Router history={browserHistory}>
-		<Route path="/" component={App}>
+	<Router history={browserHistory} onUpdate={() => window.scrollTo(0, 0)}>
+		<Route path="/" component={App} onEnter={requireAuth}>
 			<IndexRoute 
 				component={TextVideoPage}
 			/>
+			<Route path='/documentList' component={DocumentList}
+			onEnter={requireAuth} />
 		</Route>
 		<Route path='/login' component={Login} />
+		<Route path="/logout" onEnter={logout} />
 		<Route path='/signup' component={Signup} />
-		<Route path='/documentlist' component={DocumentList} />
 	</Router> 
 )
