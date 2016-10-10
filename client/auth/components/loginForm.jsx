@@ -34,8 +34,10 @@ class LoginForm extends React.Component {
 			console.log('response inside login redirect', res);
 
 				if (res !== 'User not found.') {
+					console.log('inside redirecting to documentlist----------->');
 				 this.context.router.push('/documentlist');
 				} else {
+					console.log('inside error seting state.');
 					this.setState({usernameMsg: 'user not found',passwordMsg: 'wrong password' });	
 				}
 			}
@@ -46,14 +48,14 @@ class LoginForm extends React.Component {
 	render() {
 		return (
 			<form 
-				role="form"
+				
 				onSubmit={this.onSubmit}
 				>
 
 				<h1>Welcome to COlLab</h1>
 
 				<div className="form-group">
-					<label className="control-label">Your username or email</label>
+					<label className="control-label">Your username</label>
 					<input 
 						value={this.state.username}
 						onChange={this.onChange}

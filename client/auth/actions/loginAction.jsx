@@ -16,8 +16,13 @@ export function userLoginFailure(err) {
 
 export function userLoginRequest(userData) {
 	return (dispatch) => {
+        console.log('userData ', userData);
+
+		console.log("userData.username ",userData.username);
+		console.log('hashed password', userData.password);
 		return axios.get('/users?username=' + userData.username + '&password=' + userData.password)
 		.then((res) => {
+			console.log('res.data into loginAction----->', res);
 			if (res.data === 'User not found.') {
 				console.log('response inside user not found action', res.data);
 
@@ -30,7 +35,7 @@ export function userLoginRequest(userData) {
 				const username = res.data.username;
 				localStorage.setItem('userToken', token);
 				localStorage.setItem('user', JSON.stringify(username));
-      			browserHistory.push('/documentlist');
+      			//browserHistory.push('/documentlist');
 				dispatch(userLoginSuccess(username)); 
 				console.log('userData....', username);
 				return username;
@@ -38,6 +43,7 @@ export function userLoginRequest(userData) {
 				
 		})
 		.catch((err) => {
+			console.log('inside loginAction error', err);
 			dispatch(userLoginFailure(err));
 		});
 	}
