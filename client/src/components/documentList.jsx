@@ -99,7 +99,11 @@ class DocumentList extends React.Component {
   	}
     return 'Last edited ' + result + ' ago.';
   }
-
+  
+  openDoc (doc) {
+   // <a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a>
+   browserHistory.push('/?sharelink=' + doc);
+  }
 	// Title: <input value={ this.props.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
 
 
@@ -135,7 +139,7 @@ class DocumentList extends React.Component {
 			    		  	    <img style={ docIconStyle }src="http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png" />
 			    		  	  </div>
 			    		  	  <div>
-				    		  	  <a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a>
+				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ) } }>{ doc.title }</a>
 		                  &nbsp;<a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
 		                  <br />
 		                  <span style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>
