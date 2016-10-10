@@ -13,7 +13,7 @@ class DocumentList extends React.Component {
   }
 
   componentDidMount () {
-  	
+
     console.log('local:', 'document/all?username=' + window.localStorage.user[1]);
   	//populate documents array with list of documents for user
     axios.get('document/all?username=' + window.localStorage.user[1])
@@ -26,17 +26,18 @@ class DocumentList extends React.Component {
   }
 
   createNewDoc (username) {
-  	if (this.props.inputValue === '') {
-  		this.props.dispatch(doclist.showMessage('Please enter a title.'));
-  		return;
-  	}
+  	// if (this.props.inputValue === '') {
+  	// 	this.props.dispatch(doclist.showMessage('Please enter a title.'));
+  	// 	return;
+  	// }
   	this.props.dispatch(doclist.clearMessage());
 	  var sharelinkId = 'doc' + Date.now();
 
 	  axios.post('/document', {
 	  	username: username,
 	  	sharelink: sharelinkId,
-	  	title: this.props.inputValue
+	  	// title: this.props.inputValue
+	  	title: 'untitled'
 	  })
 	  .then(function(res) {
 
@@ -77,31 +78,57 @@ class DocumentList extends React.Component {
   	// });
   }
 
+  calcTime (time) {
+  	var unixTime = new Date(time).getTime();
+    var now = Date.now();
+  	var result = '';
+  	var diff = (now - unixTime) / 1000;
+
+  	if ( diff < 60 ) {
+  		result += Math.round( diff );
+  		result === '1' ? result += ' second' : result += ' seconds';
+  	} else if ( diff < 3600 ) {
+  		result += Math.round( diff / 60 );
+  		result === '1' ? result += ' minute' : result += ' minutes';
+  	} else if ( diff < 86400 ) {
+  		result += Math.round( diff / 3600 ) + ' hours';
+  		result === '1' ? result += ' hour' : result += ' hours';
+  	} else {
+  		result += Math.round( diff / 86400 );
+  		result === '1' ? result += ' day' : result += ' days';
+  	}
+    return 'Last edited ' + result + ' ago.';
+  }
+
+	// Title: <input value={ this.props.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
+
+
 	render() {
 		var messageStyle = {
       color: 'red'
 		};
 
-		return (
-			<div>
-		    <button onClick={ () => { this.createNewDoc(window.localStorage.user[1]) } }>New Doc</button>
+	  return (
+		  <div className="container">
+		    <button className="btn btn btn-primary btn-large btn-block" onClick={ () => { this.createNewDoc(window.localStorage.user[1]) } }>Create new doc</button>
 		    <br />
-		    Title: <input value={ this.props.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
 		    <span style={ messageStyle }>{ this.props.message }</span>
         <br />
 
-		    		    <ul>
-		    		    	{ this.props.documents.length > 0 ? this.props.documents.map( (doc, index) => {
-		    		    		  return ( 
-		    		    		  	<li key={ index }>
-		    		    		  	  <a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a>
-		                      &nbsp;<a onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
-		    		    		  	</li> 
-		    		    		  );
-		    		    	  }) : 'loading...'
-		    		      }
-		    		    </ul>
-
+			    <ul>
+			    	{ this.props.documents.length > 0 ? this.props.documents.map( (doc, index) => {
+			    		  return ( 
+			    		  	<li className="doclist-li" key={ index }>
+			    		  	  <a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a>
+	                  &nbsp;<a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
+	                  <br />
+	                  <span>{ this.calcTime( doc.updatedAt ) }</span>
+	                  <hr />
+			    		  	</li> 
+			    		  );
+			    	  }) : 'loading...'
+			      }
+			    </ul>
 
 		    <br />
       </div>

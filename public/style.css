@@ -525,3 +525,27 @@ div.vid-scrollable-list {
   height: 50px;
 }
 
+/***
+ * document list css
+ */
+.doclist-li {
+  margin-bottom: 20px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+/*  width: 10px;
+  height: 10px;*/
+  /*list-style-image: url("http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png")*/
+}
+
+.del-doc-link {
+  display: none;
+}
+
+.doclist-li:hover .del-doc-link {
+  display: inline;
+}
+
+/***
+ * document list css
+ */
