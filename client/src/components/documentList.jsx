@@ -14,9 +14,9 @@ class DocumentList extends React.Component {
 
   componentDidMount () {
 
-    console.log('local:', 'document/all?username=' + window.localStorage.user[1]);
+    console.log('local:', 'document/all?username=' + window.localStorage.user.slice(1, window.localStorage.user.length - 1));
   	//populate documents array with list of documents for user
-    axios.get('document/all?username=' + window.localStorage.user[1])
+    axios.get('document/all?username=' + window.localStorage.user.slice(1, window.localStorage.user.length - 1))
       .then(function(res) {
         this.props.dispatch( doclist.populateDocs(res.data));
       }.bind(this))
@@ -30,7 +30,7 @@ class DocumentList extends React.Component {
   	// 	this.props.dispatch(doclist.showMessage('Please enter a title.'));
   	// 	return;
   	// }
-  	this.props.dispatch(doclist.clearMessage());
+  	// this.props.dispatch(doclist.clearMessage());
 	  var sharelinkId = 'doc' + Date.now();
 
 	  axios.post('/document', {
@@ -108,9 +108,21 @@ class DocumentList extends React.Component {
       color: 'red'
 		};
 
+		var lastUpdateStyle = {
+			fontSize: 12,
+      color: 'grey'
+		};
+
+    var docIconStyle = {
+      height: 40,
+      width: 25,
+      float: 'left',
+      marginRight: 10
+    };
+
 	  return (
 		  <div className="container">
-		    <button className="btn btn btn-primary btn-large btn-block" onClick={ () => { this.createNewDoc(window.localStorage.user[1]) } }>Create new doc</button>
+		    <button className="btn btn btn-primary btn-large btn-block" onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
 		    <br />
 		    <span style={ messageStyle }>{ this.props.message }</span>
         <br />
@@ -119,14 +131,19 @@ class DocumentList extends React.Component {
 			    	{ this.props.documents.length > 0 ? this.props.documents.map( (doc, index) => {
 			    		  return ( 
 			    		  	<li className="doclist-li" key={ index }>
-			    		  	  <a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a>
-	                  &nbsp;<a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
-	                  <br />
-	                  <span>{ this.calcTime( doc.updatedAt ) }</span>
+			    		  	  <div>
+			    		  	    <img style={ docIconStyle }src="http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png" />
+			    		  	  </div>
+			    		  	  <div>
+				    		  	  <a href={ 'http://localhost:8000/?sharelink=' + doc.sharelink }>{ doc.title }</a>
+		                  &nbsp;<a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
+		                  <br />
+		                  <span style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>
+	                  </div>
 	                  <hr />
 			    		  	</li> 
 			    		  );
-			    	  }) : 'loading...'
+			    	  }) : ''
 			      }
 			    </ul>
 
