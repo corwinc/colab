@@ -35,7 +35,7 @@ class NewComment extends React.Component {
     return (
       <div className="comment-container">
       {console.log('BEFORE NC RENDER selectionLoc:', this.props.selectionLoc)}
-        <div className="comment" style={{top: this.props.selectionLoc - 16, height: this.props.commentEntryHeight}}>
+        <div className="comment" style={{top: this.props.selectionLoc - 66, height: this.props.commentEntryHeight}}>
           <div className="comment-chathead">
             <span className="comment-initials">{initials}</span>
             <input 
@@ -57,7 +57,7 @@ class NewComment extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    selectionLoc: state.comment.selectionLoc,
+    selectionLoc: state.editor.selectionLoc,
     commentInput: state.comment.commentInput,
     commentEntryHeight: state.comment.commentEntryHeight,
     activeComment: state.comment.activeCommentStatus
