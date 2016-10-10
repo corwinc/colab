@@ -50,7 +50,11 @@ export default function(state = {}, action) {
       var alertsCopy = state.incomingAlerts.slice();
       return Object.assign({}, state, {
         incomingAlerts: deleteAlert(alertsCopy, action.pcKey)
-      }); 
+      });
+    case 'SHOW_INCOMING_CALL_OPTIONS':
+      return Object.assign({}, state, {
+        shouldShow: action.shouldShow
+      }) 
     default:
       return state;
   }
