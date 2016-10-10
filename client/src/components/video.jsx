@@ -16,7 +16,8 @@ class AppVideo extends React.Component {
     this.configuration = {'iceServers': [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]};
     this.pcs = {};
     this.streams = {};
-    this.signalingChannel = io('/video'); 
+    this.signalingChannel = io('/video');
+    this.isCaller;
   }  
 
   componentDidMount(){
@@ -24,7 +25,9 @@ class AppVideo extends React.Component {
   }
 
   setSignalingChannel(){
+
     var context = this;
+
     signalingChannel.on('message', function(evt) {
       var signal = JSON.parse(evt);
       if (context.isConnectionAlreadyMade(signal.pcKey)) {
@@ -49,16 +52,16 @@ class AppVideo extends React.Component {
 
     signalingChannel.on('disconnect call', function(evt){
       var signal = JSON.parse(evt);
-      context.pcs[signal.pcKey].close();
-      if (signal.isCaller !== undefined){
-        if (signal.isCaller) {
+      context.pcs[signal.pcKey] ? context.pcs[signal.pcKey].close() : null;
+      if (signal.isHangup) {
+        if (this.isCaller) {
           context.props.dispatch(videoActionList.deleteOutgoingAlert(signal.pcKey));
         } else {
           context.props.dispatch(videoActionList.deleteIncomingAlert(signal.pcKey));
         }
       } else {
         context.props.dispatch(videoActionList.removePeerConnection(signal.pcKey));
-      }
+      }      
       delete context.pcs[signal.pcKey];
     });
 
@@ -70,7 +73,7 @@ class AppVideo extends React.Component {
         myCallsToMake.forEach(function(pcKey, i){
           setTimeout(function(){
             context.initSingleCall(pcKey, 'conference call');
-          }, i * 50);
+          }, i * 150);
         });
       }
     });
@@ -78,7 +81,8 @@ class AppVideo extends React.Component {
 
   start(isCaller, pcKey, mode) {
     var context = this;
-    context.isCaller = isCaller;
+    this.isCaller = isCaller;
+    signalingChannel.isCaller = isCaller;
 
     this.pcs[pcKey] = new RTCPeerConnection(context.configuration);
 
@@ -96,9 +100,7 @@ class AppVideo extends React.Component {
         if (mode === 'direct call') {
           if (isCaller) {
             context.props.dispatch(videoActionList.showOutgoingAlerts(pcKey, 'outgoing user'));
-          } else {
-            context.props.dispatch(videoActionList.showIncomingAlerts(pcKey, 'incoming user'));
-          }
+          } 
         }
       }
       if (this && this.signalingState === 'closed') {
@@ -107,21 +109,33 @@ class AppVideo extends React.Component {
     };
 
     this.pcs[pcKey].oniceconnectionstatechange = function(evt) {
+
       if (this && this.iceConnectionState === 'connected') {
+        if (mode === 'direct call') {
+          if (isCaller){
+            console.log("fire delete outgoing");
+            context.props.dispatch(videoActionList.deleteOutgoingAlert(pcKey));
+          } else {
+            console.log("fire delete incoming");
+            context.props.dispatch(videoActionList.deleteIncomingAlert(pcKey));
+          }
+        }
         let hangupOnclick = ()=> {
           signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey}));
         };
         context.props.dispatch(videoActionList.addPeerConnection(pcKey, this, hangupOnclick));
         context.pcs[pcKey].status = 'connected';
-        if (mode === 'direct call') {
-          if (isCaller){
-            context.props.dispatch(videoActionList.deleteOutgoingAlert(pcKey));
-          } else {
-            context.props.dispatch(videoActionList.deleteIncomingAlert(pcKey));
-          }
-        }
       }
     };
+
+    const setDescription = (desc) => {
+      this.pcs[pcKey].setLocalDescription(desc);
+      signalingChannel.emit('send offer', JSON.stringify({ "sdp": desc, "callerId": myId, "pcKey": pcKey, "mode": mode}));
+    };
+
+    const errorGettingDescription = (err) => {
+        console.log("There was an error getting the description. Error message: ", err);
+      };   
 
     const handleVideo = (stream) => {
       this.pcs[pcKey].addStream(stream);
@@ -130,30 +144,19 @@ class AppVideo extends React.Component {
       } else {
         if (mode === 'direct call') {
           let acceptOnClick = ()=>{ context.pcs[pcKey].createAnswer(setDescription.bind(context), errorGettingDescription) };
-          let rejectOnClick = ()=>{ signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey, "isCaller": isCaller})) };
+          let rejectOnClick = ()=>{ signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey, "isHangup": true})) };
           context.props.dispatch(videoActionList.showIncomingAlerts(pcKey, 'incoming user', acceptOnClick, rejectOnClick));
         } 
         if (mode === 'conference call') {
           this.pcs[pcKey].createAnswer(setDescription.bind(this), errorGettingDescription);
         }
       }
-
-      function setDescription(desc) {
-        this.pcs[pcKey].setLocalDescription(desc);
-        signalingChannel.emit('send offer', JSON.stringify({ "sdp": desc, "callerId": myId, "pcKey": pcKey, "mode": mode}));
-      };
-
-      function errorGettingDescription(err) {
-        console.log("There was an error getting the description. Error message: ", err);
-      };
     };
 
-
-    navigator.getUserMedia({ "audio": true, "video": true }, handleVideo.bind(context), videoError);
-
-    function videoError(error) {
+    const videoError = (error) => {
       console.log("ERROR! ", error)
     };
+    navigator.getUserMedia({ "audio": true, "video": true }, handleVideo.bind(context), videoError);
   };
 
   areYouSignalingYourself(callerId){

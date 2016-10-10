@@ -20,38 +20,41 @@ const callAlert = (state = initialState, action) => {
   }
 }
 
+const deleteAlert = (alertsCopy, pcKey)=>{
+  for (var i = 0; i < alertsCopy.length; i++) {
+    if (alertsCopy[i].pcKey === pcKey) {
+      alertsCopy.splice(i, i + 1);
+    }
+  }
+  return alertsCopy;
+};
+
 export default function(state = {}, action) {
-  console.log("REDUCING ALERT LIST");
   switch (action.type) {
     case 'SHOW_OUTGOING_ALERTS':
-      console.log("SHOW OUTGOING PUPPY")
-      var prevAlerts = state.alertList ? state.alertList.outgoingAlerts : [];
+      var prevAlerts = state.outgoingAlerts || [];
       return Object.assign({}, state, {
         outgoingAlerts: [...prevAlerts, callAlert(null, action)]
       });
     case 'SHOW_INCOMING_ALERTS':
-      console.log("SHOW INCOMING KITTEN")
-
-      var prevAlerts = state.alertList ? state.alertList.incomingAlerts : [];
+      var prevAlerts = state.incomingAlerts || [];
       return Object.assign({}, state, {
         incomingAlerts: [...prevAlerts, callAlert(null, action)]
       });
     case 'DELETE_OUTGOING_ALERT':
-      var newState = {};
-      for (var pcKey in state){
-        if (state.pcKey !== action.pcKey) {
-          newState.pcKey = state.pcKey;
-        }
-      }
-      return newState;
+      var alertsCopy = state.outgoingAlerts.slice();
+      return Object.assign({}, state, {
+        outgoingAlerts: deleteAlert(alertsCopy, action.pcKey)
+      });
     case 'DELETE_INCOMING_ALERT':
-      var newState = {};
-      for (var pcKey in state){
-        if (state.pcKey !== action.pcKey) {
-          newState.pcKey = state.pcKey;
-        }
-      }
-      return newState;  
+      var alertsCopy = state.incomingAlerts.slice();
+      return Object.assign({}, state, {
+        incomingAlerts: deleteAlert(alertsCopy, action.pcKey)
+      });
+    case 'SHOW_INCOMING_CALL_OPTIONS':
+      return Object.assign({}, state, {
+        shouldShow: action.shouldShow
+      }) 
     default:
       return state;
   }
