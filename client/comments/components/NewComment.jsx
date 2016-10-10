@@ -16,19 +16,15 @@ class NewComment extends React.Component {
   }
 
   handleCommentInput (e) {
-    console.log('inside handleCommentInput');
     e.preventDefault();
     this.props.handleCommentInput(e.target.value);
   }
 
   updateCommentHeight() {
-    console.log('inside updateCommentHeight');
     if (this.props.commentInput !== '') {
-      console.log('the input has value!:', this.props.commentInput);
       this.props.updateCommentHeight(70);
       this.props.activeCommentStatus(true);
     } else {
-      console.log('the input DOESNOT have value', this.props.commentInput);
       this.props.updateCommentHeight(50);
       this.props.activeCommentStatus(false);
     }
@@ -52,9 +48,7 @@ class NewComment extends React.Component {
               onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
               autoFocus={true} />
             {(() => {
-              console.log('ACTIVECOMMENT?:', this.props.activeComment);
               if (this.props.activeComment === true) {
-                console.log('active comment here!');
                 return <CommentEntryLinks />;
               }
             })()}

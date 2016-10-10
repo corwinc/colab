@@ -12,7 +12,7 @@ const initialState = {
   commentInput: '',
   activeCommentStatus: false,
   commentEntryHeight: 50,
-  selectionLoc: 100
+  selectionLoc: 180
 }
 
 export default function (state=initialState, action) {

@@ -17,11 +17,9 @@ class CommentArea extends React.Component {
 
   componentWillMount() {
     this.getComments();
-    console.log('PROPS:',this.props);
   }
 
   getComments () {
-    console.log('COMMENT getComments, current props:', this.props);
     $.ajax({
       method: 'GET',
       url: '/comments',
@@ -66,8 +64,6 @@ class CommentArea extends React.Component {
         }
         {
           (() => {
-            console.log('COMMENT comments about to be rendered:', this.props.comments);
-
             return this.props.comments.map((comment, i) => {
               return (<SavedComment key={i} comment={comment} />);
             });
@@ -76,7 +72,6 @@ class CommentArea extends React.Component {
 
         {
           (() => {
-            console.log('selectionLoc:', this.props.selectionLoc);
             if (this.props.selectionLoc !== null) {
               return (<NewComment />);
             }
