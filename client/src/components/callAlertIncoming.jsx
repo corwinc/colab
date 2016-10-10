@@ -1,7 +1,6 @@
 import React from 'react';
 
 const IncomingCallAlert = ({username, acceptOnclick, rejectOnclick}) => {
-  console.log("###@@@@@@ create incoming call alerts");
   return (
     <div className="call-alerts-incoming">
       <div className="call-incoming-notifications">

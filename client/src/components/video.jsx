@@ -50,15 +50,17 @@ class AppVideo extends React.Component {
     signalingChannel.on('disconnect call', function(evt){
       var signal = JSON.parse(evt);
       context.pcs[signal.pcKey].close();
-      if (signal.isCaller !== undefined){
+      console.log("signal.isCaller is ", signal.isCaller);
+      if (signal.isCaller !== undefined) {
         if (signal.isCaller) {
+          console.log("delete outgoing");
           context.props.dispatch(videoActionList.deleteOutgoingAlert(signal.pcKey));
         } else {
+          console.log("delete incoming.")
           context.props.dispatch(videoActionList.deleteIncomingAlert(signal.pcKey));
         }
-      } else {
-        context.props.dispatch(videoActionList.removePeerConnection(signal.pcKey));
-      }
+      } 
+      context.props.dispatch(videoActionList.removePeerConnection(signal.pcKey));      
       delete context.pcs[signal.pcKey];
     });
 
@@ -70,7 +72,7 @@ class AppVideo extends React.Component {
         myCallsToMake.forEach(function(pcKey, i){
           setTimeout(function(){
             context.initSingleCall(pcKey, 'conference call');
-          }, i * 50);
+          }, i * 150);
         });
       }
     });
@@ -96,9 +98,10 @@ class AppVideo extends React.Component {
         if (mode === 'direct call') {
           if (isCaller) {
             context.props.dispatch(videoActionList.showOutgoingAlerts(pcKey, 'outgoing user'));
-          } else {
-            context.props.dispatch(videoActionList.showIncomingAlerts(pcKey, 'incoming user'));
-          }
+          } 
+          // else {
+          //   context.props.dispatch(videoActionList.showIncomingAlerts(pcKey, 'incoming user'));
+          // }
         }
       }
       if (this && this.signalingState === 'closed') {
@@ -108,18 +111,20 @@ class AppVideo extends React.Component {
 
     this.pcs[pcKey].oniceconnectionstatechange = function(evt) {
       if (this && this.iceConnectionState === 'connected') {
+        if (mode === 'direct call') {
+          if (isCaller){
+            console.log("fire delete outgoing");
+            context.props.dispatch(videoActionList.deleteOutgoingAlert(pcKey));
+          } else {
+            console.log("fire delete incoming");
+            context.props.dispatch(videoActionList.deleteIncomingAlert(pcKey));
+          }
+        }
         let hangupOnclick = ()=> {
           signalingChannel.emit('disconnect call', JSON.stringify({"pcKey": pcKey}));
         };
         context.props.dispatch(videoActionList.addPeerConnection(pcKey, this, hangupOnclick));
         context.pcs[pcKey].status = 'connected';
-        if (mode === 'direct call') {
-          if (isCaller){
-            context.props.dispatch(videoActionList.deleteOutgoingAlert(pcKey));
-          } else {
-            context.props.dispatch(videoActionList.deleteIncomingAlert(pcKey));
-          }
-        }
       }
     };
 

@@ -35,6 +35,7 @@ export function showOutgoingAlerts(pcKey, username) {
 };
 
 export function deleteOutgoingAlert(pcKey) {
+  console.log("reached action for outgoing alert.");
   return {
     type: 'DELETE_OUTGOING_ALERT', 
     pcKey: pcKey
@@ -42,6 +43,7 @@ export function deleteOutgoingAlert(pcKey) {
 };
 
 export function deleteIncomingAlert(pcKey) {
+  console.log("reached action for incoming alert.");
   return {
     type: 'DELETE_INCOMING_ALERT', 
     pcKey: pcKey

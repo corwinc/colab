@@ -20,38 +20,51 @@ const callAlert = (state = initialState, action) => {
   }
 }
 
+const deleteAlert = (alertsCopy, pcKey)=>{
+  for (var i = 0; i < alertsCopy.length; i++) {
+    if (alertsCopy[i].pcKey === pcKey) {
+      alertsCopy.splice(i, i + 1);
+    }
+  }
+  return alertsCopy;
+};
+
 export default function(state = {}, action) {
-  console.log("REDUCING ALERT LIST");
   switch (action.type) {
     case 'SHOW_OUTGOING_ALERTS':
-      console.log("SHOW OUTGOING PUPPY")
-      var prevAlerts = state.alertList ? state.alertList.outgoingAlerts : [];
+      var prevAlerts = state.outgoingAlerts || [];
+      console.log("STATE: ", state);
       return Object.assign({}, state, {
         outgoingAlerts: [...prevAlerts, callAlert(null, action)]
       });
     case 'SHOW_INCOMING_ALERTS':
-      console.log("SHOW INCOMING KITTEN")
-
-      var prevAlerts = state.alertList ? state.alertList.incomingAlerts : [];
+      var prevAlerts = state.incomingAlerts || [];
       return Object.assign({}, state, {
         incomingAlerts: [...prevAlerts, callAlert(null, action)]
       });
     case 'DELETE_OUTGOING_ALERT':
-      var newState = {};
-      for (var pcKey in state){
-        if (state.pcKey !== action.pcKey) {
-          newState.pcKey = state.pcKey;
-        }
-      }
-      return newState;
+      console.log("delete outgoing alert");
+      var alertsCopy = state.outgoingAlerts.slice();
+      // for (var i = 0; i < alertsCopy.length; i++) {
+      //   if (alertsCopy[i].pcKey === action.pcKey) {
+      //     alertsCopy.splice(i, i + 1);
+      //   }
+      // }
+      return Object.assign({}, state, {
+        outgoingAlerts: deleteAlert(alertsCopy, action.pcKey)
+      });
     case 'DELETE_INCOMING_ALERT':
-      var newState = {};
-      for (var pcKey in state){
-        if (state.pcKey !== action.pcKey) {
-          newState.pcKey = state.pcKey;
-        }
-      }
-      return newState;  
+      var alertsCopy = state.incomingAlerts.slice();
+      //alertsCopy = deleteAlert(alertsCopy, alert.pcKey);
+      console.log("copy: ", alertsCopy, alert.pcKey);
+      // for (var i = 0; i < alertsCopy.length; i++) {
+      //   if (alertsCopy[i].pcKey === action.pcKey) {
+      //     alertsCopy.splice(i, i + 1);
+      //   }
+      // }
+      return Object.assign({}, state, {
+        outgoingAlerts: deleteAlert(alertsCopy, action.pcKey)
+      }); 
     default:
       return state;
   }
