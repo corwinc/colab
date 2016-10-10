@@ -16,10 +16,8 @@ const rootReducer = combineReducers({
 	editor: EditorReducer,
 	documentlist: documentlistReducer, 
   videoList: videoReducer, 
-  alertList: callAlertReducer
-
-	// comment : Comment,
-	comment : Comment,
+  alertList: callAlertReducer,
+	comment : Comment
 });
 
 export default rootReducer;
