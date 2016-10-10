@@ -11,7 +11,7 @@ class SavedComment extends React.Component {
   render() {
     return (
       <div className="comment-saved-container">
-        <div className="comment-saved" style={{top: this.props.comment.location - 16}}>
+        <div className="comment-saved" style={{top: this.props.comment.location - 56}}>
           <div className="comment-saved-chathead" onClick={() => this.props.handleCommentClick()}>
             <span className="comment-saved-initials">{initials}</span>
           </div>
