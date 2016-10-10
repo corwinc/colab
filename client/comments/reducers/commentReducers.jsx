@@ -35,9 +35,6 @@ export default function (state=initialState, action) {
 
     // REDUCERS
     case 'GET_COMMENTS_SUCCESS':
-      //need to handle array of data
-      console.log('Success getting comments!! Fill out reducer now');
-      // check comments format: array is correct
       return Object.assign({}, state, {
         comments: action.comments
       })
@@ -70,11 +67,3 @@ export default function (state=initialState, action) {
   }
 }
 
-
-// E.G. UPDATING SINGLE STATE
-// case 'AUTH_SUCCESS':
-//   return Object.assign({}, state, {
-//     username : action.username
-//   });
-
-// E.G. ADDING ITEM TO ARRAY

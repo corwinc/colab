@@ -26,15 +26,11 @@ class CommentEntryLinks extends React.Component {
       url: '/comments',
       data: comment,
       success: (data) => {
-        console.log('Success posting comment!:', data);
-        // this.props.postEntrySuccess(data); 
-        // => update state w/ new comment...  and therefor can we avoid reusing getComments?
         this.props.setSelectionLoc(null);
         this.getComments();
       },
       error: (err) => {
         console.log('error posting entry:', err);
-        // this.props.postEntryError(err);
       }
     })
   }
@@ -48,18 +44,16 @@ class CommentEntryLinks extends React.Component {
   }
 
   getComments () {
-    console.log('COMMENT inside getComments, current props:', this.props);
     $.ajax({
       method: 'GET',
       url: '/comments',
       dataType: 'json',
       data: {docId: this.props.curDoc},
       success: (data) => {
-        console.log('COMMENT Success getting comments!:', data);
         this.props.getCommentsSuccess(data);
       },
       error: (err) => {
-        console.log('COMMENT error getting comments:', err);
+        console.log('error getting comments:', err);
       }
     })
   }

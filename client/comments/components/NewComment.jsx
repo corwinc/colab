@@ -30,10 +30,6 @@ class NewComment extends React.Component {
     }
   }
 
-  toggleLinks() {
-    // TODO: refactor to call this below in place of the anonymous function: move updateCommentHeight, etc.
-  }
-
   render() {
 
     return (

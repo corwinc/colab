@@ -11,8 +11,6 @@ class CommentArea extends React.Component {
     super(props);
 
     this.getComments = this.getComments.bind(this);
-    // this.renderComments = this.renderComments.bind(this);
-    // this.renderNewComment = this.renderNewComment.bind(this);
   }
 
   componentWillMount() {
@@ -35,33 +33,9 @@ class CommentArea extends React.Component {
     })
   }
 
-  // renderComments() {
-  //   console.log('COMMENT inside renderComments');
-  //   console.log('COMMENT renderComments current props:', this.props);
-  //   return this.props.comments.map((comment, i) => {
-  //             return (
-  //               <SavedComment key={i} comment={comment} />
-  //             );
-  //           });
-  // }
-
-  // renderNewComment() {
-  //   console.log('COMMENT inside renderNewComment');
-  //   // return <NewComment />;
-  // }
-
   render() {
     return (
       <div className="comment-area-container">
-        {
-          // (() => {
-          //   this.renderComments();
-
-          //   if (this.props.selectionLoc !== null) {
-          //     this.renderNewComment();
-          //   }
-          // })()
-        }
         {
           (() => {
             return this.props.comments.map((comment, i) => {
