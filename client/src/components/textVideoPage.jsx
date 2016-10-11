@@ -4,12 +4,14 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as tvPageActions from '../actions/tvPageActions.jsx';
 import * as editorActions from '../actions/editorActions.jsx';
+import * as navbarActions from '../actions/navbarActions.jsx';
 import TextEditor from './textEditor.jsx';
 import AppVideo from './../../video/components/video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
 import FlashMessagesList from '../../auth/components/flash/flashMessagesList.jsx';
 import CommentArea from '../../comments/components/CommentArea.jsx';
+import axios from 'axios';
 
 // /* COMPONENT WITHOUT CHAT */
 class TextVideoPage extends React.Component {
@@ -29,21 +31,38 @@ class TextVideoPage extends React.Component {
 
   componentWillMount() {
     var urldocId = window.location.search.split('').splice(11).join('');
-    var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
     var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
-    console.log('TVP sharelink componentWillMount:', sharelinkId);
     this.props.setSharelink(sharelinkId);
     this.getDocId(sharelinkId);
-  }
+    var docId = null;
 
-  componentDidMount() {
-    // Duplicated code from above b/c could not pull this.props.sharelink properly for some reason
-    // console.log('TVP CDM sharelink:', this.props.sharelinkId);
-    // var urldocId = window.location.search.split('').splice(11).join('');
-    // var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
-    // var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId;
-    // this.props.setSharelink(sharelinkId);
-    // this.getDocId(sharelinkId);
+    $.ajax({
+      method: 'GET',
+      url: '/document/id',
+      dataType: 'json',
+      data: {
+        sharelinkId: sharelinkId
+      },
+      success: (data) => {
+        console.log('NAVBAR found docID from sharelink:', data);
+        var docId = data.id;
+        axios.get('users/id/?username=' + username)
+          .then(function(res) {
+            console.log('NAVBAR success getting userId:', res.data);
+            var userId = res.data;
+            // this.props.setUserId(userId); // set up
+            this.getSharedUsers(docId, userId);
+          }.bind(this))
+          .catch(function(err) {
+            console.log('NAVBAR Error retrieving user.')
+          });
+      },
+      error: (err) => {
+        console.log('TVP getDocId error:', err);
+      }
+    })
+
   }
 
   getSharedUsers (docId, userId) {
@@ -59,8 +78,9 @@ class TextVideoPage extends React.Component {
       },
       success: (data) => {
         console.log('getSharedUsers success:', data);
-        this.setState({curSharedUsers: data});
-        console.log('state sharedusers:', this.state.curSharedUsers);
+        // this.setState({curSharedUsers: data});
+        // console.log('state sharedusers:', this.state.curSharedUsers);
+        this.props.setCurSharedUsers(data);
       },
       error: (err) => {
         console.log('getSharedUsers error:', err);
@@ -116,8 +136,8 @@ class TextVideoPage extends React.Component {
           <NavBar 
             // curDoc={this.props.curDoc}
             // curUser={this.state.curUser}
-            curSharedUsers={this.state.curSharedUsers} 
-            getSharedUsers={this.getSharedUsers}
+            // curSharedUsers={this.state.curSharedUsers} 
+            // getSharedUsers={this.getSharedUsers}
             getInitials={this.getInitials}
             getDocId={this.getDocId} />
         </div>
@@ -157,14 +177,18 @@ function mapStateToProps(state) {
   return {
     curDoc: state.tvPage.curDoc,
     curUser: state.tvPage.curUser,
-    sharelinkId: state.editor.sharelinkId
+    sharelinkId: state.editor.sharelinkId,
+    curSharedUsers: state.tvPage.curSharedUsers
+
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setSharelink: editorActions.setLink,
-    setDocId: tvPageActions.setDocId
+    setDocId: tvPageActions.setDocId,
+    setCurSharedUsers: tvPageActions.setCurSharedUsers
+    // setUserId: navbarActions.setUserId
   }, dispatch);
 }
 

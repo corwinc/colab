@@ -4,3 +4,10 @@ export function setDocId(docId) {
     docId
   }
 }
+
+export function setCurSharedUsers(users) {
+  return {
+    type: 'SET_CUR_SHARED_USERS',
+    users
+  }
+}
