@@ -1,5 +1,6 @@
 var db = require('../../../db/config.js');
 var User = require('../../../db/Models/User');
+var encryption = require('../../utils/encryption.js');
 /**
  * Get user
  * @param {Object} req
@@ -7,18 +8,29 @@ var User = require('../../../db/Models/User');
  * @return undefined
  */ 
 exports.getUser = function(req, res) {
-  User.findOne({where: req.query})
-    .then(function(user){
+  //console.log('-------------------------');
+  User.findOne({where: {username: req.query.username}})
+    .then(user => {
+      console.log('req.query.password', req.query.password);
+      console.log('------------>>>>>>>', user.password);
       if (user !== null) {
-        res.send(user);
-      } else {
-        res.send('User not found.');
-      }
+        return encryption.comparePassword(req.query.password, user.password)
+        .then(match => {
+           console.log('match ---> ', match);
+          if (match) {
+            res.status(200).send(user);
+          } else {
+            console.log('User not found.');
+            res.send('User not found.');
+          }
+        })
+      } 
     })
     .catch(function(error){
-      res.status(500).send('Error getting user.');
+      res.status(500).send('Error getting user.', error);
     });
 };
+
 
 /**
  * Oauth

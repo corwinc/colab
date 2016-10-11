@@ -9,6 +9,8 @@ class LoginForm extends React.Component {
 			
 			username:'',
 			password:'',
+			usernameMsg:'',
+			passwordMsg: '',
 		}
 			
 			
@@ -17,6 +19,8 @@ class LoginForm extends React.Component {
 	}
 
 	onChange(e) {
+
+		
 		this.setState({
 			[e.target.name]: e.target.value
 		});
@@ -30,9 +34,11 @@ class LoginForm extends React.Component {
 			console.log('response inside login redirect', res);
 
 				if (res !== 'User not found.') {
+					console.log('inside redirecting to documentlist----------->');
 				 this.context.router.push('/documentlist');
 				} else {
-					this.setState({username: 'user not found', password: 'password doesnt match'});	
+					console.log('inside error seting state.');
+					this.setState({usernameMsg: 'user not found',passwordMsg: 'wrong password' });	
 				}
 			}
 		);
@@ -40,16 +46,16 @@ class LoginForm extends React.Component {
 
 	
 	render() {
-		const {errors, identifier, password, isLoading} = this.state;
 		return (
-			<form onSubmit={this.onSubmit}
+			<form 
 				
+				onSubmit={this.onSubmit}
 				>
 
 				<h1>Welcome to COlLab</h1>
 
 				<div className="form-group">
-					<label className="control-label">Your username or email</label>
+					<label className="control-label">Your username</label>
 					<input 
 						value={this.state.username}
 						onChange={this.onChange}
@@ -57,6 +63,7 @@ class LoginForm extends React.Component {
 						placeholder="username"
 						className="form-control" required
 					/>
+					<span >{this.state.usernameMsg}</span>
 				</div>
 
 				
@@ -71,16 +78,29 @@ class LoginForm extends React.Component {
 						className="form-control"
 						placeholder="password" required
 					/>
+					<span >{this.state.passwordMsg}</span>
 				</div>
+
+				<div className="form-group">
+					<label className="checkbox control-label">
+				        <input type="checkbox" value="remember-me" name="rememberMe" className="form-level" 
+				        /> Remember me
+				        
+			        </label>
+			    </div>
+				
+
+
 
 				
 
 				<div className="form-group">
 					<button className="btn btn-primary btn-lg"
-					disabled={isLoading}>
+					>
 					Log In
 					</button>
 				</div>
+
 				<div className="form-group">
 		          Don't have an account? <Link to="/signup">Register</Link>
 		        </div>
