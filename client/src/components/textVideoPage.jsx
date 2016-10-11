@@ -1,5 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as tvPageActions from '../actions/tvPageActions.jsx';
 import TextEditor from './textEditor.jsx';
 import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
@@ -8,21 +11,13 @@ import FlashMessagesList from '../../auth/components/flash/flashMessagesList.jsx
 import CommentArea from '../../comments/components/CommentArea.jsx';
 
 // /* COMPONENT WITHOUT CHAT */
-export default class TextVideoPage extends React.Component {
+class TextVideoPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       curUser: 2,
-      curDoc: 2,
-      curSharedUsers: [],
-      selectionLoc: null,
-      commentEntryHeight: 50,
-      activeCommentStatus: false,
-      commentInput: '',
-      comments: [],
-      savedCommentFocus: false,
-      sharelinkId: 'CC1476140584551'
+      curSharedUsers: []
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
@@ -31,8 +26,11 @@ export default class TextVideoPage extends React.Component {
     this.getDocId = this.getDocId.bind(this);
   };
 
-  componentWillMount() {
-    this.getDocId(this.state.sharelinkId);
+  componentDidMount() {
+    // CURRENTLY SHARELINK = ''
+    console.log('PROPS:', this.props);
+    this.getDocId(this.props.sharelinkId);
+    // this.getDocId("CC1476140584551");
   }
 
   getSharedUsers (docId, userId) {
@@ -68,14 +66,14 @@ export default class TextVideoPage extends React.Component {
       success: (data) => {
         console.log('DOC W/ given sharelink:', data);
         var docId = data.id;
-        this.setState({curDoc: docId});
+        // this.setState({curDoc: docId});
+        this.props.setDocId(docId);
       },
       error: (err) => {
         console.log('getDocId error:', err);
       }
     })
   }
-
 
   getInitials (user) {
     if (user.firstname !== null) {
@@ -102,7 +100,7 @@ export default class TextVideoPage extends React.Component {
       <div>
         <div>
           <NavBar 
-            curDoc={this.state.curDoc}
+            curDoc={this.props.curDoc}
             curUser={this.state.curUser}
             curSharedUsers={this.state.curSharedUsers} 
             getSharedUsers={this.getSharedUsers}
@@ -139,3 +137,19 @@ export default class TextVideoPage extends React.Component {
 //     );
 //   }
 // }
+
+function mapStateToProps(state) {
+  return {
+    curDoc: state.tvPage.curDoc,
+    curUser: state.tvPage.curUser,
+    sharelinkId: state.editor.sharelinkId
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setDocId: tvPageActions.setDocId
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextVideoPage);

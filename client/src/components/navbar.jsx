@@ -13,7 +13,7 @@ class NavBar extends React.Component {
 
 // Probably, the logic for getting shared users should be an effect of textEditor mounting
   componentWillMount() {
-    console.log('inside NavBar componentWillMount');
+    console.log('inside NavBar componentWillMount, docId:', this.props.curDoc);
     // var docId = this.props.curDoc;
     var docId = this.props.docId;
     console.log('new docId:', docId);
