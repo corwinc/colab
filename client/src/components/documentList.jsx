@@ -13,6 +13,16 @@ class DocumentList extends React.Component {
   }
 
   componentDidMount () {
+    console.log('---------------->component mounted');
+    var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
+    axios.get('users/?username=' + username)
+      .then(function(res) {
+        console.log('==========================id:', res.data.id);
+        // this.props.dispatch( doclist.setUserId(JSON.stringify(res.data.id) ));
+      }.bind(this))
+      .catch(function(err) {
+        console.log('==========================Error retrieving user.')
+      });
 
     console.log('local:', 'document/all?username=' + window.localStorage.user.slice(1, window.localStorage.user.length - 1));
   	//populate documents array with list of documents for user
@@ -105,7 +115,9 @@ class DocumentList extends React.Component {
    browserHistory.push('/?sharelink=' + doc);
   }
 	// Title: <input value={ this.props.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
-
+  test () {
+    console.log('--------------->curUser after mount:', this.props.curUser);
+  }
 
 	render() {
 		var messageStyle = {
@@ -142,7 +154,7 @@ class DocumentList extends React.Component {
 				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ) } }>{ doc.title }</a>
 		                  &nbsp;<a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
 		                  <br />
-		                  <span style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>
+		                  <span onClick={ this.test.bind(this) } style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>
 	                  </div>
 	                  <hr />
 			    		  	</li> 
@@ -169,6 +181,7 @@ export default connect((store) => {
 		message: store.documentlist.message,
 		username: store.documentlist.username,
 		documents: store.documentlist.documents,
-		inputValue: store.documentlist.inputValue
+		inputValue: store.documentlist.inputValue,
+    curUser: store.documentlist.curUser
 	}
 })(DocumentList);
