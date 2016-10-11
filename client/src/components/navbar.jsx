@@ -13,10 +13,10 @@ class NavBar extends React.Component {
 
 // Probably, the logic for getting shared users should be an effect of textEditor mounting
   componentWillMount() {
-    console.log('inside NavBar componentWillMount, docId:', this.props.curDoc);
+    console.log('NAVBAR componentWillMount, docId:', this.props.curDoc);
     // var docId = this.props.curDoc;
     var docId = this.props.docId;
-    console.log('new docId:', docId);
+    console.log('NAVBAR props.docId:', docId);
     var userId = this.props.curUser;
     this.props.getSharedUsers(docId, userId);
     // this.props.setSharedUsersState(sharedUsers);
@@ -69,15 +69,16 @@ class NavBar extends React.Component {
 
 
 function mapStateToProps(state) {
+  console.log('NAVBAR state mapStateToProps:', state);
   return {
-    docId: state.documentlist.curDocId,
+    docId: state.tvPage.curDoc,
     sharelink: state.editor.sharelinkId
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    something: navbarActions.something
+    // something: navbarActions.something
   }, dispatch);
 }
 

@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as tvPageActions from '../actions/tvPageActions.jsx';
+import * as editorActions from '../actions/editorActions.jsx';
 import TextEditor from './textEditor.jsx';
 import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
@@ -26,16 +27,28 @@ class TextVideoPage extends React.Component {
     this.getDocId = this.getDocId.bind(this);
   };
 
+  componentWillMount() {
+    var urldocId = window.location.search.split('').splice(11).join('');
+    var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
+    console.log('TVP sharelink componentWillMount:', sharelinkId);
+    this.props.setSharelink(sharelinkId);
+    this.getDocId(sharelinkId);
+  }
+
   componentDidMount() {
-    // CURRENTLY SHARELINK = ''
-    console.log('PROPS:', this.props);
-    this.getDocId(this.props.sharelinkId);
-    // this.getDocId("CC1476140584551");
+    // Duplicated code from above b/c could not pull this.props.sharelink properly for some reason
+    // console.log('TVP CDM sharelink:', this.props.sharelinkId);
+    // var urldocId = window.location.search.split('').splice(11).join('');
+    // var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    // var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId;
+    // this.props.setSharelink(sharelinkId);
+    // this.getDocId(sharelinkId);
   }
 
   getSharedUsers (docId, userId) {
     // send request to server
-    console.log('inside FE getSharedUsers');
+    console.log('TVP inside FE getSharedUsers');
     $.ajax({
       method: 'GET',
       url: '/userdocs',
@@ -56,6 +69,7 @@ class TextVideoPage extends React.Component {
   }
 
   getDocId(sharelinkId) {
+    console.log('TVP inside getDocIc');
     $.ajax({
       method: 'GET',
       url: '/document/id',
@@ -64,13 +78,13 @@ class TextVideoPage extends React.Component {
         sharelinkId: sharelinkId
       },
       success: (data) => {
-        console.log('DOC W/ given sharelink:', data);
+        console.log('TVP found doc from sharelink:', data);
         var docId = data.id;
         // this.setState({curDoc: docId});
         this.props.setDocId(docId);
       },
       error: (err) => {
-        console.log('getDocId error:', err);
+        console.log('TVP getDocId error:', err);
       }
     })
   }
@@ -110,7 +124,6 @@ class TextVideoPage extends React.Component {
         <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
         <CommentArea />
-        {console.log('STATE:', this.state)}
       </div>
     );
   }
@@ -139,6 +152,7 @@ class TextVideoPage extends React.Component {
 // }
 
 function mapStateToProps(state) {
+  console.log('TVP STATE inside mapStateToProps:', state);
   return {
     curDoc: state.tvPage.curDoc,
     curUser: state.tvPage.curUser,
@@ -148,6 +162,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
+    setSharelink: editorActions.setLink,
     setDocId: tvPageActions.setDocId
   }, dispatch);
 }

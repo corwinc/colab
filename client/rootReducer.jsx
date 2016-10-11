@@ -7,6 +7,7 @@ import videoReducer from './src/reducers/videoReducer.jsx';
 import callAlertReducer from './src/reducers/callAlertReducer.jsx';
 import Comment from './comments/reducers/commentReducers.jsx';
 import tvPageReducer from './src/reducers/tvPageReducer.jsx';
+import navbarReducer from './src/reducers/navbarReducer.jsx';
 
 const rootReducer = combineReducers({
 	flashMessages: flashMessages,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   videoList: videoReducer, 
   alertList: callAlertReducer,
 	comment : Comment,
-  tvPage: tvPageReducer
+  tvPage: tvPageReducer,
+  navbar: navbarReducer
 });
 
 export default rootReducer;
