@@ -51,8 +51,6 @@ class TextEditor extends React.Component {
       [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
       [{ 'font': [] }],
       [{ 'align': [] }],
-      ['image']
-
       ['clean']                                         // remove formatting button
     ];
 
