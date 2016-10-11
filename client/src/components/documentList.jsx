@@ -13,15 +13,13 @@ class DocumentList extends React.Component {
   }
 
   componentDidMount () {
-    console.log('---------------->component mounted');
     var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
-    axios.get('users/?username=' + username)
+    axios.get('users/id/?username=' + username)
       .then(function(res) {
-        console.log('==========================id:', res.data.id);
-        // this.props.dispatch( doclist.setUserId(JSON.stringify(res.data.id) ));
+        this.props.dispatch( doclist.setUserId(JSON.stringify(res.data) ));
       }.bind(this))
       .catch(function(err) {
-        console.log('==========================Error retrieving user.')
+        console.log('Error retrieving user.')
       });
 
     console.log('local:', 'document/all?username=' + window.localStorage.user.slice(1, window.localStorage.user.length - 1));
