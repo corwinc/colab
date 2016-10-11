@@ -5,8 +5,6 @@ import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
 import CommentEntryLinks from './CommentEntryLinks.jsx';
 
-var initials = 'CC';
-
 class NewComment extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +35,7 @@ class NewComment extends React.Component {
       {console.log('BEFORE NC RENDER selectionLoc:', this.props.selectionLoc)}
         <div className="comment" style={{top: this.props.selectionLoc - 66, height: this.props.commentEntryHeight}}>
           <div className="comment-chathead">
-            <span className="comment-initials">{initials}</span>
+            <span className="comment-initials">{this.props.curUserInitials}</span>
             <input 
               value={this.props.commentInput}
               className="comment-input" 
@@ -60,7 +58,8 @@ function mapStateToProps(state) {
     selectionLoc: state.editor.selectionLoc,
     commentInput: state.comment.commentInput,
     commentEntryHeight: state.comment.commentEntryHeight,
-    activeComment: state.comment.activeCommentStatus
+    activeComment: state.comment.activeCommentStatus,
+    curUserInitials: state.tvPage.curUserInitials
   }
 }
 
