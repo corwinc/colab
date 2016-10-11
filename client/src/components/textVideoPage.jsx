@@ -19,7 +19,6 @@ class TextVideoPage extends React.Component {
     super(props);
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
-    this.setSelectionLoc = this.setSelectionLoc.bind(this);
     this.getDocId = this.getDocId.bind(this);
   };
 
@@ -133,9 +132,9 @@ class TextVideoPage extends React.Component {
     })
   }
 
-  setSelectionLoc (loc) {
-    this.setState({selectionLoc: loc});
-  }
+  // setSelectionLoc (loc) {
+  //   this.setState({selectionLoc: loc});
+  // }
 
   render() {
     return (
@@ -144,7 +143,7 @@ class TextVideoPage extends React.Component {
           <NavBar />
         </div>
         <FlashMessagesList />
-        <TextEditor setSelectionLoc={this.setSelectionLoc} />
+        <TextEditor />
         <AppVideo />
         <CommentArea />
       </div>
