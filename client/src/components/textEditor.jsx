@@ -36,6 +36,13 @@ class TextEditor extends React.Component {
 
 
     var quill = new Quill('#editor', {
+      modules: {
+        toolbar: [
+          [{header: [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          ['image', 'code-block']
+        ]
+      },
       theme: 'snow'
     });
 
