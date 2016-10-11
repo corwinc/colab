@@ -13,7 +13,7 @@ export default class TextVideoPage extends React.Component {
     super(props);
 
     this.state = {
-      curUser: 18,
+      curUser: 2,
       curDoc: 2,
       curSharedUsers: [],
       selectionLoc: null,
@@ -21,13 +21,19 @@ export default class TextVideoPage extends React.Component {
       activeCommentStatus: false,
       commentInput: '',
       comments: [],
-      savedCommentFocus: false
+      savedCommentFocus: false,
+      sharelinkId: 'CC1476140584551'
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
     this.setSelectionLoc = this.setSelectionLoc.bind(this);
+    this.getDocId = this.getDocId.bind(this);
   };
+
+  componentWillMount() {
+    this.getDocId(this.state.sharelinkId);
+  }
 
   getSharedUsers (docId, userId) {
     // send request to server
@@ -50,6 +56,26 @@ export default class TextVideoPage extends React.Component {
       }
     })
   }
+
+  getDocId(sharelinkId) {
+    $.ajax({
+      method: 'GET',
+      url: '/document/id',
+      dataType: 'json',
+      data: {
+        sharelinkId: sharelinkId
+      },
+      success: (data) => {
+        console.log('DOC W/ given sharelink:', data);
+        var docId = data.id;
+        this.setState({curDoc: docId});
+      },
+      error: (err) => {
+        console.log('getDocId error:', err);
+      }
+    })
+  }
+
 
   getInitials (user) {
     if (user.firstname !== null) {
@@ -76,7 +102,7 @@ export default class TextVideoPage extends React.Component {
       <div>
         <div>
           <NavBar 
-            curDoc={this.state.curDoc} 
+            curDoc={this.state.curDoc}
             curUser={this.state.curUser}
             curSharedUsers={this.state.curSharedUsers} 
             getSharedUsers={this.getSharedUsers}
@@ -86,6 +112,7 @@ export default class TextVideoPage extends React.Component {
         <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
         <CommentArea />
+        {console.log('STATE:', this.state)}
       </div>
     );
   }

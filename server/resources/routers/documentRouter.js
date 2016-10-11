@@ -12,4 +12,7 @@ documentRouter.route('/')
 documentRouter.route('/all')
   .get(documentController.getDocuments);
 
+documentRouter.route('/id')
+  .get(documentController.getId);
+
 module.exports = documentRouter;
