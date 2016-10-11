@@ -1,5 +1,5 @@
 const Promise = require('bluebird').Promise;
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 Promise.promisifyAll(bcrypt, { context: bcrypt });
 
