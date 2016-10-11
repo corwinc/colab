@@ -6,7 +6,9 @@ var Comment = sqlConnection.define('comment',
     block: Sequelize.INTEGER, 
     user: Sequelize.INTEGER,
     location: Sequelize.INTEGER,
-    document: Sequelize.INTEGER }
+    document: Sequelize.INTEGER,
+    // initials: Sequelize.STRING 
+  }
 );
 
 Comment.sync();

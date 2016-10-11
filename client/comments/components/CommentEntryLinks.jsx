@@ -19,8 +19,11 @@ class CommentEntryLinks extends React.Component {
       block: 1,
       user: this.props.curUser,
       location: this.props.selectionLoc,
-      document: this.props.curDoc
+      document: this.props.curDoc,
+      initials: this.props.curUserIntials
     }
+
+    console.log('POSTENTRY COMMENT:', comment);
 
     $.ajax({
       method: 'POST',
@@ -74,7 +77,8 @@ function mapStateToProps(state) {
     selectionLoc: state.comment.selectionLoc,
     commentInput: state.comment.commentInput,
     curUser: state.comment.curUser,
-    curDoc: state.comment.curDoc
+    curDoc: state.comment.curDoc,
+    curUserInitials: state.tvPage.curUserInitials
   }
 }
 
