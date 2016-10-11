@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as editor from '../actions/editorActions.jsx';
-
+import * as doclist from '../actions/documentlistActions.jsx';
 
 
 class TextEditor extends React.Component {
@@ -12,6 +12,15 @@ class TextEditor extends React.Component {
   };
 
   componentDidMount () {
+    var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
+    axios.get('users/id/?username=' + username)
+      .then(function(res) {
+        this.props.dispatch( doclist.setUserId(JSON.stringify(res.data) ));
+      }.bind(this))
+      .catch(function(err) {
+        console.log('Error retrieving user.')
+      });
+
     var Delta = Quill.import('delta');
     var urldocId = window.location.search.split('').splice(11).join('');
     var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
@@ -110,6 +119,8 @@ class TextEditor extends React.Component {
   }
 
   saveDoc(quill, sharelinkId) {
+    console.log('curUser:', this.props.curUser);
+
     axios.put('/document', {
       sharelink: sharelinkId,
       textS3: JSON.stringify(quill.getContents()),
@@ -141,6 +152,7 @@ export default connect((store) => {
     saveInterval: null,
     sharelinkId: store.editor.sharelinkId,
     user: null,
+    curUser: store.documentlist.curUser
     // selectionLoc: store.editor.selectionLoc
   }
 })(TextEditor);
