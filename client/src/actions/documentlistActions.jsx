@@ -33,3 +33,9 @@ export function setUserId(curUser) {
 		curUser: curUser
 	}
 }
+export function setCurDocId(curDocId) {
+	return {
+		type: 'SET_CUR_DOC_ID',
+		curDocId
+	}
+}

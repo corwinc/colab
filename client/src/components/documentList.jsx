@@ -114,6 +114,9 @@ class DocumentList extends React.Component {
     console.log('--------------->curUser after mount:', this.props.curUser);
   }
   // Title: <input value={ this.props.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
+  setCurDocId(docId) {
+    this.props.dispatch(doclist.setCurDocId(docId));
+  }
 
   render() {
     var messageStyle = {
@@ -147,7 +150,7 @@ class DocumentList extends React.Component {
 			    		  	    <img style={ docIconStyle }src="http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png" />
 			    		  	  </div>
 			    		  	  <div>
-				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ) } }>{ doc.title }</a>
+				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ); this.setCurDocId(doc.id); } }>{ doc.title }</a>
 		                  &nbsp;<a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
 		                  <br />
 		                  <span onClick={ this.test.bind(this) } style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>

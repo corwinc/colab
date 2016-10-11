@@ -11,6 +11,14 @@ class TextEditor extends React.Component {
     super(props);
   };
 
+  // componentWillMount() {
+  //   var urldocId = window.location.search.split('').splice(11).join('');
+  //   var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+  //   var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
+  //   console.log('EDITOR sharelink componentWillMount:', sharelinkId);
+  //   this.props.dispatch(editor.setLink(sharelinkId));
+  // }
+
   componentDidMount () {
     var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
     axios.get('users/id/?username=' + username)
@@ -32,7 +40,8 @@ class TextEditor extends React.Component {
     var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
     
 
-    this.props.dispatch(editor.setLink(sharelinkId));
+    // NOTE: Moved this logic to textVideoPage's componentWillMount in order to set sharelink sooner:
+    // this.props.dispatch(editor.setLink(sharelinkId));
 
 
     var quill = new Quill('#editor', {
@@ -85,6 +94,7 @@ class TextEditor extends React.Component {
         }
       });
       
+      console.log('EDITOR componentDidMount sharelinkid:', sharelinkId);
       axios.get('/document?sharelink=' + sharelinkId)
         .then(function(res) {
         quill.setContents( JSON.parse(res.data.textS3) );

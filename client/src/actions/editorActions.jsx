@@ -32,3 +32,10 @@ export function setSelectionLoc(loc) {
     loc
   }
 }
+
+export function setDocId(docId) {
+  return {
+    type: 'SET_SELECTION_LOC',
+    docId
+  }
+}
