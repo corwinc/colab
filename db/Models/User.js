@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
 var sqlConnection = require('../config.js');
+var encryption = require('../../server/utils/encryption.js');
 
 var User = sqlConnection.define('user', 
   { firstname: Sequelize.STRING,
@@ -13,5 +14,14 @@ var User = sqlConnection.define('user',
 // User.sync();
 
 module.exports = User;
+
+User.beforeCreate((user) => {
+  if (!user.password) { return Promise.resolve(user); }
+  return encryption.hashPassword(user.password)
+    .then(hashedPw => {
+      user.password = hashedPw;
+      console.log('saltedPassword', hashedPw);
+    });
+});
 
 
