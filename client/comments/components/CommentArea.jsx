@@ -46,6 +46,7 @@ class CommentArea extends React.Component {
 
         {
           (() => {
+            console.log('CURRENT SELECTION IS:', this.props.selectionLoc);
             if (this.props.selectionLoc !== null) {
               return (<NewComment />);
             }

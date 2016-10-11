@@ -11,13 +11,13 @@ class TextEditor extends React.Component {
     super(props);
   };
 
-  // componentWillMount() {
-  //   var urldocId = window.location.search.split('').splice(11).join('');
-  //   var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
-  //   var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
-  //   console.log('EDITOR sharelink componentWillMount:', sharelinkId);
-  //   this.props.dispatch(editor.setLink(sharelinkId));
-  // }
+  componentWillMount() {
+    var urldocId = window.location.search.split('').splice(11).join('');
+    var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
+    console.log('EDITOR sharelink componentWillMount:', sharelinkId);
+    this.props.dispatch(editor.setLink(sharelinkId));
+  }
 
   componentDidMount () {
     var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
