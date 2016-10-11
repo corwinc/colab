@@ -17,7 +17,7 @@ class TextVideoPage extends React.Component {
     super(props);
 
     this.state = {
-      curUser: 2,
+      // curUser: 2,
       curSharedUsers: []
     };
 
@@ -114,11 +114,12 @@ class TextVideoPage extends React.Component {
       <div>
         <div>
           <NavBar 
-            curDoc={this.props.curDoc}
-            curUser={this.state.curUser}
+            // curDoc={this.props.curDoc}
+            // curUser={this.state.curUser}
             curSharedUsers={this.state.curSharedUsers} 
             getSharedUsers={this.getSharedUsers}
-            getInitials={this.getInitials} />
+            getInitials={this.getInitials}
+            getDocId={this.getDocId} />
         </div>
         <FlashMessagesList />
         <TextEditor setSelectionLoc={this.setSelectionLoc} />

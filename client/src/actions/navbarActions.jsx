@@ -1,6 +1,6 @@
-export function addCommentToComments(comment) {
+export function setUserId(userId) {
   return {
-    type: 'ADD_COMMENT_TO_COMMENTS',
-    comment
+    type: 'SET_USER_ID',
+    userId
   }
 }

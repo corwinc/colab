@@ -110,16 +110,13 @@ class DocumentList extends React.Component {
    browserHistory.push('/?sharelink=' + doc);
   }
 
-<<<<<<< ca720b44f2ade43b82e721d3a7fb071713aaccce
   test () {
     console.log('--------------->curUser after mount:', this.props.curUser);
   }
   // Title: <input value={ this.props.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
-=======
   setCurDocId(docId) {
     this.props.dispatch(doclist.setCurDocId(docId));
   }
->>>>>>> Create curDocId state on doc link click in docList
 
   render() {
     var messageStyle = {
