@@ -1,7 +1,12 @@
 import React from 'react';
+import {render} from 'react-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as navbarActions from '../actions/navbarActions.jsx';
+
 window.myId = Math.floor(Math.random() * 10000);
 // STATEFUL B/C ADDING COMPONENTWILLMOUNT
-export default class NavBar extends React.Component {
+class NavBar extends React.Component {
   constructor(props) {
     super(props);
   };
@@ -13,6 +18,7 @@ export default class NavBar extends React.Component {
     var userId = this.props.curUser;
     this.props.getSharedUsers(docId, userId);
     // this.props.setSharedUsersState(sharedUsers);
+
   }
 
   render() {
@@ -60,32 +66,19 @@ export default class NavBar extends React.Component {
 };
 
 
+function mapStateToProps(state) {
+  return {
+    docId: state.editor.curDoc
+  }
+}
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    something: navbarActions.something
+  }, dispatch);
+}
 
-
-
-
-
-// STATELESS VERSION
-// const NavBar = (props) => 
-//   (
-//     <div className="NavBarWrapper">
-//       <div className="NavBarContainer">
-//         <div className="userCircles">
-//         {props.curSharedUsers.map((user, i) => {
-//           var initials = props.getInitials(user); 
-//           return <div key={i} className='userCircle'>{initials}</div>
-//         })}
-//         </div>
-//         <div className="nav-bar-buttons">
-//           <img id="call-nav-button" src="public/images/makecall.png"></img>
-//           <button>Share</button>
-//           <a href="http://localhost:8000/">logout</a>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// export default NavBar;
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
 
 
 
