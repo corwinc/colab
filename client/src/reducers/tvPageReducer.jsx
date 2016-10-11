@@ -1,7 +1,8 @@
 const initialState = {
   curUser: null,
   curDoc: null,
-  curSharedUsers: []
+  curSharedUsers: [],
+  curUserInitials: ''
 }
 
 export default function (state=initialState, action) {
@@ -14,6 +15,10 @@ export default function (state=initialState, action) {
     case 'SET_CUR_SHARED_USERS':
       return Object.assign({}, state, {
         curSharedUsers: action.users
+      })
+    case 'SET_CUR_USER_INITIALS':
+      return Object.assign({}, state, {
+        curUserInitials: action.initials
       })
     default:
       return state

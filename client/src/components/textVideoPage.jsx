@@ -18,18 +18,13 @@ class TextVideoPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      // curUser: 2,
-      curSharedUsers: []
-    };
-
     this.getSharedUsers = this.getSharedUsers.bind(this);
-    this.getInitials = this.getInitials.bind(this);
     this.setSelectionLoc = this.setSelectionLoc.bind(this);
     this.getDocId = this.getDocId.bind(this);
   };
 
   componentWillMount() {
+    // GET SHARED USERS
     var urldocId = window.location.search.split('').splice(11).join('');
     var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
     var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
@@ -37,6 +32,7 @@ class TextVideoPage extends React.Component {
     this.getDocId(sharelinkId);
     var docId = null;
 
+    // Get docId
     $.ajax({
       method: 'GET',
       url: '/document/id',
@@ -47,11 +43,19 @@ class TextVideoPage extends React.Component {
       success: (data) => {
         console.log('NAVBAR found docID from sharelink:', data);
         var docId = data.id;
+
+        // Get userId
         axios.get('users/id/?username=' + username)
           .then(function(res) {
             console.log('NAVBAR success getting userId:', res.data);
             var userId = res.data;
-            // this.props.setUserId(userId); // set up
+            
+            // Get & Set current user's initals (for use in new comments)
+            // var curUserInitials = this.getInitials(userId);
+            // console.log('curuserinitials:', curUserInitials);
+            // this.props.setCurUserInitials(curUserInitials);
+
+            // Get & set document's shared users 
             this.getSharedUsers(docId, userId);
           }.bind(this))
           .catch(function(err) {
@@ -77,15 +81,31 @@ class TextVideoPage extends React.Component {
         userId: userId
       },
       success: (data) => {
-        console.log('getSharedUsers success:', data);
+        console.log('TVPAGE getSharedUsers success:', data);
         // this.setState({curSharedUsers: data});
         // console.log('state sharedusers:', this.state.curSharedUsers);
         this.props.setCurSharedUsers(data);
       },
       error: (err) => {
-        console.log('getSharedUsers error:', err);
+        console.log('TVPAGE getSharedUsers error:', err);
       }
     })
+  }
+
+  getInitials (user) {
+    if (user.firstname !== null) {
+      var firstInit = user.firstname[0];
+    } else {
+      var firstInit = '';
+    }
+
+    if (user.lastname !== null) {
+      var lastInit = user.lastname[0];
+    } else {
+      var lastInit = '';
+    }
+
+    return firstInit + lastInit;
   }
 
   getDocId(sharelinkId) {
@@ -109,22 +129,6 @@ class TextVideoPage extends React.Component {
     })
   }
 
-  getInitials (user) {
-    if (user.firstname !== null) {
-      var firstInit = user.firstname[0];
-    } else {
-      var firstInit = '';
-    }
-
-    if (user.lastname !== null) {
-      var lastInit = user.lastname[0];
-    } else {
-      var lastInit = '';
-    }
-
-    return firstInit + lastInit;
-  }
-
   setSelectionLoc (loc) {
     this.setState({selectionLoc: loc});
   }
@@ -133,13 +137,7 @@ class TextVideoPage extends React.Component {
     return (
       <div>
         <div>
-          <NavBar 
-            // curDoc={this.props.curDoc}
-            // curUser={this.state.curUser}
-            // curSharedUsers={this.state.curSharedUsers} 
-            // getSharedUsers={this.getSharedUsers}
-            getInitials={this.getInitials}
-            getDocId={this.getDocId} />
+          <NavBar />
         </div>
         <FlashMessagesList />
         <TextEditor setSelectionLoc={this.setSelectionLoc} />
@@ -178,7 +176,8 @@ function mapStateToProps(state) {
     curDoc: state.tvPage.curDoc,
     curUser: state.tvPage.curUser,
     sharelinkId: state.editor.sharelinkId,
-    curSharedUsers: state.tvPage.curSharedUsers
+    curSharedUsers: state.tvPage.curSharedUsers,
+    curUserInitials: state.tvPage.curUserInitials
 
   }
 }
@@ -187,7 +186,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setSharelink: editorActions.setLink,
     setDocId: tvPageActions.setDocId,
-    setCurSharedUsers: tvPageActions.setCurSharedUsers
+    setCurSharedUsers: tvPageActions.setCurSharedUsers,
+    setCurUserInitials: tvPageActions.setCurUserInitials
     // setUserId: navbarActions.setUserId
   }, dispatch);
 }

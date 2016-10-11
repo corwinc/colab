@@ -11,3 +11,10 @@ export function setCurSharedUsers(users) {
     users
   }
 }
+
+export function setCurUserInitials(initials) {
+  return {
+    type: 'SET_CUR_USER_INITIALS',
+    initials
+  }
+}
