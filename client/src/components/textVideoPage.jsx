@@ -31,6 +31,7 @@ class TextVideoPage extends React.Component {
     this.props.setSharelink(sharelinkId);
     this.getDocId(sharelinkId);
     var docId = null;
+    var userId = null;
 
     // Get docId
     $.ajax({
@@ -48,12 +49,19 @@ class TextVideoPage extends React.Component {
         axios.get('users/id/?username=' + username)
           .then(function(res) {
             console.log('NAVBAR success getting userId:', res.data);
-            var userId = res.data;
-            
-            // Get & Set current user's initals (for use in new comments)
-            // var curUserInitials = this.getInitials(userId);
-            // console.log('curuserinitials:', curUserInitials);
-            // this.props.setCurUserInitials(curUserInitials);
+            userId = res.data;
+
+            axios.get('/users/user/?id=' + userId)
+              .then((res) => {
+                console.log('TVPAGE SUCCESS GETTING USER BY ID:', res);
+
+                // Set user initial's (for use in new comments);
+                var initials = this.getInitials(res.data);
+                this.props.setCurUserInitials(initials);
+              })
+              .catch((err) => {
+                console.log('TVPAGE error getting user by id,', err);
+              })
 
             // Get & set document's shared users 
             this.getSharedUsers(docId, userId);
@@ -66,11 +74,9 @@ class TextVideoPage extends React.Component {
         console.log('TVP getDocId error:', err);
       }
     })
-
   }
 
   getSharedUsers (docId, userId) {
-    // send request to server
     console.log('TVP inside FE getSharedUsers');
     $.ajax({
       method: 'GET',
@@ -82,8 +88,6 @@ class TextVideoPage extends React.Component {
       },
       success: (data) => {
         console.log('TVPAGE getSharedUsers success:', data);
-        // this.setState({curSharedUsers: data});
-        // console.log('state sharedusers:', this.state.curSharedUsers);
         this.props.setCurSharedUsers(data);
       },
       error: (err) => {
