@@ -9,7 +9,7 @@ import Chat from './src/components/chat.jsx';
 import OauthSuccess from './auth/components/oauth.jsx';
 import TextVideoPage from './src/components/textVideoPage.jsx';
 import DocumentList from './src/components/documentList.jsx';
-
+import CommentDemo from './comments/components/DemoComment.jsx';
 
 const requireAuth = (nextState, replace) => {
   const token = localStorage.getItem('userToken');
@@ -38,7 +38,11 @@ module.exports = (
 			<Route path='/documentList' component={DocumentList}
 			 onEnter={requireAuth} />
 		</Route>
+<<<<<<< HEAD
 		<Route path="/oauthsuccess" component={OauthSuccess} />
+=======
+		<Route path='/commentdemo' component={CommentDemo} />
+>>>>>>> ef50d578f7142dec62593e03f10100df2ab77235
 		<Route path='/login' component={Login} />
 		<Route path="/logout" onEnter={logout} />
 		<Route path='/signup' component={Signup} />

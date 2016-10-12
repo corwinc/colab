@@ -47,3 +47,10 @@ export function deleteIncomingAlert(pcKey) {
     pcKey: pcKey
   }  
 };
+
+export function showIncomingCallOptions(shouldShow) {
+  return {
+    type: 'SHOW_INCOMING_CALL_OPTIONS', 
+    shouldShow: shouldShow
+  }
+};

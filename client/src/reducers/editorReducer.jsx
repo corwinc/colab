@@ -1,15 +1,17 @@
 const initialState = {
-  quill: null,
+  quill: [],
   saveInterval: null,
   sharelinkId: '',
-  user: null
+  docId: null,
+  user: null,
+  selectionLoc: null
 }
 
 export default function(state = initialState, action) {
 	switch(action.type) {
 		case 'SET_QUILL': {
 			return Object.assign({}, state, {
-				quill: action.quill 
+				quill: [action.quill] 
 			});
 		}
 		case 'SET_INTERVAL': {
@@ -27,6 +29,14 @@ export default function(state = initialState, action) {
 				user: action.user
 			});
 		}
+		case 'SET_SELECTION_LOC':
+		 return Object.assign({}, state, {
+		    selectionLoc: action.loc
+		 })
+		case 'SET_DOC_ID':
+			return Object.assign({}, state, {
+				docId: action.docId
+			})
 		default:
 		  return state;
 	}

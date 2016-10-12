@@ -15,12 +15,12 @@ var db = require('../db/config.js');
 require('./config/passport.js');
 
 app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use('/public', express.static(path.join(__dirname, '/../public')));
 
-const rootPath = path.join(__dirname + '/../')
+const rootPath = path.join(__dirname + '/../');
 
 var server = require('http').Server(app);
 require('./sockets/socketRouter')(server);

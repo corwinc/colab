@@ -1,49 +1,54 @@
 import React from 'react';
 import { render } from 'react-dom';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as tvPageActions from '../actions/tvPageActions.jsx';
+import * as editorActions from '../actions/editorActions.jsx';
 import TextEditor from './textEditor.jsx';
 import AppVideo from './video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
 import FlashMessagesList from '../../auth/components/flash/flashMessagesList.jsx';
-import CommentArea from './commentArea.jsx';
+import CommentArea from '../../comments/components/CommentArea.jsx';
 
 // /* COMPONENT WITHOUT CHAT */
-export default class TextVideoPage extends React.Component {
+class TextVideoPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      curUser: 18,
-      curDoc: 2,
-      curSharedUsers: [],
-      selectionLoc: null,
-      commentEntryHeight: 50,
-      activeCommentStatus: false,
-      commentInput: '',
-      comments: [],
-      savedCommentFocus: false
+      // curUser: 2,
+      curSharedUsers: []
     };
 
     this.getSharedUsers = this.getSharedUsers.bind(this);
     this.getInitials = this.getInitials.bind(this);
-    this.getComments = this.getComments.bind(this);
     this.setSelectionLoc = this.setSelectionLoc.bind(this);
-    this.handleCommentInput = this.handleCommentInput.bind(this);
-    this.postEntry = this.postEntry.bind(this);
-    this.cancelEntry = this.cancelEntry.bind(this);
-    this.handleCommentClick = this.handleCommentClick.bind(this);
+    this.getDocId = this.getDocId.bind(this);
   };
 
-  componentWillMount () {
-    console.log('componentDidMount');
-    this.getComments();
-    // render comments from this.state.comments
-    // => for each comment, create a jsx element and attach it to DOM
+  componentWillMount() {
+    var urldocId = window.location.search.split('').splice(11).join('');
+    var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
+    console.log('TVP sharelink componentWillMount:', sharelinkId);
+    this.props.setSharelink(sharelinkId);
+    this.getDocId(sharelinkId);
+  }
+
+  componentDidMount() {
+    // Duplicated code from above b/c could not pull this.props.sharelink properly for some reason
+    // console.log('TVP CDM sharelink:', this.props.sharelinkId);
+    // var urldocId = window.location.search.split('').splice(11).join('');
+    // var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    // var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId;
+    // this.props.setSharelink(sharelinkId);
+    // this.getDocId(sharelinkId);
   }
 
   getSharedUsers (docId, userId) {
     // send request to server
-    console.log('inside FE getSharedUsers');
+    console.log('TVP inside FE getSharedUsers');
     $.ajax({
       method: 'GET',
       url: '/userdocs',
@@ -59,6 +64,27 @@ export default class TextVideoPage extends React.Component {
       },
       error: (err) => {
         console.log('getSharedUsers error:', err);
+      }
+    })
+  }
+
+  getDocId(sharelinkId) {
+    console.log('TVP inside getDocIc');
+    $.ajax({
+      method: 'GET',
+      url: '/document/id',
+      dataType: 'json',
+      data: {
+        sharelinkId: sharelinkId
+      },
+      success: (data) => {
+        console.log('TVP found doc from sharelink:', data);
+        var docId = data.id;
+        // this.setState({curDoc: docId});
+        this.props.setDocId(docId);
+      },
+      error: (err) => {
+        console.log('TVP getDocId error:', err);
       }
     })
   }
@@ -79,81 +105,8 @@ export default class TextVideoPage extends React.Component {
     return firstInit + lastInit;
   }
 
-  //////// COMMENT METHODS /////////
-  getComments () {
-    // send request to server
-    // on success: setState w/ comments
-    // componentDidMount: render comments
-    console.log('inside getComments');
-    $.ajax({
-      method: 'GET',
-      url: '/comments',
-      dataType: 'json',
-      data: {docId: this.state.curDoc},
-      success: (data) => {
-        console.log('Success getting comments!:', data);
-        this.setState({comments: data}, () => {
-          console.log('state comments:', this.state.comments);
-        });  
-      },
-      error: (err) => {
-        console.log('error getting comments:', err);
-      }
-    })
-  }
-
   setSelectionLoc (loc) {
     this.setState({selectionLoc: loc});
-  }
-
-  handleCommentInput (e) {
-    console.log('inside handleCommentInput');
-    e.preventDefault();
-    this.setState({commentInput: e.target.value}, () => {
-      if (this.state.commentInput !== '') {
-        console.log('the input has value!:', this.state.commentInput);
-        this.setState({commentEntryHeight: 70, activeCommentStatus: true});
-      } else {
-        console.log('the input DOESNOT have value');
-        this.setState({commentEntryHeight: 50, activeCommentStatus: false});
-      }
-    });
-  }
-
-  postEntry () {
-    // send POST req to db w/ input data
-    var comment = {
-      text: this.state.commentInput,
-      block: 1,
-      user: this.state.curUser,
-      location: this.state.selectionLoc,
-      document: this.state.curDoc
-    }
-
-    $.ajax({
-      method: 'POST',
-      url: '/comments',
-      data: comment,
-      success: (data) => {
-        console.log('Success posting comment!:', data);
-        this.setState({selectionLoc: null});
-        this.getComments();
-      },
-      error: (err) => {
-        console.log('error posting entry:', err);
-      }
-    })
-    // on success: remove comment entry and show rendered unfocused comment
-  }
-
-  cancelEntry () {
-    // remove DOM ==> create activeCommentEntry state?
-    this.setState({commentInput: '', activeCommentStatus: false, commentEntryHeight: 50, selectionLoc: null});
-  }
-
-  handleCommentClick () {
-    this.setState({savedCommentFocus: true});
-    // => increase height, add border, add resolve link (delete)
   }
 
   render() {
@@ -161,27 +114,58 @@ export default class TextVideoPage extends React.Component {
       <div>
         <div>
           <NavBar 
-            curDoc={this.state.curDoc} 
-            curUser={this.state.curUser}
+            // curDoc={this.props.curDoc}
+            // curUser={this.state.curUser}
             curSharedUsers={this.state.curSharedUsers} 
             getSharedUsers={this.getSharedUsers}
-            getInitials={this.getInitials} />
+            getInitials={this.getInitials}
+            getDocId={this.getDocId} />
         </div>
         <FlashMessagesList />
         <TextEditor setSelectionLoc={this.setSelectionLoc} />
         <AppVideo />
-        <CommentArea 
-          comments={this.state.comments}
-          selectionLoc={this.state.selectionLoc} 
-          handleCommentInput={this.handleCommentInput}
-          commentInput={this.state.commentInput}
-          commentEntryHeight={this.state.commentEntryHeight}
-          activeCommentStatus={this.state.activeCommentStatus}
-          postEntry={this.postEntry}
-          cancelEntry={this.cancelEntry}
-          handleCommentClick={this.handleCommentClick}
-          savedCommentFocus={this.state.savedCommentFocus} />
+        <CommentArea />
       </div>
     );
   }
 }
+
+
+
+// /* COMPONENT WITH CHAT */
+// export default class TextVideoPage extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <div className="NavBar">
+//           <NavBar />
+//         </div>
+//         <div id="editor">
+//           <p>Type here...</p>
+//         </div>
+//         <div className="video-and-chat">
+//           <AppVideo className="Video"/>
+//           <Chat className="Chat"/>
+//         </div>
+//       </div>
+//     );
+//   }
+// }
+
+function mapStateToProps(state) {
+  console.log('TVP STATE inside mapStateToProps:', state);
+  return {
+    curDoc: state.tvPage.curDoc,
+    curUser: state.tvPage.curUser,
+    sharelinkId: state.editor.sharelinkId
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setSharelink: editorActions.setLink,
+    setDocId: tvPageActions.setDocId
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextVideoPage);

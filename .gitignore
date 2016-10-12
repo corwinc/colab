@@ -1,3 +1,5 @@
+public/videocall_original.js
+public/videocall_refactor.js
 public/bundle.*
 server/config/config.js
 server/config/facebookAuth.js

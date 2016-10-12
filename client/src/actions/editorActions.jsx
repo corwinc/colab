@@ -25,3 +25,17 @@ export function setUser(user) {
     user: user
 	}
 }
+
+export function setSelectionLoc(loc) {
+  return {
+    type: 'SET_SELECTION_LOC',
+    loc
+  }
+}
+
+export function setDocId(docId) {
+  return {
+    type: 'SET_SELECTION_LOC',
+    docId
+  }
+}

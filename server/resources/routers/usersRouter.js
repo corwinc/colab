@@ -14,6 +14,49 @@ usersRouter.route('/users')
   .post(usersController.createUser)
   .put(usersController.updateUser)
   .delete(usersController.deleteUser)
+<<<<<<< HEAD
+=======
+  .get(usersController.oauthSuccess);
+
+usersRouter.route('/id')
+  .get(usersController.getId)
+// function validateInput(data) {
+// 	let errors = {};
+// 	console.log('inside validateInput')
+	
+// 	if (Validator.isEmpty(data.email)) {
+// 		errors.email = 'This field is required';
+// 	}
+// 	if(!Validator.isEmail(data.email)) {
+// 		errors.email = 'Email is invalid';
+// 	}
+// 	if (Validator.isEmpty(data.firstname)) {
+// 		errors.firstname = 'This field is required';
+// 	}
+// 	if (Validator.isEmpty(data.lastname)) {
+// 		errors.lastname = 'This field is required';
+// 	}
+// 	if (Validator.isEmpty(data.username)) {
+// 		errors.username = 'This field is required';
+// 	}
+// 	if (Validator.isEmpty(data.password)) {
+// 		errors.password = 'This field is required';
+// 	}
+// 	 return {
+// 		errors,
+// 		isValid: isempty(errors)
+// 	}
+// }
+
+// usersRouter.post('/', (req, res) => {
+// 	console.log(req.body);
+// 	const {errors, isValid } = validateInput(req.body);
+
+// 	if (!isValid) {
+// 		res.status(400).json(errors);
+// 	}
+// });
+>>>>>>> ef50d578f7142dec62593e03f10100df2ab77235
 
   //facebook oauth routes
   usersRouter.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
