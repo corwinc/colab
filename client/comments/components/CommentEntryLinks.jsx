@@ -31,7 +31,7 @@ class CommentEntryLinks extends React.Component {
       data: comment,
       success: (data) => {
         this.props.setSelectionLoc(null);
-        this.props.handleCommentInput(null);
+        this.props.handleCommentInput('');
         this.props.activeCommentStatus(false);
         this.props.setNewCommentStatus(false);
         this.getComments();
