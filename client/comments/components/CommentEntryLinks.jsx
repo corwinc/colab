@@ -23,7 +23,7 @@ class CommentEntryLinks extends React.Component {
       initials: this.props.curUserInitials
     }
 
-    console.log('POSTENTRY COMMENT:', comment);
+    // console.log('POSTENTRY COMMENT:', comment);
 
     $.ajax({
       method: 'POST',
@@ -31,6 +31,7 @@ class CommentEntryLinks extends React.Component {
       data: comment,
       success: (data) => {
         this.props.setSelectionLoc(null);
+        this.props.handleCommentInput(null);
         this.getComments();
       },
       error: (err) => {
