@@ -10,16 +10,12 @@ var encryption = require('../../utils/encryption.js');
 exports.getUser = function(req, res) {
   User.findOne({where: {username: req.query.username}})
     .then(user => {
-      console.log('req.query.password', req.query.password);
-      console.log('------------>>>>>>>', user.password);
       if (user !== null) {
         return encryption.comparePassword(req.query.password, user.password)
         .then(match => {
-           console.log('match ---> ', match);
           if (match) {
             res.status(200).send(user);
           } else {
-            console.log('User not found.');
             res.send('User not found.');
           }
         })
@@ -44,18 +40,6 @@ exports.getId = function(req, res) {
     });
 };
 
-/**
- * Oauth
- * @param {Object} req
- * @param {Object} res
- * @return undefined
- */
- exports.oauthSuccess = function(req, res) {
-  if (!req.user) { return res.status(404).send({ message: 'Login failed' }); }
-  const user = req.user;
-  const token = req.user;
-  return res.redirect(`/oauthsuccess?token=${token}&firstname=${user.firstname}&lastname=${user.lastname}&username=${user.username}&email=${user.email}`);
-}
 
 /**
  * Create user
@@ -63,25 +47,89 @@ exports.getId = function(req, res) {
  * @param {Object} res
  * @return undefined
  */
+ 
 exports.createUser = function(req, res) {
-  User.findOne({where: {username: req.body.username} })
-    .then(function(user){
-      if (user !== null){
-        res.send('A user with that username already exists.');
-      } else {
-        User.create(req.body)
-          .then(function(user){
-            res.send(user);
-          })
-          .catch(function(error){
-            res.status(500).send('Error creating the user.');
-          })
-      }
-    })    
-    .catch(function(error){
-      res.status(500).send('Error finding this user.');
-    });
+  console.log('req.body 1-------->', req.body);
+  
+  if (Object.keys(req.body).length === 0) {
+
+    // console.log('--------------------------------------------------------------------->>>>>>inside facebook create user');
+    ////////////////////////////////////////////facebook
+    
+
+    User.findOne({where: {username: req.user.id} })
+      .then(function(user){
+        
+        if (user !== null){
+          res.send('A user with that username already exists.');
+        } else {
+          var newUser = {
+            fb_id: req.user.id,
+            fb_name: req.user.displayName,
+            username: req.user.id,
+          }
+
+          User.create(newUser)
+            .then(function(user){
+              // console.log('newUser----->', user);
+              res.send(user);
+            })
+            .catch(function(error){
+              res.status(500).send('Error creating the user.');
+            })
+        }
+      })    
+      .catch(function(error){
+        res.status(500).send('Error finding this user.');
+      });
+
+
+
+      ///////////////////////////////////////////facebook
+
+  } else {
+      //////////////////////////////////////////Regular Signup
+    User.findOne({where: {username: req.body.username} })
+      .then(function(user){
+        if (user !== null){
+          res.send('A user with that username already exists.');
+        } else {
+          User.create(req.body)
+            .then(function(user){
+              // console.log('Regularuser----->', user);
+              res.send(user);
+            })
+            .catch(function(error){
+              res.status(500).send('Error creating the user.');
+            })
+        }
+      })    
+      .catch(function(error){
+        res.status(500).send('Error finding this user.');
+      });
+  }
+
+
 };
+
+/**
+ * Oauth
+ * @param {Object} req
+ * @param {Object} res
+ * @return undefined
+ */
+exports.oauthSuccess = function(req, res) {
+  // console.log('oauthSuccess req.body---------', req.body);
+  // console.log('req-------------------------->', req.user.id);
+  if (!req.user) { return res.status(404).send({ message: 'Login failed' }); }
+  const user = req.user;
+  const token = req.user.id;
+
+  exports.createUser(req);
+
+  return res.redirect(`/oauthSuccess?token=${token}&username=${user.id}`);
+}
+
 
 /**
  * Update user

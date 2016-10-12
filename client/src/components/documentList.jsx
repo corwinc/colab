@@ -14,6 +14,7 @@ class DocumentList extends React.Component {
   }
 
   componentDidMount () {
+
     var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
     axios.get('users/id/?username=' + username)
       .then(function(res) {
@@ -135,11 +136,12 @@ class DocumentList extends React.Component {
       marginRight: 10
     };
 
-    return (
-      <div className="container">
-        <button className="btn btn btn-primary btn-large btn-block" onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
-        <br />
-        <span style={ messageStyle }>{ this.props.message }</span>
+	  return (
+		  <div className="container">
+		    <button className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
+        <div className="logout-link btn-block"><a href="/logout">logout</a></div>
+		    <br />
+		    <span style={ messageStyle }>{ this.props.message }</span>
         <br />
 
 			    <ul>
@@ -162,7 +164,8 @@ class DocumentList extends React.Component {
 			      }
 			    </ul>
 
-        <br />
+		    <br />
+      
       </div>
           );
   }
