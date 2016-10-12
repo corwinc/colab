@@ -108,6 +108,13 @@ class TextEditor extends React.Component {
       }
     });
 
+// CHECK IF BELOW CODE IS IN THE RIGHT PLACE, IF NOT, TRY MOVING INTO THE ABOVE CODE BLOCK
+        var bounds = quill.getBounds(range.index);
+        console.log('bounds:', bounds);
+        if (range.length !== 0) {
+          context.props.dispatch(editor.setSelectionLoc(bounds.top));
+          context.props.dispatch(editor.saveSelectionLoc(bounds.top));          
+        }
 
     socket.on('change', function(msg){
       if(msg.who !== user && sharelinkId === msg.sharelinkId) { // prevent infinite loop; user who emitted msg should not receive it
@@ -182,7 +189,7 @@ export default connect((store) => {
     saveInterval: null,
     sharelinkId: store.editor.sharelinkId,
     user: null,
-    curUser: store.documentlist.curUser
+    curUser: store.documentlist.curUser,
     // selectionLoc: store.editor.selectionLoc
   }
 })(TextEditor);

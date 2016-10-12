@@ -17,10 +17,10 @@ class CommentEntryLinks extends React.Component {
     var comment = {
       text: this.props.commentInput,
       block: 1,
-      user: this.props.curUser,
-      location: this.props.selectionLoc,
+      user: Number(this.props.curUser),
+      location: this.props.savedSelectionLoc,
       document: this.props.curDoc,
-      initials: this.props.curUserIntials
+      initials: this.props.curUserInitials
     }
 
     console.log('POSTENTRY COMMENT:', comment);
@@ -75,9 +75,10 @@ class CommentEntryLinks extends React.Component {
 function mapStateToProps(state) {
   return {
     selectionLoc: state.comment.selectionLoc,
+    savedSelectionLoc: state.editor.savedSelectionLoc,
     commentInput: state.comment.commentInput,
-    curUser: state.comment.curUser,
-    curDoc: state.comment.curDoc,
+    curUser: state.documentlist.curUser,
+    curDoc: state.editor.docId,
     curUserInitials: state.tvPage.curUserInitials
   }
 }

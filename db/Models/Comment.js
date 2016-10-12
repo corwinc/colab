@@ -7,7 +7,7 @@ var Comment = sqlConnection.define('comment',
     user: Sequelize.INTEGER,
     location: Sequelize.INTEGER,
     document: Sequelize.INTEGER,
-    // initials: Sequelize.STRING 
+    initials: Sequelize.STRING 
   }
 );
 

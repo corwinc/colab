@@ -11,7 +11,8 @@ const initialState = {
   comments: [],
   commentInput: '',
   activeCommentStatus: false,
-  commentEntryHeight: 50
+  commentEntryHeight: 50,
+  savedSelectionLoc: null
 }
 
 export default function (state=initialState, action) {
