@@ -1,3 +1,6 @@
+import thunk from 'redux-thunk';
+import promise from 'redux-promise';
+
 // DEMO
 export function addComment(comment) {
   return {
@@ -36,6 +39,7 @@ export function getCommentsError(error) {
 }
 
 export function handleCommentInput(input) {
+  console.log('INSIDE HANDLE COMMENT INPUT');
   return {
     type: 'HANDLE_COMMENT_INPUT',
     input
@@ -43,11 +47,48 @@ export function handleCommentInput(input) {
 }
 
 export function updateCommentHeight(height) {
+  console.log('INSIDE UPDATE COMMENT HEIGHT');
   return {
     type: 'UPDATE_COMMENT_HEIGHT',
     height
   }
 }
+
+
+
+//////// NEW
+
+export function handleCommentInputThenHeight(input) {
+  console.log('INSIDE ACTION HANDLE INPUT THEN HEIGHT, input:', input);
+  return dispatch => {
+    console.log('INSIDE INNER DISPATCH ABOUT TO D HANDLECOMMENTINPUTP, input:', input);
+     dispatch(handleCommentInputP(input))
+      .then((inputRes) => dispatch(updateCommentHeightAfterInput(inputRes)))
+  }
+}
+
+export function handleCommentInputP(input) {
+  console.log('INSIDE HANDLE COMMENT INPUT P, input:', input);
+  return new Promise(() => handleCommentInput);
+}
+
+export function updateCommentHeightAfterInput(input) {
+  console.log('INSIDE UPDATE HEIGHT AFTER INPUT: input:', input);
+  if (input !== '') {
+    return {
+      type: 'UPDATE_COMMENT_HEIGHT_AFTER_INPUT',
+      height: 70
+    } 
+  } else {
+    return {
+      type: 'UPDATE_COMMENT_HEIGHT_AFTER_INPUT',
+      height: 50
+    }
+  }
+}
+
+
+///
 
 export function activeCommentStatus(bool) {
   return {

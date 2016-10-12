@@ -15,11 +15,11 @@ class CommentArea extends React.Component {
   }
 
   componentDidMount() {
-    console.log('COMMENT CURDOC:', this.props.curDoc);
     this.getComments();
   }
 
   getComments () {
+    console.log('GETTING COMMENTS');
     $.ajax({
       method: 'GET',
       url: '/comments',

@@ -51,6 +51,10 @@ export default function (state=initialState, action) {
       return Object.assign({}, state, {
         commentEntryHeight: action.height
       })
+    case 'HANDLE_COMMENT_HEIGHT_AFTER_INPUT':
+      return Object.assign({}, state, {
+        commentEntryHeight: action.height
+      })
     case 'SET_NEW_COMMENT_STATUS':
       return Object.assign({}, state, {
         newCommentStatus: action.status

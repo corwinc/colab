@@ -14,8 +14,15 @@ class NewComment extends React.Component {
   }
 
   handleCommentInput (e) {
+    console.log('HANDLECOMMENTINPUT input:', e.target.value);
     e.preventDefault();
     this.props.handleCommentInput(e.target.value);
+  }
+
+  handleCommentInputThenHeight (e) {
+    console.log('INSIDE HANDLEINPUTTHENHEIGHT');
+    e.preventDefault();
+    this.props.handleCommentInputThenHeight(e.target.value);
   }
 
   updateCommentHeight() {
@@ -41,6 +48,7 @@ class NewComment extends React.Component {
               className="comment-input" 
               placeholder="New comment" 
               onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
+              // onChange={(e) => this.handleCommentInputThenHeight(e)}
               autoFocus={true} />
             {(() => {
               if (this.props.activeComment === true) {
@@ -67,7 +75,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     handleCommentInput: commentActions.handleCommentInput,
     updateCommentHeight: commentActions.updateCommentHeight,
-    activeCommentStatus: commentActions.activeCommentStatus
+    activeCommentStatus: commentActions.activeCommentStatus,
+    handleCommentInputThenHeight: commentActions.handleCommentInputThenHeight
   }, dispatch);
 }
 
