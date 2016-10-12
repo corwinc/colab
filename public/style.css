@@ -521,6 +521,20 @@ div.vid-scrollable-list {
   height: 50px;
 }
 
+.text-selection-menu-container {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: none;
+}
+
+.comment-icon {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  margin-left: 6px;
+}
+
 /***
  * document list css
  */

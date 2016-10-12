@@ -90,3 +90,10 @@ export function handleCommentClick() {
   }
 }
 
+export function setNewCommentStatus(status) {
+  return {
+    type: 'SET_NEW_COMMENT_STATUS',
+    status
+  }
+}
+

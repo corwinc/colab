@@ -7,12 +7,13 @@
 // WHAT BELONGS TO LARGER APP (TAKE THESE OUT);
 const initialState = {
   curUser: null,
-  curDoc: 2,
+  curDoc: null,
   comments: [],
   commentInput: '',
   activeCommentStatus: false,
   commentEntryHeight: 50,
-  savedSelectionLoc: null
+  savedSelectionLoc: null,
+  newCommentStatus: false
 }
 
 export default function (state=initialState, action) {
@@ -49,6 +50,10 @@ export default function (state=initialState, action) {
     case 'UPDATE_COMMENT_HEIGHT':
       return Object.assign({}, state, {
         commentEntryHeight: action.height
+      })
+    case 'SET_NEW_COMMENT_STATUS':
+      return Object.assign({}, state, {
+        newCommentStatus: action.status
       })
     case 'POST_ENTRY':
       return Object.assign({}, state, {

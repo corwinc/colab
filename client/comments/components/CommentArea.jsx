@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
 import SavedComment from './SavedComment.jsx';
 import NewComment from './NewComment.jsx';
+import TextSelectionMenu from './TextSelectionMenu.jsx';
 import {connect} from 'react-redux';
 
 class CommentArea extends React.Component {
@@ -13,7 +14,8 @@ class CommentArea extends React.Component {
     this.getComments = this.getComments.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    console.log('COMMENT CURDOC:', this.props.curDoc);
     this.getComments();
   }
 
@@ -46,8 +48,16 @@ class CommentArea extends React.Component {
 
         {
           (() => {
-            console.log('CURRENT SELECTION IS:', this.props.selectionLoc);
             if (this.props.selectionLoc !== null) {
+              return (<TextSelectionMenu />);
+            }
+          })()
+        }
+
+        {
+          (() => {
+            if (this.props.newCommentStatus) {
+              
               return (<NewComment />);
             }
           })()
@@ -62,7 +72,8 @@ function mapStateToProps(state) {
   return {
     comments: state.comment.comments,
     selectionLoc: state.editor.selectionLoc,
-    curDoc: state.comment.curDoc
+    curDoc: state.comment.curDoc,
+    newCommentStatus: state.comment.newCommentStatus
   }
 }
 
