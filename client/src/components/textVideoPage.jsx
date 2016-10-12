@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import * as tvPageActions from '../actions/tvPageActions.jsx';
 import * as editorActions from '../actions/editorActions.jsx';
 import TextEditor from './textEditor.jsx';
-import AppVideo from './video.jsx';
+import AppVideo from './../../video/components/video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
 import FlashMessagesList from '../../auth/components/flash/flashMessagesList.jsx';

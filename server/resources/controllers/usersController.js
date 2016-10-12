@@ -27,8 +27,6 @@ exports.getUser = function(req, res) {
 };
 
 
-<<<<<<< HEAD
-=======
 exports.getId = function(req, res) {
   User.findOne({
     where: {
@@ -41,7 +39,7 @@ exports.getId = function(req, res) {
       res.status(500).send('Error getting user id.', error);
     });
 };
->>>>>>> ef50d578f7142dec62593e03f10100df2ab77235
+
 
 /**
  * Create user
