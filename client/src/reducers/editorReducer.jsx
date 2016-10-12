@@ -1,5 +1,5 @@
 const initialState = {
-  quill: null,
+  quill: [],
   saveInterval: null,
   sharelinkId: '',
   docId: null,
@@ -11,7 +11,7 @@ export default function(state = initialState, action) {
 	switch(action.type) {
 		case 'SET_QUILL': {
 			return Object.assign({}, state, {
-				quill: action.quill 
+				quill: [action.quill] 
 			});
 		}
 		case 'SET_INTERVAL': {

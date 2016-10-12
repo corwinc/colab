@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use('/public', express.static(path.join(__dirname, '/../public')));
 
-const rootPath = path.join(__dirname + '/../')
+const rootPath = path.join(__dirname + '/../');
 
 var server = require('http').Server(app);
 require('./sockets/socketRouter')(server);

@@ -109,14 +109,11 @@ class AppVideo extends React.Component {
     };
 
     this.pcs[pcKey].oniceconnectionstatechange = function(evt) {
-
       if (this && this.iceConnectionState === 'connected') {
         if (mode === 'direct call') {
           if (isCaller){
-            console.log("fire delete outgoing");
             context.props.dispatch(videoActionList.deleteOutgoingAlert(pcKey));
           } else {
-            console.log("fire delete incoming");
             context.props.dispatch(videoActionList.deleteIncomingAlert(pcKey));
           }
         }
