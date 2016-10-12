@@ -8,7 +8,6 @@ var encryption = require('../../utils/encryption.js');
  * @return undefined
  */ 
 exports.getUser = function(req, res) {
-  //console.log('-------------------------');
   User.findOne({where: {username: req.query.username}})
     .then(user => {
       console.log('req.query.password', req.query.password);
@@ -31,6 +30,19 @@ exports.getUser = function(req, res) {
     });
 };
 
+
+exports.getId = function(req, res) {
+  User.findOne({
+    where: {
+      username: req.query.username
+    }})
+    .then(user => {
+      res.send(JSON.stringify(user.id));
+    })
+    .catch(function(error){
+      res.status(500).send('Error getting user id.', error);
+    });
+};
 
 /**
  * Oauth

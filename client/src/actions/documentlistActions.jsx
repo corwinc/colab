@@ -26,3 +26,16 @@ export function setInputvalue(val) {
 		inputValue: val
 	}
 }
+
+export function setUserId(curUser) {
+	return {
+		type: 'SET_CURUSER',
+		curUser: curUser
+	}
+}
+export function setCurDocId(curDocId) {
+	return {
+		type: 'SET_CUR_DOC_ID',
+		curDocId
+	}
+}
