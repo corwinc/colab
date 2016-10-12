@@ -13,7 +13,7 @@ class SavedComment extends React.Component {
       <div className="comment-saved-container">
         <div className="comment-saved" style={{top: this.props.comment.location - 56}}>
           <div className="comment-saved-chathead" onClick={() => this.props.handleCommentClick()}>
-            <span className="comment-saved-initials">{initials}</span>
+            <span className="comment-saved-initials">{this.props.comment.initials}</span>
           </div>
           <div className="comment-saved-text">{this.props.comment.text}</div>
         </div>
@@ -21,6 +21,16 @@ class SavedComment extends React.Component {
     )
   }
 }
+
+// function mapStateToProps(state) {
+//   return {
+//     selectionLoc: state.editor.selectionLoc,
+//     commentInput: state.comment.commentInput,
+//     commentEntryHeight: state.comment.commentEntryHeight,
+//     activeComment: state.comment.activeCommentStatus,
+//     curUserInitials: state.tvPage.curUserInitials
+//   }
+// }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
