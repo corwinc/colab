@@ -7,6 +7,10 @@ var User = sqlConnection.define('user',
     lastname: Sequelize.STRING, 
     username: Sequelize.STRING,
     email: Sequelize.STRING,
+    fb_id: Sequelize.STRING,
+    fb_name: Sequelize.STRING,
+    fb_email: Sequelize.STRING,
+    fb_token: Sequelize.STRING, 
     password: Sequelize.STRING, 
   });
 

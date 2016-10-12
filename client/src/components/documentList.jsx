@@ -13,9 +13,10 @@ class DocumentList extends React.Component {
   }
 
   componentDidMount () {
+   
 
     console.log('local:', 'document/all?username=' + window.localStorage.user.slice(1, window.localStorage.user.length - 1));
-  	//populate documents array with list of documents for user
+   //populate documents array with list of documents for user
     axios.get('document/all?username=' + window.localStorage.user.slice(1, window.localStorage.user.length - 1))
       .then(function(res) {
         this.props.dispatch( doclist.populateDocs(res.data));
@@ -122,7 +123,8 @@ class DocumentList extends React.Component {
 
 	  return (
 		  <div className="container">
-		    <button className="btn btn btn-primary btn-large btn-block" onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
+		    <button className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
+        <div className="logout-link btn-block"><a href="/logout">logout</a></div>
 		    <br />
 		    <span style={ messageStyle }>{ this.props.message }</span>
         <br />
@@ -148,6 +150,7 @@ class DocumentList extends React.Component {
 			    </ul>
 
 		    <br />
+      
       </div>
 		  		);
 	}

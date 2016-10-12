@@ -1,5 +1,6 @@
 public/bundle.*
 server/config/config.js
+server/config/facebookAuth.js
 node_modules
 # db/config.js
 .env
