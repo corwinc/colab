@@ -8,10 +8,14 @@ var initials = 'CC';
 
 class SavedComment extends React.Component {
 
+  setBorder() {
+    console.log('setting a border');
+  }
+
   render() {
     return (
       <div className="comment-saved-container">
-        <div className="comment-saved" style={{top: this.props.comment.location - 56}}>
+        <div className="comment-saved" style={{top: this.props.comment.location - 56, border: this.setBorder()}}>
           <div className="comment-saved-chathead" onClick={() => this.props.handleCommentClick()}>
             <span className="comment-saved-initials">{this.props.comment.initials}</span>
           </div>

@@ -59,23 +59,23 @@ export function updateCommentHeight(height) {
 //////// NEW
 
 
-var p = new Promise(function(resolve, reject) {
+// var p = new Promise(function(resolve, reject) {
   
-  // Do an async task async task and then...
+//   // Do an async task async task and then...
 
-  if(/* good condition */) {
-    resolve('Success!');
-  }
-  else {
-    reject('Failure!');
-  }
-});
+//   if(/* good condition */) {
+//     resolve('Success!');
+//   }
+//   else {
+//     reject('Failure!');
+//   }
+// });
 
-p.then(function() { 
-  /* do something with the result */
-}).catch(function() {
-  /* error :( */
-})
+// p.then(function() { 
+//   /* do something with the result */
+// }).catch(function() {
+//   /* error :( */
+// })
 
 export function handleCommentInputThenHeight(input) {
   // console.log('HANDLE COMMENT handleCommentInputThenHeight, input:', input);
@@ -92,6 +92,7 @@ export function handleCommentInputThenHeight(input) {
 export function handleCommentInputP(input) {
   // console.log('HANDLE COMMENT handleCommentInputP, input:', input);
   const handleInputPromise = new Promise((resolve) => {
+
     // console.log('HANDLE COMMENT inside handleInputPromise')
     return {
       type: 'HANDLE_COMMENT_INPUT',
