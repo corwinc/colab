@@ -100,22 +100,23 @@ class TextEditor extends React.Component {
 
       var bounds = quill.getBounds(range.index);
       console.log('bounds:', bounds);
-      if (range.length !== 0) {
-        setSelectionLoc(bounds.top);          
+      if (range.length !== 0) {  
+        context.props.dispatch(editor.setSelectionLoc(bounds.top));
+        context.props.dispatch(editor.saveSelectionLoc(bounds.top));          
       }
 
       if (range.length === 0) {
-        setSelectionLoc(null);
+        context.props.dispatch(editor.setSelectionLoc(null));
       }
     });
 
 // CHECK IF BELOW CODE IS IN THE RIGHT PLACE, IF NOT, TRY MOVING INTO THE ABOVE CODE BLOCK
-        var bounds = quill.getBounds(range.index);
-        console.log('bounds:', bounds);
-        if (range.length !== 0) {
-          context.props.dispatch(editor.setSelectionLoc(bounds.top));
-          context.props.dispatch(editor.saveSelectionLoc(bounds.top));          
-        }
+//         var bounds = quill.getBounds(range.index);
+//         console.log('bounds:', bounds);
+//         if (range.length !== 0) {
+//           context.props.dispatch(editor.setSelectionLoc(bounds.top));
+//           context.props.dispatch(editor.saveSelectionLoc(bounds.top));          
+//         }
 
     socket.on('change', function(msg){
       if(msg.who !== user && sharelinkId === msg.sharelinkId) { // prevent infinite loop; user who emitted msg should not receive it
