@@ -11,7 +11,8 @@ usersRouter.route('/')
   .delete(usersController.deleteUser)
   .get(usersController.oauthSuccess);
 
-
+usersRouter.route('/id')
+  .get(usersController.getId)
 // function validateInput(data) {
 // 	let errors = {};
 // 	console.log('inside validateInput')

@@ -153,3 +153,16 @@ exports.deleteDocument = function(req, res) {
     res.status(500).send('Error finding the document.');
   });
 };
+
+exports.getId = function(req, res) {
+  console.log('inside getId, req:', req.query);
+  Document.findOne({
+    where: {sharelink: req.query.sharelinkId}
+  })
+  .then((doc) => {
+    res.send(doc);
+  })
+  .catch((err) => {
+    res.status(500).send('Error finding the document')
+  })
+}
