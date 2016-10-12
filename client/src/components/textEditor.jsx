@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as editor from '../actions/editorActions.jsx';
 import * as doclist from '../actions/documentlistActions.jsx';
+import * as comment from '../../comments/actions/commentActions.jsx';
 
 
 class TextEditor extends React.Component {

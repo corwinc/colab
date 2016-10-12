@@ -48,7 +48,7 @@ class CommentArea extends React.Component {
 
         {
           (() => {
-            if (this.props.selectionLoc !== null) {
+            if (this.props.selectionLoc !== null && !this.props.newCommentStatus) {
               return (<TextSelectionMenu />);
             }
           })()
@@ -57,7 +57,6 @@ class CommentArea extends React.Component {
         {
           (() => {
             if (this.props.newCommentStatus) {
-              
               return (<NewComment />);
             }
           })()
