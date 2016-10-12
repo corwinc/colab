@@ -39,7 +39,7 @@ export function getCommentsError(error) {
 }
 
 export function handleCommentInput(input) {
-  console.log('INSIDE HANDLE COMMENT INPUT');
+  console.log('HANDLE COMMENT handleCommentInput, input:', input);
   return {
     type: 'HANDLE_COMMENT_INPUT',
     input
@@ -47,7 +47,7 @@ export function handleCommentInput(input) {
 }
 
 export function updateCommentHeight(height) {
-  console.log('INSIDE UPDATE COMMENT HEIGHT');
+  console.log('HANDLE COMMENT updateCommentHeight, height:', height);
   return {
     type: 'UPDATE_COMMENT_HEIGHT',
     height
@@ -58,22 +58,51 @@ export function updateCommentHeight(height) {
 
 //////// NEW
 
+
+var p = new Promise(function(resolve, reject) {
+  
+  // Do an async task async task and then...
+
+  if(/* good condition */) {
+    resolve('Success!');
+  }
+  else {
+    reject('Failure!');
+  }
+});
+
+p.then(function() { 
+  /* do something with the result */
+}).catch(function() {
+  /* error :( */
+})
+
 export function handleCommentInputThenHeight(input) {
-  console.log('INSIDE ACTION HANDLE INPUT THEN HEIGHT, input:', input);
+  // console.log('HANDLE COMMENT handleCommentInputThenHeight, input:', input);
   return dispatch => {
-    console.log('INSIDE INNER DISPATCH ABOUT TO D HANDLECOMMENTINPUTP, input:', input);
-     dispatch(handleCommentInputP(input))
-      .then((inputRes) => dispatch(updateCommentHeightAfterInput(inputRes)))
+    // console.log('HANDLE COMMENT about to dispatch handleCommentInputP, input:', input);
+     return dispatch(handleCommentInputP(input))
+      .then((inputRes) => {
+        dispatch(updateCommentHeightAfterInput(inputRes));
+        dispatch(activeCommentStatus(true));
+      })
   }
 }
 
 export function handleCommentInputP(input) {
-  console.log('INSIDE HANDLE COMMENT INPUT P, input:', input);
-  return new Promise(() => handleCommentInput);
+  // console.log('HANDLE COMMENT handleCommentInputP, input:', input);
+  const handleInputPromise = new Promise((resolve) => {
+    // console.log('HANDLE COMMENT inside handleInputPromise')
+    return {
+      type: 'HANDLE_COMMENT_INPUT',
+      input
+    };
+  } );
+  return handleInputPromise;
 }
 
 export function updateCommentHeightAfterInput(input) {
-  console.log('INSIDE UPDATE HEIGHT AFTER INPUT: input:', input);
+  console.log('HANDLE COMMENT updateCommentHeightAfterInput, input:', input);
   if (input !== '') {
     return {
       type: 'UPDATE_COMMENT_HEIGHT_AFTER_INPUT',
@@ -91,6 +120,7 @@ export function updateCommentHeightAfterInput(input) {
 ///
 
 export function activeCommentStatus(bool) {
+  console.log('HANDLE COMMENT activeCommentStatus, bool:', bool);
   return {
     type:'ACTIVE_COMMENT_STATUS',
     bool

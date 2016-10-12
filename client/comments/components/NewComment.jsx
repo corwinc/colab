@@ -40,15 +40,15 @@ class NewComment extends React.Component {
     return (
       <div className="comment-container">
       {console.log('BEFORE NC RENDER selectionLoc:', this.props.selectionLoc)}
-        <div className="comment" style={{top: this.props.selectionLoc - 66, height: this.props.commentEntryHeight}}>
+        <div className="comment" style={{top: this.props.selectionLoc - 40, height: this.props.commentEntryHeight}}>
           <div className="comment-chathead">
             <span className="comment-initials">{this.props.curUserInitials}</span>
             <input 
               value={this.props.commentInput}
               className="comment-input" 
               placeholder="New comment" 
-              onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
-              // onChange={(e) => this.handleCommentInputThenHeight(e)}
+              // onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
+              onChange={(e) => this.handleCommentInputThenHeight(e)}
               autoFocus={true} />
             {(() => {
               if (this.props.activeComment === true) {
