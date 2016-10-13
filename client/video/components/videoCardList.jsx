@@ -1,6 +1,7 @@
 import React from 'react';
 import VideoCard from './videoCard.jsx';
 
+// All the current videos are contained here. 
 const VideoCardList = ({connections, streams}) => {
   return (
     <div className="vid-scrollable-list">

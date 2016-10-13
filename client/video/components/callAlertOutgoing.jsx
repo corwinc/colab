@@ -1,10 +1,10 @@
 import React from 'react';
 
-const OutgoingCallAlert = ({username, acceptOnclick}) => {
+const OutgoingCallAlert = ({acceptOnclick}) => {
   return (
     <div className="call-alerts-outgoing">
       <img id="callIcon" className="call-icon icon-spin" src="public/images/callwaiting.svg"></img>
-      <span className="call-message"> { "Waiting for a response from " + username + "..." }</span>
+      <span className="call-message"> { "Waiting for a response..." }</span>
     </div> 
   )
 };

@@ -7,6 +7,8 @@ import * as videoActionList from '../actions/videoActions.jsx';
 
 import IncomingCallOptions from './callAlertIncomingOptions.jsx'
 
+// The incoming call alert is stateful so that it has a show/hide state for the incoming call options. They will show when the user hovers
+// the cursor over the incoming call alert. 
 class IncomingCallAlert extends React.Component {
   constructor(props){
     super(props);
@@ -20,7 +22,7 @@ class IncomingCallAlert extends React.Component {
                 src="public/images/callwaiting.svg"
                 onMouseOver={ ()=>{ this.props.dispatch(videoActionList.showIncomingCallOptions(true)) }}>
           </img>
-          <span className="call-message"> {"Incoming call from " + this.username + "..."}</span>
+          <span className="call-message"> {"Incoming call..."}</span>
         </div>
         <IncomingCallOptions shouldShow={ this.props.shouldShow } acceptOnclick={ this.props.acceptOnclick } rejectOnclick={ this.props.rejectOnclick }/>
       </div>
