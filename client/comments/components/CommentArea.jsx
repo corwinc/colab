@@ -26,7 +26,7 @@ class CommentArea extends React.Component {
       dataType: 'json',
       data: {docId: this.props.curDoc},
       success: (data) => {
-        this.props.getCommentsSuccess(data); // reducer should update state w/ this once hooked up
+        this.props.getCommentsSuccess(data);
       },
       error: (err) => {
         console.log('Error getting comments:', err);
@@ -49,6 +49,7 @@ class CommentArea extends React.Component {
     return (
       <div className="comment-area-container">
         {
+          // Render all saved comments
           (() => {
             return this.props.comments.map((comment, i) => {
               return (<SavedComment key={i} comment={comment} deleteComment={this.deleteComment} />);
@@ -57,6 +58,7 @@ class CommentArea extends React.Component {
         }
 
         {
+          // If text is selected and a NewComment component is not rendered, show menu (currently only shows comment icon)
           (() => {
             if (this.props.selectionLoc !== null && !this.props.newCommentStatus) {
               return (<TextSelectionMenu />);
@@ -65,6 +67,7 @@ class CommentArea extends React.Component {
         }
 
         {
+          // If comment icon has been selected (and therefor newCommentStatus == true), render NewComment
           (() => {
             if (this.props.newCommentStatus) {
               return (<NewComment />);

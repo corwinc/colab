@@ -13,15 +13,14 @@ class NewComment extends React.Component {
     this.updateCommentHeight = this.updateCommentHeight.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.updateCommentHeight();
-  }
-
+  // On user input, update commentInput state
   handleCommentInput (e) {
     e.preventDefault();
     this.props.handleCommentInput(e.target.value);
   }
 
+  // If user has written input into newComment, increase height 
+  // & show links (activeCommentStatus == true)
   updateCommentHeight() {
     if (this.props.commentInput !== '') {
       this.props.updateCommentHeight(70);
@@ -33,7 +32,6 @@ class NewComment extends React.Component {
   }
 
   render() {
-
     return (
       <div className="comment-container">
         <div className="comment" style={{top: this.props.selectionLoc - 40, height: this.props.commentEntryHeight}}>
@@ -43,6 +41,8 @@ class NewComment extends React.Component {
               value={this.props.commentInput}
               className="comment-input" 
               placeholder="New comment" 
+              // handleCommentInput -> updateCommentHeight asynchronous behavior needs to be handled: 
+              // updates height before input state is set
               onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
               autoFocus={true} />
             {(() => {
@@ -52,7 +52,8 @@ class NewComment extends React.Component {
             })()}
           </div>
         </div>
-      </div>    )
+      </div>
+    )
   }
 }
 

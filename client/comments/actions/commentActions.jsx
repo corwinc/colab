@@ -25,7 +25,6 @@ export function getCommentsError(error) {
 
 /* NEW COMMENTS */
 export function handleCommentInput(input) {
-  console.log('HANDLE COMMENT handleCommentInput, input:', input);
   return {
     type: 'HANDLE_COMMENT_INPUT',
     input
@@ -33,7 +32,6 @@ export function handleCommentInput(input) {
 }
 
 export function updateCommentHeight(height) {
-  console.log('HANDLE COMMENT updateCommentHeight, height:', height);
   return {
     type: 'UPDATE_COMMENT_HEIGHT',
     height
@@ -41,7 +39,6 @@ export function updateCommentHeight(height) {
 }
 
 export function activeCommentStatus(bool) {
-  console.log('HANDLE COMMENT activeCommentStatus, bool:', bool);
   return {
     type:'ACTIVE_COMMENT_STATUS',
     bool

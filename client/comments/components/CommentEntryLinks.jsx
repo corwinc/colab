@@ -27,6 +27,7 @@ class CommentEntryLinks extends React.Component {
       url: '/comments',
       data: comment,
       success: (data) => {
+        // After post, reset initial values and call getComments to see latest post
         this.props.setSelectionLoc(null);
         this.props.handleCommentInput('');
         this.props.activeCommentStatus(false);
@@ -40,6 +41,7 @@ class CommentEntryLinks extends React.Component {
   }
 
   cancelEntry () {
+    // Reset initial values
     this.props.handleCommentInput('');
     this.props.activeCommentStatus(false);
     this.props.updateCommentHeight(50);
