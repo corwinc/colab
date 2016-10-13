@@ -19,6 +19,10 @@ usersRouter.route('/id')
   .get(usersController.getId)
 
 
+usersRouter.route('/user')
+  .get(usersController.getUserById)
+
+
   //facebook oauth routes
   // usersRouter.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
   // usersRouter.get('/auth/facebook/callback',

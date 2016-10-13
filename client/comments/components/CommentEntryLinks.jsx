@@ -9,17 +9,17 @@ class CommentEntryLinks extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.getComments = this.getComments.bind(this);
   }
 
   postEntry () {
+    // 'block' is a placeholder for a future feature allowing chaining comments together in a block
     var comment = {
       text: this.props.commentInput,
       block: 1,
-      user: this.props.curUser,
-      location: this.props.selectionLoc,
-      document: this.props.curDoc
+      user: Number(this.props.curUser),
+      location: this.props.savedSelectionLoc,
+      document: this.props.curDoc,
+      initials: this.props.curUserInitials
     }
 
     $.ajax({
@@ -27,20 +27,26 @@ class CommentEntryLinks extends React.Component {
       url: '/comments',
       data: comment,
       success: (data) => {
+        // After post, reset initial values and call getComments to see latest post
         this.props.setSelectionLoc(null);
+        this.props.handleCommentInput('');
+        this.props.activeCommentStatus(false);
+        this.props.setNewCommentStatus(false);
         this.getComments();
       },
       error: (err) => {
-        console.log('error posting entry:', err);
+        console.log('Error posting entry:', err);
       }
     })
   }
 
   cancelEntry () {
+    // Reset initial values
     this.props.handleCommentInput('');
     this.props.activeCommentStatus(false);
     this.props.updateCommentHeight(50);
     this.props.setSelectionLoc(null);
+    this.props.setNewCommentStatus(false);
 
   }
 
@@ -54,7 +60,7 @@ class CommentEntryLinks extends React.Component {
         this.props.getCommentsSuccess(data);
       },
       error: (err) => {
-        console.log('error getting comments:', err);
+        console.log('Error getting comments:', err);
       }
     })
   }
@@ -71,22 +77,22 @@ class CommentEntryLinks extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    selectionLoc: state.comment.selectionLoc,
+    savedSelectionLoc: state.editor.savedSelectionLoc,
     commentInput: state.comment.commentInput,
-    curUser: state.comment.curUser,
-    curDoc: state.comment.curDoc
+    curUser: state.documentlist.curUser,
+    curDoc: state.editor.docId,
+    curUserInitials: state.tvPage.curUserInitials
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    postEntry: commentActions.postEntry,
-    cancelEntry: commentActions.cancelEntry,
     setSelectionLoc: editorActions.setSelectionLoc,
     handleCommentInput: commentActions.handleCommentInput,
     activeCommentStatus: commentActions.activeCommentStatus,
     updateCommentHeight: commentActions.updateCommentHeight,
-    getCommentsSuccess: commentActions.getCommentsSuccess
+    getCommentsSuccess: commentActions.getCommentsSuccess,
+    setNewCommentStatus: commentActions.setNewCommentStatus
   }, dispatch);
 }
 

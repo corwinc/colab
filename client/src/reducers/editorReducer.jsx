@@ -4,7 +4,8 @@ const initialState = {
   sharelinkId: '',
   docId: null,
   user: null,
-  selectionLoc: null
+  selectionLoc: null,
+  savedSelectionLoc: null
 }
 
 export default function(state = initialState, action) {
@@ -37,6 +38,10 @@ export default function(state = initialState, action) {
 			return Object.assign({}, state, {
 				docId: action.docId
 			})
+		case 'SAVE_SELECTION_LOC':
+		  return Object.assign({}, state, {
+		    savedSelectionLoc: action.loc
+		  })
 		default:
 		  return state;
 	}

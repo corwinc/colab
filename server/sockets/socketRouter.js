@@ -31,6 +31,8 @@ module.exports = function(server) {
 
   });
 
+
+
   var editorSocket = io.of('/editor');
 
   editorSocket.on('connection', function(socket){
@@ -41,6 +43,41 @@ module.exports = function(server) {
       console.log('text:' + msg)
       editorSocket.emit('change', msg);
     });  
+
+    socket.on('disconnect', function() {
+      console.log('A user disconnected.');
+    });
+
+  });
+
+
+
+  var documents = {};
+
+  var documentSocket = io.of('/document');
+
+  documentSocket.on('connection', function(socket){
+
+    console.log("DOCUMENT SOCKET CONNECTED");
+
+    socket.on('user joining document', function(joinInfo){
+      var joinInfo = JSON.parse(joinInfo);
+      if (documents[joinInfo.documentId] === undefined) {
+        documents[joinInfo.documentId] = [];
+      }
+      documents[joinInfo.documentId].push(joinInfo.newUserId);
+      // Setting the timeout allows the joining user's video page view finish rendering before the event emits. 
+      setTimeout(function(){
+        documentSocket.emit('user joins document', JSON.stringify({"documentId": joinInfo.documentId, "activeUsers": documents[joinInfo.documentId]}));
+      }, 100);
+    });
+
+    socket.on('user leaving document', function(exitInfo){
+      var exitInfo = JSON.parse(exitInfo);
+      var exUserIndex = documents[exitInfo.documentId].indexOf(exitInfo.exitingUserId);
+      documents[exitInfo.documentId].splice(exUserIndex, exUserIndex + 1);
+      documentSocket.emit('user leaves document', JSON.stringify({"documentId": exitInfo.documentId, "activeUsers": documents[exitInfo.documentId]}));
+    });
 
     socket.on('disconnect', function() {
       console.log('A user disconnected.');

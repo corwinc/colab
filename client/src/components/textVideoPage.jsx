@@ -4,50 +4,78 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as tvPageActions from '../actions/tvPageActions.jsx';
 import * as editorActions from '../actions/editorActions.jsx';
+import * as navbarActions from '../actions/navbarActions.jsx';
 import TextEditor from './textEditor.jsx';
 import AppVideo from './../../video/components/video.jsx';
 import Chat from './chat.jsx';
 import NavBar from './navbar.jsx';
 import FlashMessagesList from '../../auth/components/flash/flashMessagesList.jsx';
 import CommentArea from '../../comments/components/CommentArea.jsx';
+import axios from 'axios';
 
 // /* COMPONENT WITHOUT CHAT */
 class TextVideoPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      // curUser: 2,
-      curSharedUsers: []
-    };
-
     this.getSharedUsers = this.getSharedUsers.bind(this);
-    this.getInitials = this.getInitials.bind(this);
-    this.setSelectionLoc = this.setSelectionLoc.bind(this);
     this.getDocId = this.getDocId.bind(this);
   };
 
   componentWillMount() {
+    // GET SHARED USERS
     var urldocId = window.location.search.split('').splice(11).join('');
-    var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
     var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
-    console.log('TVP sharelink componentWillMount:', sharelinkId);
     this.props.setSharelink(sharelinkId);
     this.getDocId(sharelinkId);
-  }
+    var docId = null;
+    var userId = null;
 
-  componentDidMount() {
-    // Duplicated code from above b/c could not pull this.props.sharelink properly for some reason
-    // console.log('TVP CDM sharelink:', this.props.sharelinkId);
-    // var urldocId = window.location.search.split('').splice(11).join('');
-    // var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
-    // var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId;
-    // this.props.setSharelink(sharelinkId);
-    // this.getDocId(sharelinkId);
+    // Get docId
+    $.ajax({
+      method: 'GET',
+      url: '/document/id',
+      dataType: 'json',
+      data: {
+        sharelinkId: sharelinkId
+      },
+      success: (data) => {
+        console.log('NAVBAR found docID from sharelink:', data);
+        var docId = data.id;
+
+        // Get userId
+        axios.get('users/id/?username=' + username)
+          .then(function(res) {
+            console.log('NAVBAR success getting userId:', res.data);
+            userId = res.data;
+
+            axios.get('/users/user/?id=' + userId)
+              .then((res) => {
+                console.log('TVPAGE SUCCESS GETTING USER BY ID:', res);
+
+                // Set user initial's (for use in new comments);
+                var initials = this.getInitials(res.data);
+                this.props.setCurUserInitials(initials);
+              })
+              .catch((err) => {
+                console.log('TVPAGE error getting user by id,', err);
+              })
+
+            // Get & set document's shared users 
+            this.getSharedUsers(docId, userId);
+          }.bind(this))
+          .catch(function(err) {
+            console.log('NAVBAR Error retrieving user.')
+          });
+      },
+      error: (err) => {
+        console.log('TVP getDocId error:', err);
+      }
+    })
   }
 
   getSharedUsers (docId, userId) {
-    // send request to server
     console.log('TVP inside FE getSharedUsers');
     $.ajax({
       method: 'GET',
@@ -58,14 +86,29 @@ class TextVideoPage extends React.Component {
         userId: userId
       },
       success: (data) => {
-        console.log('getSharedUsers success:', data);
-        this.setState({curSharedUsers: data});
-        console.log('state sharedusers:', this.state.curSharedUsers);
+        console.log('TVPAGE getSharedUsers success:', data);
+        this.props.setCurSharedUsers(data);
       },
       error: (err) => {
-        console.log('getSharedUsers error:', err);
+        console.log('TVPAGE getSharedUsers error:', err);
       }
     })
+  }
+
+  getInitials (user) {
+    if (user.firstname !== null) {
+      var firstInit = user.firstname[0];
+    } else {
+      var firstInit = '';
+    }
+
+    if (user.lastname !== null) {
+      var lastInit = user.lastname[0];
+    } else {
+      var lastInit = '';
+    }
+
+    return firstInit + lastInit;
   }
 
   getDocId(sharelinkId) {
@@ -89,40 +132,18 @@ class TextVideoPage extends React.Component {
     })
   }
 
-  getInitials (user) {
-    if (user.firstname !== null) {
-      var firstInit = user.firstname[0];
-    } else {
-      var firstInit = '';
-    }
-
-    if (user.lastname !== null) {
-      var lastInit = user.lastname[0];
-    } else {
-      var lastInit = '';
-    }
-
-    return firstInit + lastInit;
-  }
-
-  setSelectionLoc (loc) {
-    this.setState({selectionLoc: loc});
-  }
+  // setSelectionLoc (loc) {
+  //   this.setState({selectionLoc: loc});
+  // }
 
   render() {
     return (
       <div>
         <div>
-          <NavBar 
-            // curDoc={this.props.curDoc}
-            // curUser={this.state.curUser}
-            curSharedUsers={this.state.curSharedUsers} 
-            getSharedUsers={this.getSharedUsers}
-            getInitials={this.getInitials}
-            getDocId={this.getDocId} />
+          <NavBar />
         </div>
         <FlashMessagesList />
-        <TextEditor setSelectionLoc={this.setSelectionLoc} />
+        <TextEditor />
         <AppVideo />
         <CommentArea />
       </div>
@@ -157,14 +178,20 @@ function mapStateToProps(state) {
   return {
     curDoc: state.tvPage.curDoc,
     curUser: state.tvPage.curUser,
-    sharelinkId: state.editor.sharelinkId
+    sharelinkId: state.editor.sharelinkId,
+    curSharedUsers: state.tvPage.curSharedUsers,
+    curUserInitials: state.tvPage.curUserInitials
+
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setSharelink: editorActions.setLink,
-    setDocId: tvPageActions.setDocId
+    setDocId: tvPageActions.setDocId,
+    setCurSharedUsers: tvPageActions.setCurSharedUsers,
+    setCurUserInitials: tvPageActions.setCurUserInitials
+    // setUserId: navbarActions.setUserId
   }, dispatch);
 }
 
