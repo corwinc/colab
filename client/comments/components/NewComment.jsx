@@ -5,8 +5,6 @@ import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
 import CommentEntryLinks from './CommentEntryLinks.jsx';
 
-var initials = 'CC';
-
 class NewComment extends React.Component {
   constructor(props) {
     super(props);
@@ -15,9 +13,20 @@ class NewComment extends React.Component {
     this.updateCommentHeight = this.updateCommentHeight.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.updateCommentHeight();
+  }
+
   handleCommentInput (e) {
+    console.log('HANDLECOMMENTINPUT input:', e.target.value);
     e.preventDefault();
     this.props.handleCommentInput(e.target.value);
+  }
+
+  handleCommentInputThenHeight (e) {
+    console.log('INSIDE HANDLEINPUTTHENHEIGHT');
+    e.preventDefault();
+    this.props.handleCommentInputThenHeight(e.target.value);
   }
 
   updateCommentHeight() {
@@ -34,15 +43,15 @@ class NewComment extends React.Component {
 
     return (
       <div className="comment-container">
-      {console.log('BEFORE NC RENDER selectionLoc:', this.props.selectionLoc)}
-        <div className="comment" style={{top: this.props.selectionLoc - 66, height: this.props.commentEntryHeight}}>
+        <div className="comment" style={{top: this.props.selectionLoc - 40, height: this.props.commentEntryHeight}}>
           <div className="comment-chathead">
-            <span className="comment-initials">{initials}</span>
+            <span className="comment-initials">{this.props.curUserInitials}</span>
             <input 
               value={this.props.commentInput}
               className="comment-input" 
               placeholder="New comment" 
               onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
+              // onChange={(e) => this.handleCommentInputThenHeight(e)}
               autoFocus={true} />
             {(() => {
               if (this.props.activeComment === true) {
@@ -60,7 +69,8 @@ function mapStateToProps(state) {
     selectionLoc: state.editor.selectionLoc,
     commentInput: state.comment.commentInput,
     commentEntryHeight: state.comment.commentEntryHeight,
-    activeComment: state.comment.activeCommentStatus
+    activeComment: state.comment.activeCommentStatus,
+    curUserInitials: state.tvPage.curUserInitials
   }
 }
 
@@ -68,7 +78,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     handleCommentInput: commentActions.handleCommentInput,
     updateCommentHeight: commentActions.updateCommentHeight,
-    activeCommentStatus: commentActions.activeCommentStatus
+    activeCommentStatus: commentActions.activeCommentStatus,
+    handleCommentInputThenHeight: commentActions.handleCommentInputThenHeight
   }, dispatch);
 }
 

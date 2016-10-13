@@ -39,3 +39,10 @@ export function setDocId(docId) {
     docId
   }
 }
+
+export function saveSelectionLoc(loc) {
+  return {
+    type: 'SAVE_SELECTION_LOC',
+    loc
+  }
+}

@@ -29,3 +29,22 @@ exports.createComment = function(req, res) {
   Comment.create(comment)
     .then(res.send('created a comment'))
 }; 
+
+exports.deleteComment = function(req, res) {
+  var id = req.query.id;
+
+  Comment.findOne({where: {id: id}})
+    .then((comment) => {
+      comment.destroy()
+      .then((comment) => {
+        res.send(comment);
+      })
+      .catch((err) => {
+        console.log('controller: error deleting comment:', err);
+        res.status(500).send('Error deleting the comment');
+      })
+    })
+    .catch((err) => {
+      res.status(500).send('Error finding the comment to delete');
+    })
+}; 

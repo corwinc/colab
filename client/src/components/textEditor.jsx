@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as editor from '../actions/editorActions.jsx';
 import * as doclist from '../actions/documentlistActions.jsx';
+import * as comment from '../../comments/actions/commentActions.jsx';
 
 
 class TextEditor extends React.Component {
@@ -11,13 +12,13 @@ class TextEditor extends React.Component {
     super(props);
   };
 
-  // componentWillMount() {
-  //   var urldocId = window.location.search.split('').splice(11).join('');
-  //   var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
-  //   var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
-  //   console.log('EDITOR sharelink componentWillMount:', sharelinkId);
-  //   this.props.dispatch(editor.setLink(sharelinkId));
-  // }
+  componentWillMount() {
+    var urldocId = window.location.search.split('').splice(11).join('');
+    var user = 'user_' + Date.now(); // temp unique user identifier; swap out later with username
+    var sharelinkId = urldocId.length === 0 ? 'hr46' : urldocId; // default to public doc if there is no doc id in url
+    console.log('EDITOR sharelink componentWillMount:', sharelinkId);
+    this.props.dispatch(editor.setLink(sharelinkId));
+  }
 
   componentDidMount () {
     var username = window.localStorage.user.slice(1, window.localStorage.user.length - 1);
@@ -99,15 +100,23 @@ class TextEditor extends React.Component {
 
       var bounds = quill.getBounds(range.index);
       console.log('bounds:', bounds);
-      if (range.length !== 0) {
-        setSelectionLoc(bounds.top);          
+      if (range.length !== 0) {  
+        context.props.dispatch(editor.setSelectionLoc(bounds.top));
+        context.props.dispatch(editor.saveSelectionLoc(bounds.top));          
       }
 
       if (range.length === 0) {
-        setSelectionLoc(null);
+        context.props.dispatch(editor.setSelectionLoc(null));
       }
     });
 
+// CHECK IF BELOW CODE IS IN THE RIGHT PLACE, IF NOT, TRY MOVING INTO THE ABOVE CODE BLOCK
+//         var bounds = quill.getBounds(range.index);
+//         console.log('bounds:', bounds);
+//         if (range.length !== 0) {
+//           context.props.dispatch(editor.setSelectionLoc(bounds.top));
+//           context.props.dispatch(editor.saveSelectionLoc(bounds.top));          
+//         }
 
     socket.on('change', function(msg){
       if(msg.who !== user && sharelinkId === msg.sharelinkId) { // prevent infinite loop; user who emitted msg should not receive it
@@ -182,7 +191,7 @@ export default connect((store) => {
     saveInterval: null,
     sharelinkId: store.editor.sharelinkId,
     user: null,
-    curUser: store.documentlist.curUser
+    curUser: store.documentlist.curUser,
     // selectionLoc: store.editor.selectionLoc
   }
 })(TextEditor);

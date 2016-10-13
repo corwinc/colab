@@ -1,4 +1,3 @@
-
 /* NAVBAR */
 .navbar-container {
   position: relative;
@@ -472,6 +471,12 @@ div.vid-scrollable-list {
 
 .comment-saved-container {
   font-family: arial;
+  border-radius: 5px;
+  border-width: .5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: gray;
+  width: 80%;
 }
 
 .comment-saved {
@@ -519,6 +524,35 @@ div.vid-scrollable-list {
   background: blue;
   width: 200px;
   height: 50px;
+}
+
+.text-selection-menu-container {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: none;
+}
+
+.comment-icon {
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  margin-left: 6px;
+}
+
+.comment-saved-unfocused {
+
+}
+
+.comment-saved-focused {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: .5px;
+  margin-left: 10%;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: gray;
+  width: 80%;
 }
 
 /***
