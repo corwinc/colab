@@ -186,10 +186,16 @@ class DocumentList extends React.Component {
       paddingLeft: 50
     };
 
+    var logoStyle = {
+      fontSize: 36,
+      fontFamily: 'Arial'
+    };
+
 	  return (
 		  <div className="container-fluid">
         <div className="row">
           <div id="doclist-left-sidebar" className="col-md-2">
+            <h2 style={ logoStyle } >ColLab</h2>
             <a href="/logout">logout</a>
           </div>
           <div className="col-md-8">
