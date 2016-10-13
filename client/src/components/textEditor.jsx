@@ -135,7 +135,8 @@ class TextEditor extends React.Component {
         // should comment out to limit AWS RDS db hits
         axios.put('/document', {
           sharelink: sharelinkId,
-          textS3: JSON.stringify(quill.getContents())
+          textS3: JSON.stringify(quill.getContents()),
+          title: quill.getText().slice( 0, quill.getText().indexOf('\n') )
         })
           .then(function(result) {
             console.log('data saved');
