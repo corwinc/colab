@@ -156,9 +156,10 @@ export function cancelEntry() {
 }
 
 // in reducer: toggle commentclick & if true, turn off all others
-export function handleCommentClick() {
+export function setFocus(bool) {
   return {
-    type: 'HANDLE_COMMENT_CLICK'
+    type: 'SET_FOCUS',
+    bool
   }
 }
 

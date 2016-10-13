@@ -13,7 +13,8 @@ const initialState = {
   activeCommentStatus: false,
   commentEntryHeight: 50,
   savedSelectionLoc: null,
-  newCommentStatus: false
+  newCommentStatus: false,
+  savedCommentFocus: true
 }
 
 export default function (state=initialState, action) {
@@ -58,6 +59,10 @@ export default function (state=initialState, action) {
     case 'SET_NEW_COMMENT_STATUS':
       return Object.assign({}, state, {
         newCommentStatus: action.status
+      })
+    case 'SET_FOCUS':
+      return Object.assign({}, state, {
+        savedCommentFocus: action.bool
       })
     case 'POST_ENTRY':
       return Object.assign({}, state, {

@@ -40,6 +40,7 @@ class CommentArea extends React.Component {
       <div className="comment-area-container">
         {
           (() => {
+            console.log('THIS PROPS COMMENTS:', this.props.comments);
             return this.props.comments.map((comment, i) => {
               return (<SavedComment key={i} comment={comment} />);
             });

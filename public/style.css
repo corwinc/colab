@@ -1,4 +1,3 @@
-
 /* NAVBAR */
 .navbar-container {
   position: relative;
@@ -493,7 +492,7 @@ div.vid-scrollable-list {
   list-style-type: none;
   text-align: center;
   margin-left: 12px;
-  margin-top: 12px;
+  margin-top: 12
 }
 
 .comment-saved-initials {
@@ -533,6 +532,21 @@ div.vid-scrollable-list {
   height: 24px;
   width: 24px;
   margin-left: 6px;
+}
+
+.comment-saved-unfocused {
+
+}
+
+.comment-saved-focused {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: .5px;
+  margin-left: 10%;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: gray;
+  width: 80%;
 }
 
 /***
