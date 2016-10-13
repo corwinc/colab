@@ -66,7 +66,7 @@ module.exports = function(server) {
         documents[joinInfo.documentId] = [];
       }
       documents[joinInfo.documentId].push(joinInfo.newUserId);
-      console.log("user joining document *************************");
+      // Setting the timeout allows the joining user's video page view finish rendering before the event emits. 
       setTimeout(function(){
         documentSocket.emit('user joins document', JSON.stringify({"documentId": joinInfo.documentId, "activeUsers": documents[joinInfo.documentId]}));
       }, 100);
@@ -74,11 +74,9 @@ module.exports = function(server) {
 
     socket.on('user leaving document', function(exitInfo){
       var exitInfo = JSON.parse(exitInfo);
-      console.log("user exiting document *************************, before ", documents);
       var exUserIndex = documents[exitInfo.documentId].indexOf(exitInfo.exitingUserId);
       documents[exitInfo.documentId].splice(exUserIndex, exUserIndex + 1);
       documentSocket.emit('user leaves document', JSON.stringify({"documentId": exitInfo.documentId, "activeUsers": documents[exitInfo.documentId]}));
-      console.log("********* AFTER: ", documents);
     });
 
     socket.on('disconnect', function() {

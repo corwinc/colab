@@ -29,10 +29,6 @@ class AppVideo extends React.Component {
     this.props.dispatch(videoActionList.setStartConferenceCall(this.initConferenceCall.bind(this)));
   }
 
-  // componentWillUnmount(){
-  //   documentChannel.emit('user leaving document', JSON.stringify({"documentId": this.props.documentId, "exitingUserId": this.props.userId}));
-  // }
-
   setDocumentChannel(){
     var context = this;
 
@@ -235,17 +231,11 @@ class AppVideo extends React.Component {
     return grid;
   }
 
-  showProps() {
-    console.log("USERS ARE: ", this.activeUsers);
-  }
-
   render(){
     return (
       <div className="call-views">
-        <button onClick={ this.initConferenceCall.bind(this) }> Start trial conference call </button>
         <CallAlertList isCaller={ this.isCaller } outgoingAlerts={ this.props.outgoingAlerts } incomingAlerts={ this.props.incomingAlerts }/>
         <VideoCardList connections={ this.props.connections } streams={ this.streams }/>
-        <button onClick={ this.showProps.bind(this) }> Show users </button>
       </div>
     );
   }

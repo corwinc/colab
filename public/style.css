@@ -534,11 +534,16 @@ div.vid-scrollable-list {
   /*list-style-image: url("http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png")*/
 }
 
-.del-doc-link {
+.del-doc-link,
+.del-checkbox {
   display: none;
 }
 
 .doclist-li:hover .del-doc-link {
+  display: inline;
+}
+
+.doclist-li:hover .del-checkbox {
   display: inline;
 }
 
