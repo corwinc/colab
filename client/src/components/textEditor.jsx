@@ -128,23 +128,23 @@ class TextEditor extends React.Component {
     /*
       Include save Interval for auto save
     */
-    // var saveInterval = setInterval(function() {
-    //   if (change.length() > 0) {
-    //     console.log('Saving changes', sharelinkId);
+    var saveInterval = setInterval(function() {
+      if (change.length() > 0) {
+        console.log('Saving changes', sharelinkId);
 
-    //     // should commet out to limit AWS RDS db hits
-    //     axios.put('/document', {
-    //       sharelink: sharelinkId,
-    //       textS3: JSON.stringify(quill.getContents())
-    //     })
-    //       .then(function(result) {
-    //         console.log('data saved');
+        // should comment out to limit AWS RDS db hits
+        axios.put('/document', {
+          sharelink: sharelinkId,
+          textS3: JSON.stringify(quill.getContents())
+        })
+          .then(function(result) {
+            console.log('data saved');
 
-    //         change = new Delta();
+            change = new Delta();
 
-    //       });
-    //   } 
-    // }, 5000);
+          });
+      } 
+    }, 5000);
 
     // this.setState({ saveInterval: saveInterval });
   }
