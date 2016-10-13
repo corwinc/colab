@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as navbarActions from '../actions/navbarActions.jsx';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 window.myId = Math.floor(Math.random() * 10000);
 // STATEFUL B/C ADDING COMPONENTWILLMOUNT
@@ -52,6 +53,10 @@ class NavBar extends React.Component {
 
   }
 
+  goToDocs () {
+    browserHistory.push('/documentlist');
+  }
+
   render() {
     return (
       <div className="navbar-container">
@@ -88,6 +93,7 @@ class NavBar extends React.Component {
               <div className="share-button"><button onClick={ ()=>{initConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
               <div className="logout-link"><a href="/logout">logout</a></div>
+              <div><a onClick={ this.goToDocs }>docs</a></div>
             </div>
           </div>
         </div>
