@@ -59,7 +59,7 @@ class AppVideo extends React.Component {
         return;
       }
       var users = signal.pcKey.split('---');
-      if (context.props.userId == users[0].toString() || context.props.userId == users[1].toString()){
+      if (context.props.userId == users[0] || context.props.userId == users[1]){
         if (context.areYouSignalingYourself(signal.callerId)){
           return;
         }

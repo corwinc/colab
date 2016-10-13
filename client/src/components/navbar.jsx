@@ -39,7 +39,6 @@ class NavBar extends React.Component {
             <div className="chathead-container">
               <ul className="chathead-list">
                 {this.props.curSharedUsers.map((user, i) => {
-                  console.log('MAPPING USER:', user);
                   var initials = this.getInitials(user); 
                   return (
                     <li key={i}
@@ -73,16 +72,16 @@ class NavBar extends React.Component {
 
 
 function mapStateToProps(state) {
-  console.log('NAVBAR state mapStateToProps:', state);
   return {
     docId: state.tvPage.curDoc,
-    userId: state.navbar.userId,
+    userId: parseInt(state.documentlist.curUser),
     startCall: state.videoList.startCall, 
     startConferenceCall: state.videoList.startConferenceCall,
     sharelink: state.editor.sharelinkId,
     curSharedUsers: state.tvPage.curSharedUsers
   }
 }
+
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
