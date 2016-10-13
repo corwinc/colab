@@ -13,22 +13,14 @@ class NewComment extends React.Component {
     this.updateCommentHeight = this.updateCommentHeight.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.updateCommentHeight();
-  }
-
+  // On user input, update commentInput state
   handleCommentInput (e) {
-    console.log('HANDLECOMMENTINPUT input:', e.target.value);
     e.preventDefault();
     this.props.handleCommentInput(e.target.value);
   }
 
-  handleCommentInputThenHeight (e) {
-    console.log('INSIDE HANDLEINPUTTHENHEIGHT');
-    e.preventDefault();
-    this.props.handleCommentInputThenHeight(e.target.value);
-  }
-
+  // If user has written input into newComment, increase height 
+  // & show links (activeCommentStatus == true)
   updateCommentHeight() {
     if (this.props.commentInput !== '') {
       this.props.updateCommentHeight(70);
@@ -40,7 +32,6 @@ class NewComment extends React.Component {
   }
 
   render() {
-
     return (
       <div className="comment-container">
         <div className="comment" style={{top: this.props.selectionLoc - 40, height: this.props.commentEntryHeight}}>
@@ -50,8 +41,9 @@ class NewComment extends React.Component {
               value={this.props.commentInput}
               className="comment-input" 
               placeholder="New comment" 
+              // handleCommentInput -> updateCommentHeight asynchronous behavior needs to be handled: 
+              // updates height before input state is set
               onChange={(e) => {this.handleCommentInput(e); this.updateCommentHeight();}}
-              // onChange={(e) => this.handleCommentInputThenHeight(e)}
               autoFocus={true} />
             {(() => {
               if (this.props.activeComment === true) {
@@ -60,7 +52,8 @@ class NewComment extends React.Component {
             })()}
           </div>
         </div>
-      </div>    )
+      </div>
+    )
   }
 }
 
@@ -78,8 +71,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     handleCommentInput: commentActions.handleCommentInput,
     updateCommentHeight: commentActions.updateCommentHeight,
-    activeCommentStatus: commentActions.activeCommentStatus,
-    handleCommentInputThenHeight: commentActions.handleCommentInputThenHeight
+    activeCommentStatus: commentActions.activeCommentStatus
   }, dispatch);
 }
 

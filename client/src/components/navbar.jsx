@@ -14,6 +14,7 @@ class NavBar extends React.Component {
     super(props);
   };
 
+  // Get initials for each user's chathead
   getInitials (user) {
     if (user.firstname !== null) {
       var firstInit = user.firstname[0];
@@ -38,24 +39,24 @@ class NavBar extends React.Component {
           <div className="navbar-right">
             <div className="chathead-container">
               <ul className="chathead-list">
-                {this.props.curSharedUsers.map((user, i) => {
-                  var initials = this.getInitials(user); 
-                  return (
-                    <li key={i}
-                      id={user.id}
-                      onClick={ ()=>{
-                        var pcKey = this.props.userId + '---' + user.id;
-                        this.props.startCall(true, pcKey, 'direct call', user.id)
-                      }} 
-                    >
-                      <span className="chathead-initials">{initials}</span>
-                    </li> 
-                  )             
-                })}
+                {
+                  this.props.curSharedUsers.map((user, i) => {
+                    var initials = this.getInitials(user); 
+                    return (
+                      <li key={i}
+                        id={user.id}
+                        onClick={()=>{
+                          var pcKey = this.props.userId + '---' + user.id;
+                          this.props.startCall(true, pcKey, 'direct call', user.id) }}>
+                        <span className="chathead-initials">{initials}</span>
+                      </li> 
+                    )             
+                  })
+                }
               </ul>
             </div>
             <div className="navbar-button-container">
-              <div className="share-button"><button onClick={ ()=>{this.props.startConferenceCall()}}>Conference Call</button></div>
+              <div className="share-button"><button onClick={()=>{this.props.startConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
               <div className="logout-link">
                 <a href="/logout" onClick={()=>{ var docId = this.props.docId;
@@ -77,19 +78,11 @@ function mapStateToProps(state) {
     userId: parseInt(state.documentlist.curUser),
     startCall: state.videoList.startCall, 
     startConferenceCall: state.videoList.startConferenceCall,
-    sharelink: state.editor.sharelinkId,
     curSharedUsers: state.tvPage.curSharedUsers
   }
 }
 
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    setUserId: navbarActions.setUserId
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps)(NavBar);
 
 
 
