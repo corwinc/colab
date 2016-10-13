@@ -26,9 +26,12 @@ var server = require('http').Server(app);
 require('./sockets/socketRouter')(server);
 
 app.use('/document', documentRouter);
-app.use('/', usersRouter);
+app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
 app.use('/userdocs', userDocumentRouter);
+
+app.use('/auth', usersRouter);
+app.use('/auth', usersRouter);
 
 app.get('/*', (req, res) => {
  res.sendFile(rootPath + 'public/index.html');
