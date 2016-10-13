@@ -8,6 +8,7 @@ import * as videoActionList from '../actions/videoActions.jsx';
 import VideoCardList from './videoCardList.jsx';
 import CallAlertList from './callAlertList.jsx';
 const signalingChannel = io('/video');
+const documentChannel = io('/document');
 
 class AppVideo extends React.Component {
 
@@ -18,14 +19,45 @@ class AppVideo extends React.Component {
     this.streams = {};
     this.signalingChannel = io('/video');
     this.isCaller;
+    this.activeUsers;
   }  
 
   componentDidMount(){
     this.setSignalingChannel.call(this);
+    this.setDocumentChannel.call(this);
+    this.props.dispatch(videoActionList.setStartCall(this.start.bind(this)));
+  }
+
+  setDocumentChannel(){
+    var context = this;
+
+    documentChannel.on('user joins document', function(evt) {
+      var signal = JSON.parse(evt);
+      console.log("FLAG FLAG FLAG : ", signal.activeUsers);
+      console.log("IDS ARE: ", context.props.documentId, signal.documentId);
+      if (context.props.documentId === signal.documentId){
+        if (signal.newUserId != context.props.userId){
+          context.activeUsers = signal.activeUsers;
+          console.log("added user: now the array is: ", context.activeUsers);
+        }
+      }
+    });
+
+    documentChannel.on('user leaves document', function(evt) {
+      var signal = JSON.parse(evt);
+      console.log("FLAG FLAG FLAG EXIT: ", signal);
+      if (context.documentId === signal.documentId){
+        if (signal.exitingUserId != context.props.userId){
+          var indexOfExiter = context.activeUsers.indexOf(signal.exitingUserId);
+          context.activeUsers.splice(indexOfExiter, indexOfExiter + 1);
+          console.log("deleted user: now the array is: ", context.activeUsers);
+        }
+      }
+    });
+
   }
 
   setSignalingChannel(){
-
     var context = this;
 
     signalingChannel.on('message', function(evt) {
@@ -35,7 +67,7 @@ class AppVideo extends React.Component {
         return;
       }
       var users = signal.pcKey.split('---');
-      if (myId == users[0].toString() || myId == users[1].toString()){
+      if (context.props.userId == users[0].toString() || context.props.userId == users[1].toString()){
         if (context.areYouSignalingYourself(signal.callerId)){
           return;
         }
@@ -68,15 +100,16 @@ class AppVideo extends React.Component {
     signalingChannel.on('initialize conference call', function(evt) {
       var signal = JSON.parse(evt);
       var meshGrid = signal.meshGrid;
-      var myCallsToMake = meshGrid[myId];
+      var myCallsToMake = meshGrid[context.props.userId];
       if (myCallsToMake !== undefined) {
         myCallsToMake.forEach(function(pcKey, i){
           setTimeout(function(){
-            context.initSingleCall(pcKey, 'conference call');
+            context.start(true, pcKey, 'conference call');
           }, i * 150);
         });
       }
     });
+
   }
 
   start(isCaller, pcKey, mode) {
@@ -88,7 +121,7 @@ class AppVideo extends React.Component {
 
     this.pcs[pcKey].onicecandidate = function (evt) {
       signalingChannel.emit('send candidate', JSON.stringify({ "candidate": evt.candidate, "isCaller": isCaller, 
-                                                                "callerId": myId, "pcKey": pcKey, "mode": mode }));
+                                                                "callerId": context.props.userId, "pcKey": pcKey, "mode": mode }));
     };
 
     this.pcs[pcKey].onaddstream = function (evt) {
@@ -127,7 +160,7 @@ class AppVideo extends React.Component {
 
     const setDescription = (desc) => {
       this.pcs[pcKey].setLocalDescription(desc);
-      signalingChannel.emit('send offer', JSON.stringify({ "sdp": desc, "callerId": myId, "pcKey": pcKey, "mode": mode}));
+      signalingChannel.emit('send offer', JSON.stringify({ "sdp": desc, "callerId": context.props.userId, "pcKey": pcKey, "mode": mode}));
     };
 
     const errorGettingDescription = (err) => {
@@ -157,7 +190,7 @@ class AppVideo extends React.Component {
   };
 
   areYouSignalingYourself(callerId){
-    if (callerId === myId) {
+    if (callerId === this.props.userId) {
       return true;
     }
   }
@@ -176,15 +209,8 @@ class AppVideo extends React.Component {
     }
   };
 
-  initSingleCall(pcKey, mode) {
-    pcKey = pcKey || "2---18";
-    mode = mode || "direct call";
-    this.start(true, pcKey, mode);
-  }
-
-  initConferenceCall(){
-    var userIds = this.getUserIds();
-    var meshGrid = this.createMeshGrid(userIds);
+  initConferenceCall(docId){
+    var meshGrid = this.createMeshGrid(this.activeUsers);
     signalingChannel.emit('signal conference call', JSON.stringify({"meshGrid": meshGrid}));
   }
 
@@ -203,12 +229,7 @@ class AppVideo extends React.Component {
     return grid;
   }
 
-  getUserIds(){
-    var userIds = [2, 3, 4, 5];
-    return userIds;
-  }
-
-  showProps(){
+  showProps() {
     console.log("PROPS ARE: ", this.props);
   }
 
@@ -216,7 +237,6 @@ class AppVideo extends React.Component {
     return (
       <div className="call-views">
         <button onClick={ this.initConferenceCall.bind(this) }> Start trial conference call </button>
-        <button onClick={ (()=>{ this.initSingleCall() }).bind(this) }> Start trial direct call </button>
         <CallAlertList isCaller={ this.isCaller } outgoingAlerts={ this.props.outgoingAlerts } incomingAlerts={ this.props.incomingAlerts }/>
         <VideoCardList connections={ this.props.connections } streams={ this.streams }/>
         <button onClick={ this.showProps.bind(this) }> Show props </button>
@@ -228,14 +248,17 @@ class AppVideo extends React.Component {
 AppVideo.propTypes = {
   connections: React.PropTypes.array.isRequired, 
   outgoingAlerts: React.PropTypes.array.isRequired, 
-  incomingAlerts: React.PropTypes.array.isRequired
+  incomingAlerts: React.PropTypes.array.isRequired, 
+  userId: React.PropTypes.number.isRequired
 }
 
 export default connect((store) => {
   return {
     connections: store.videoList.connections || [],
     outgoingAlerts: store.alertList.outgoingAlerts || [],
-    incomingAlerts: store.alertList.incomingAlerts || []
+    incomingAlerts: store.alertList.incomingAlerts || [], 
+    userId: parseInt(store.documentlist.curUser) || 0, 
+    documentId: store.tvPage.curDoc
   }
 })(AppVideo);
 

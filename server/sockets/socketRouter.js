@@ -31,6 +31,8 @@ module.exports = function(server) {
 
   });
 
+
+
   var editorSocket = io.of('/editor');
 
   editorSocket.on('connection', function(socket){
@@ -41,6 +43,37 @@ module.exports = function(server) {
       console.log('text:' + msg)
       editorSocket.emit('change', msg);
     });  
+
+    socket.on('disconnect', function() {
+      console.log('A user disconnected.');
+    });
+
+  });
+
+  var documents = {};
+
+  var documentSocket = io.of('/document');
+
+  documentSocket.on('connection', function(socket){
+
+    console.log("DOCUMENT SOCKET CONNECTED");
+
+    socket.on('user joining document', function(joinInfo){
+      var joinInfo = JSON.parse(joinInfo);
+      if (documents[joinInfo.documentId] === undefined) {
+        documents[joinInfo.documentId] = [];
+      }
+      documents[joinInfo.documentId].push(joinInfo.newUserId);
+      console.log("user joining document *************************");
+      setTimeout(function(){
+        documentSocket.emit('user joins document', JSON.stringify({"documentId": joinInfo.documentId, "activeUsers": documents[joinInfo.documentId]}));
+      },1000);
+    });
+
+    socket.on('user leaving document', function(exitInfo){
+      console.log("user exiting document *************************");
+      documentSocket.emit('user leaves document', exitInfo);
+    });
 
     socket.on('disconnect', function() {
       console.log('A user disconnected.');

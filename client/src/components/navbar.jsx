@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as navbarActions from '../actions/navbarActions.jsx';
 import axios from 'axios';
+const documentChannel = io('/document');
+
 
 window.myId = Math.floor(Math.random() * 10000);
 // STATEFUL B/C ADDING COMPONENTWILLMOUNT
@@ -66,16 +68,21 @@ class NavBar extends React.Component {
                     <li key={i}
                       id={user.id}
                       onClick={ ()=>{
-                        var pcKey = myId + '---' + user.id;
-                        if (isConnectionAlreadyMade(pcKey)){
-                          console.log("You're already connected to this user. Womp womp.");
-                          return;
-                        }
-                        if (user.id !== myId) { 
-                          initSingleCall(pcKey, 'direct call');
-                        } else {
-                          console.log("You can't call yourself, silly goose!");
-                        }
+                        console.log("curUser is: ", this.props.userId);
+                        //signalingChannel.emit("send call from navbar", JSON.stringify({userId: this.props.userId}));
+                        console.log("start function is: ", this.props.startCall);
+                        var pcKey = this.props.userId + '---' + user.id;
+                        this.props.startCall(true, pcKey, 'direct call')
+                        // var pcKey = myId + '---' + user.id;
+                        // if (isConnectionAlreadyMade(pcKey)){
+                        //   console.log("You're already connected to this user. Womp womp.");
+                        //   return;
+                        // }
+                        // if (user.id !== myId) { 
+                        //   initSingleCall(pcKey, 'direct call');
+                        // } else {
+                        //   console.log("You can't call yourself, silly goose!");
+                        // }
                       }} 
                     >
                       <span className="chathead-initials">{initials}</span>
@@ -85,9 +92,13 @@ class NavBar extends React.Component {
               </ul>
             </div>
             <div className="navbar-button-container">
-              <div className="share-button"><button onClick={ ()=>{initConferenceCall()}}>Conference Call</button></div>
+              <div className="share-button"><button onClick={ ()=>{initConferenceCall(this.props.docId)}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
-              <div className="logout-link"><a href="/logout">logout</a></div>
+              <div className="logout-link">
+                <a href="/logout" onClick={()=>{ var docId = this.props.docId;
+                                                var userId = parseInt(this.props.userId);
+                                                documentChannel.emit('user leaving document', JSON.stringify({"documentId": docId, "exitingUserId": userId}))}}>logout</a>
+              </div>
             </div>
           </div>
         </div>
@@ -103,7 +114,8 @@ function mapStateToProps(state) {
     docId: state.tvPage.curDoc,
     // userId: state.documentlist.curUser,
     userId: state.navbar.userId,
-    sharelink: state.editor.sharelinkId
+    sharelink: state.editor.sharelinkId, 
+    startCall: state.videoList.startCall
   }
 }
 

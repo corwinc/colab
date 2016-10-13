@@ -54,3 +54,10 @@ export function showIncomingCallOptions(shouldShow) {
     shouldShow: shouldShow
   }
 };
+
+export function setStartCall(startCall) {
+  return {
+    type: 'SET_START_CALL', 
+    startCall: startCall
+  }
+};
