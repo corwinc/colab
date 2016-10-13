@@ -7,7 +7,6 @@ import reducers from './rootReducer.jsx';
 import routes from './app.routes.jsx';
 import promise from 'redux-promise';
 
-
 // //if you want to use logger() to see all the states get updates 
 // //into the browser console then these three lines of code.
 //   //@Redux-logger

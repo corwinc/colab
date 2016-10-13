@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as doclist from '../actions/documentlistActions.jsx';
 // set curUser: user id using username
+const documentChannel = io('/document');
 
 class DocumentList extends React.Component {
 
@@ -193,7 +194,10 @@ class DocumentList extends React.Component {
 			    		  	    <img style={ docIconStyle }src="http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png" />
 			    		  	  </div>
 			    		  	  <div>
-				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ); this.setCurDocId(doc.id); } }>{ doc.title }</a>
+				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ); 
+                                            this.setCurDocId(doc.id); 
+                                            documentChannel.emit('user joining document', JSON.stringify({"documentId": doc.id, "newUserId": parseInt(this.props.curUser)}))
+                                            } }>{ doc.title }</a>
 		                  &nbsp;
                       <input className="del-checkbox" onChange={ () => { this.handleCheckbox( doc.id, index, this.props.itemsToDelete ) } } type="checkbox"/>
                       <a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
