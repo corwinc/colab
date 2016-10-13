@@ -98,10 +98,6 @@ export default function (state=initialState, action) {
     //       width: action.width
     //     }
     //   })
-    case 'POST_ENTRY':
-      return Object.assign({}, state, {
-        comment: action.postEntry
-      })
     case 'CANCEL_ENTRY':
       return state
     case 'HANDLE_COMMENT_CLICK':

@@ -90,8 +90,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    postEntry: commentActions.postEntry,
-    cancelEntry: commentActions.cancelEntry,
     setSelectionLoc: editorActions.setSelectionLoc,
     handleCommentInput: commentActions.handleCommentInput,
     activeCommentStatus: commentActions.activeCommentStatus,
