@@ -9,7 +9,7 @@ var usersController = require('../controllers/usersController');
 
 usersRouter.use(passport.initialize());
 
-usersRouter.route('/users')
+usersRouter.route('/')
   .get(usersController.getUser)
   .post(usersController.createUser)
   .put(usersController.updateUser)
@@ -20,10 +20,13 @@ usersRouter.route('/id')
 
 
   //facebook oauth routes
-  usersRouter.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
-  usersRouter.get('/auth/facebook/callback',
-  	passport.authenticate('facebook'), usersController.oauthSuccess); //
-
+  // usersRouter.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
+  // usersRouter.get('/auth/facebook/callback',
+  // 	passport.authenticate('facebook'), usersController.oauthSuccess); //
+usersRouter.route('/facebook')
+.get( passport.authenticate('facebook', {scope: ['email']}))
+usersRouter.route('/facebook/callback')
+.get(passport.authenticate('facebook'), usersController.oauthSuccess); //
 
   /////////////////////////////////////
 module.exports = usersRouter;
