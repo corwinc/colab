@@ -116,7 +116,7 @@ class DocumentList extends React.Component {
   }
 
   handleCheckbox (id, index, list) {
-    list[id] ? delete list[id] : list[id] = index;     
+    list[id] ? delete list[id] : list[id] = index;
   }
 
   delete () {
@@ -178,8 +178,8 @@ class DocumentList extends React.Component {
 
 	  return (
 		  <div className="container">
-		    <button className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
-        <button className="btn btn btn-primary btn-large btn-block" onClick={ this.delete.bind(this) }>Delete</button>
+		    <button id="add-doc" className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
+        <button id="del-doc" className="btn btn btn-primary btn-large btn-block" onClick={ this.delete.bind(this) }>Delete</button>
         <div className="logout-link btn-block"><a href="/logout">logout</a></div>
 		    <br />
 		    <span style={ messageStyle }>{ this.props.message }</span>
@@ -195,7 +195,7 @@ class DocumentList extends React.Component {
 			    		  	  <div>
 				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ); this.setCurDocId(doc.id); } }>{ doc.title }</a>
 		                  &nbsp;
-                      <input className="del-checkbox" onChange={ () => { this.handleCheckbox( doc.id, index, this.props.itemsToDelete ) } } type="checkbox" checked={ console.log('chex:', this.props.checkVal) }/>
+                      <input className="del-checkbox" onChange={ () => { this.handleCheckbox( doc.id, index, this.props.itemsToDelete ) } } type="checkbox"/>
                       <a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
 		                  <br />
 		                  <span onClick={ this.test.bind(this) } style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>
@@ -228,6 +228,6 @@ export default connect((store) => {
 		documents: store.documentlist.documents,
 		inputValue: store.documentlist.inputValue,
     curUser: store.documentlist.curUser,
-    itemsToDelete: {},
+    itemsToDelete: {}
 	}
 })(DocumentList);
