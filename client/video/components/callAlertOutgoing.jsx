@@ -1,5 +1,6 @@
 import React from 'react';
 
+// The outgoing call alert for the caller shows here. 
 const OutgoingCallAlert = ({acceptOnclick}) => {
   return (
     <div className="call-alerts-outgoing">
