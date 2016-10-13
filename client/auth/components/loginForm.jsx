@@ -105,7 +105,7 @@ class LoginForm extends React.Component {
 		          Don't have an account? <Link to="/signup">Register</Link>
 		        </div>
 		        <div className="form-group">
-		          <a className="btn btn-danger btn-lg" href="/auth/google">Sign In With Google</a>
+		          <a className="btn btn-primary btn-lg" href="/auth/facebook"><span className="fa fa-facebook"></span>Sign In With facebook</a>
 		        </div>
 		    </form>
 		);

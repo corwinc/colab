@@ -135,7 +135,7 @@ class SignupForm extends React.Component {
 		          Already have an account? <Link to="/login">Sign in</Link>
 		        </div>
 		        <div className="form-group">
-		          <a className="btn btn-danger btn-lg" href="/auth/google">Sign Up With Google</a>
+		          <a className="btn btn-primary btn-lg" href="/auth/facebook">Sign Up With Facebook</a>
 		        </div>
 			</form>
 		);

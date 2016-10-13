@@ -12,6 +12,8 @@ var commentsRouter = require('./resources/routers/commentsRouter');
 var userDocumentRouter = require('./resources/routers/userDocumentRouter');
 var db = require('../db/config.js');
 
+require('./config/passport.js');
+
 app.use(morgan('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
@@ -27,6 +29,9 @@ app.use('/document', documentRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
 app.use('/userdocs', userDocumentRouter);
+
+app.use('/auth', usersRouter);
+app.use('/auth', usersRouter);
 
 app.get('/*', (req, res) => {
  res.sendFile(rootPath + 'public/index.html');
