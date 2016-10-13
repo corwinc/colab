@@ -22,11 +22,6 @@ class NewComment extends React.Component {
     this.props.handleCommentInput(e.target.value);
   }
 
-  handleCommentInputThenHeight (e) {
-    e.preventDefault();
-    this.props.handleCommentInputThenHeight(e.target.value);
-  }
-
   updateCommentHeight() {
     if (this.props.commentInput !== '') {
       this.props.updateCommentHeight(70);
@@ -75,8 +70,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     handleCommentInput: commentActions.handleCommentInput,
     updateCommentHeight: commentActions.updateCommentHeight,
-    activeCommentStatus: commentActions.activeCommentStatus,
-    handleCommentInputThenHeight: commentActions.handleCommentInputThenHeight
+    activeCommentStatus: commentActions.activeCommentStatus
   }, dispatch);
 }
 
