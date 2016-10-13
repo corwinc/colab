@@ -9,11 +9,10 @@ class CommentEntryLinks extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.getComments = this.getComments.bind(this);
   }
 
   postEntry () {
+    // 'block' is a placeholder for a future feature allowing chaining comments together in a block
     var comment = {
       text: this.props.commentInput,
       block: 1,
@@ -22,8 +21,6 @@ class CommentEntryLinks extends React.Component {
       document: this.props.curDoc,
       initials: this.props.curUserInitials
     }
-
-    // console.log('POSTENTRY COMMENT:', comment);
 
     $.ajax({
       method: 'POST',
@@ -37,7 +34,7 @@ class CommentEntryLinks extends React.Component {
         this.getComments();
       },
       error: (err) => {
-        console.log('error posting entry:', err);
+        console.log('Error posting entry:', err);
       }
     })
   }
@@ -61,7 +58,7 @@ class CommentEntryLinks extends React.Component {
         this.props.getCommentsSuccess(data);
       },
       error: (err) => {
-        console.log('error getting comments:', err);
+        console.log('Error getting comments:', err);
       }
     })
   }
@@ -78,13 +75,11 @@ class CommentEntryLinks extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    selectionLoc: state.editor.selectionLoc,
     savedSelectionLoc: state.editor.savedSelectionLoc,
     commentInput: state.comment.commentInput,
     curUser: state.documentlist.curUser,
     curDoc: state.editor.docId,
-    curUserInitials: state.tvPage.curUserInitials,
-    newCommentStatus: state.comment.newCommentStatus
+    curUserInitials: state.tvPage.curUserInitials
   }
 }
 

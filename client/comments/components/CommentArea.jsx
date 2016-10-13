@@ -12,7 +12,6 @@ class CommentArea extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getComments = this.getComments.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
   }
 
@@ -21,33 +20,27 @@ class CommentArea extends React.Component {
   }
 
   getComments () {
-    console.log('GETTING COMMENTS, curDoc:', this.props.curDoc);
     $.ajax({
       method: 'GET',
       url: '/comments',
       dataType: 'json',
       data: {docId: this.props.curDoc},
       success: (data) => {
-        console.log('COMMENT Success getting comments!:', data);
         this.props.getCommentsSuccess(data); // reducer should update state w/ this once hooked up
       },
       error: (err) => {
-        console.log('COMMENT error getting comments:', err);
+        console.log('Error getting comments:', err);
       }
     })
   }
 
   deleteComment(id) {
-    console.log('DELETING COMMENT:, id:', id);
-
     axios.delete('/comments?id=' + id)
       .then((res) => {
-        console.log('DELETED COMMENT');
-
         this.getComments();
       })
       .catch((err) => {
-        console.log('ERROR DELETING COMMENT');
+        console.log('Error deleting comment:', err);
       })
 
   }
@@ -57,7 +50,6 @@ class CommentArea extends React.Component {
       <div className="comment-area-container">
         {
           (() => {
-            console.log('THIS PROPS COMMENTS:', this.props.comments);
             return this.props.comments.map((comment, i) => {
               return (<SavedComment key={i} comment={comment} deleteComment={this.deleteComment} />);
             });
@@ -84,7 +76,6 @@ class CommentArea extends React.Component {
   }
 }
 
-// 1st 'comment' = root reducer, 2nd is props
 function mapStateToProps(state) {
   return {
     comments: state.comment.comments,
