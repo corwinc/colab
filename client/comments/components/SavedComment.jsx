@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
 import SavedCommentUnfocused from './SavedCommentUnfocused.jsx';
 import SavedCommentFocused from './SavedCommentFocused.jsx';
+import axios from 'axios';
 
 
 class SavedComment extends React.Component {
@@ -30,15 +31,13 @@ class SavedComment extends React.Component {
   render() {
     console.log('PASSED IN COMMENT SC:', this.props.comment);
     return (
-      <div className="comment-saved-container">
-        <SavedCommentUnfocused
-          setFocus={this.props.setFocus} 
-          comment={this.props.comment} 
-          borderStyle={this.props.borderStyle}
-          borderWidth={this.props.borderWidth}
-          borderRadius={this.props.borderRadius}
-          updateCommentBorderStyle={this.props.updateCommentBorderStyle}
-          updateCommentBorderWidth={this.props.updateCommentBorderWidth} />
+      <div className="comment-saved-container" onClick={() => this.props.deleteComment(this.props.comment.id)}>
+        <div className="comment-saved" style={{top: this.props.comment.location - 56}}>
+          <div className="comment-saved-chathead">
+            <span className="comment-saved-initials">{this.props.comment.initials}</span>
+          </div>
+          <div className="comment-saved-text">{this.props.comment.text}</div>
+        </div> 
       </div>
     )
   }
@@ -59,7 +58,8 @@ function mapDispatchToProps(dispatch) {
     setFocus: commentActions.setFocus,
     // updateSavedCommentStyle: commentActions.updateSavedCommentStyle,
     updateCommentBorderStyle: commentActions.updateCommentBorderStyle,
-    updateCommentBorderWidth: commentActions.updateCommentBorderWidth
+    updateCommentBorderWidth: commentActions.updateCommentBorderWidth,
+    deleteComment: commentActions.deleteComment
   }, dispatch);
 }
 
@@ -86,6 +86,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(SavedComment);
   </div>
   <div className="comment-saved-text">{this.props.comment.text}</div>
 </div> 
+
+
+
+<SavedCommentUnfocused
+  setFocus={this.props.setFocus} 
+  comment={this.props.comment} 
+  borderStyle={this.props.borderStyle}
+  borderWidth={this.props.borderWidth}
+  borderRadius={this.props.borderRadius}
+  updateCommentBorderStyle={this.props.updateCommentBorderStyle}
+  updateCommentBorderWidth={this.props.updateCommentBorderWidth} />
 */
 
 

@@ -54,7 +54,6 @@ export function updateCommentHeight(height) {
   }
 }
 
-
 export function updateCommentBorderStyle(borderStyle) {
   return {
     type: 'UPDATE_COMMENT_BORDER_STYLE',
@@ -199,3 +198,9 @@ export function setNewCommentStatus(status) {
   }
 }
 
+// export function deleteComment(id) {
+//   return {
+//     type: 'DELETE_COMMENT',
+//     id
+//   }
+// }
