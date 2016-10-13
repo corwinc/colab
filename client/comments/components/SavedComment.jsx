@@ -45,6 +45,7 @@ class SavedComment extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    curDoc: state.editor.docId,
     savedCommentFocus: state.comment.savedCommentFocus,
     // style: state.comment.style,
     borderStyle: state.comment.borderStyle,

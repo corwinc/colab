@@ -21,7 +21,7 @@ class CommentArea extends React.Component {
   }
 
   getComments () {
-    console.log('GETTING COMMENTS');
+    console.log('GETTING COMMENTS, curDoc:', this.props.curDoc);
     $.ajax({
       method: 'GET',
       url: '/comments',
@@ -38,12 +38,12 @@ class CommentArea extends React.Component {
   }
 
   deleteComment(id) {
-    console.log('DELETING COMMENT');
+    console.log('DELETING COMMENT:, id:', id);
 
     axios.delete('/comments?id=' + id)
       .then((res) => {
         console.log('DELETED COMMENT');
-        
+
         this.getComments();
       })
       .catch((err) => {
@@ -89,7 +89,7 @@ function mapStateToProps(state) {
   return {
     comments: state.comment.comments,
     selectionLoc: state.editor.selectionLoc,
-    curDoc: state.comment.curDoc,
+    curDoc: state.editor.docId,
     newCommentStatus: state.comment.newCommentStatus
   }
 }
