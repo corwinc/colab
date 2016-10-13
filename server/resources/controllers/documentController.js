@@ -137,22 +137,45 @@ exports.updateDocument = function(req, res) {
  * @return undefined
  */
 exports.deleteDocument = function(req, res) {
-  Document.findOne({
-    where: req.query
-  })
-  .then((doc) => {
-    doc.destroy()
-    .then((document) => {
-      res.send(document);
+  var ids = req.query.sharelink.split(',').map( item => Number(item));
+  if (ids.length === 1) {
+    // delete one document
+    Document.findOne({
+      where: ids[0]
+    })
+    .then((doc) => {
+      doc.destroy()
+      .then((document) => {
+        res.send(document);
+      })
+      .catch((error) => {
+        res.status(500).send('Error deleting the document.');
+      });
     })
     .catch((error) => {
-      res.status(500).send('Error deleting the document.');
+      res.status(500).send('Error finding the document.');
     });
-  })
-  .catch((error) => {
-    res.status(500).send('Error finding the document.');
-  });
+  } else if (ids.length > 1) {
+    // batch delete
+    Document.findAll({
+      where: { 
+        id: ids
+      }
+    })
+    .then(function(docs) {
+      docs.forEach( doc => {
+        doc.destroy();
+      })
+      
+      res.send('deleted');
+    })
+    .catch(function(err) {
+      res.send('Error finding documents:', err);
+    });
+  }
+  console.log('error');
 };
+
 
 exports.getId = function(req, res) {
   console.log('inside getId, req:', req.query);
