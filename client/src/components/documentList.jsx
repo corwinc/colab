@@ -114,6 +114,46 @@ class DocumentList extends React.Component {
   test () {
     console.log('--------------->curUser after mount:', this.props.curUser);
   }
+
+  handleCheckbox (id, index, list) {
+    list[id] ? delete list[id] : list[id] = index;     
+  }
+
+  delete () {
+    console.log('indexes', this.props.itemsToDelete);
+
+
+    console.log('docs props:', this.props.documents.slice());
+    console.log('Are you sure you want to delete:', this.props.itemsToDelete)
+    var keys = Object.keys( this.props.itemsToDelete).map( num => { return Number(num) });
+
+    console.log('keys:', keys);
+
+    axios.delete('/document?sharelink=' + keys)
+    .then(function(res) {
+      // browserHistory.push('/?sharelink=' + sharelinkId);
+      console.log('deleted');
+
+      // modify client, begin testing
+      var docs = this.props.documents.slice();
+      
+      console.log('docs before splice:', docs);
+      var i = 0;
+      for (var key in this.props.itemsToDelete) {
+        console.log('splicing:', this.props.itemsToDelete[key]);
+        i === 0 ? docs.splice(this.props.itemsToDelete[key], 1) : docs.splice(this.props.itemsToDelete[key] - 1, 1)
+        i++;
+      }
+
+      console.log('docs after splice:', docs);
+      this.props.dispatch( doclist.populateDocs(docs) ); // store doesn't see change??
+      // end testing
+    }.bind(this))
+    .catch(function(err) {
+      console.log('Error deleting docs:', err);
+    });
+  }
+
   // Title: <input value={ this.props.inputValue } onChange={ this.updateInputValue.bind(this) }type='text' placeholder='Enter the title for the document'/>
   setCurDocId(docId) {
     this.props.dispatch(doclist.setCurDocId(docId));
@@ -139,6 +179,7 @@ class DocumentList extends React.Component {
 	  return (
 		  <div className="container">
 		    <button className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
+        <button className="btn btn btn-primary btn-large btn-block" onClick={ this.delete.bind(this) }>Delete</button>
         <div className="logout-link btn-block"><a href="/logout">logout</a></div>
 		    <br />
 		    <span style={ messageStyle }>{ this.props.message }</span>
@@ -153,7 +194,9 @@ class DocumentList extends React.Component {
 			    		  	  </div>
 			    		  	  <div>
 				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ); this.setCurDocId(doc.id); } }>{ doc.title }</a>
-		                  &nbsp;<a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
+		                  &nbsp;
+                      <input className="del-checkbox" onChange={ () => { this.handleCheckbox( doc.id, index, this.props.itemsToDelete ) } } type="checkbox" checked={ console.log('chex:', this.props.checkVal) }/>
+                      <a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
 		                  <br />
 		                  <span onClick={ this.test.bind(this) } style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>
 	                  </div>
@@ -184,6 +227,7 @@ export default connect((store) => {
 		username: store.documentlist.username,
 		documents: store.documentlist.documents,
 		inputValue: store.documentlist.inputValue,
-    curUser: store.documentlist.curUser
+    curUser: store.documentlist.curUser,
+    itemsToDelete: {},
 	}
 })(DocumentList);
