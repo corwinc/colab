@@ -1,3 +1,6 @@
+import thunk from 'redux-thunk';
+import promise from 'redux-promise';
+
 // DEMO
 export function addComment(comment) {
   return {
@@ -36,6 +39,7 @@ export function getCommentsError(error) {
 }
 
 export function handleCommentInput(input) {
+  console.log('HANDLE COMMENT handleCommentInput, input:', input);
   return {
     type: 'HANDLE_COMMENT_INPUT',
     input
@@ -43,13 +47,109 @@ export function handleCommentInput(input) {
 }
 
 export function updateCommentHeight(height) {
+  console.log('HANDLE COMMENT updateCommentHeight, height:', height);
   return {
     type: 'UPDATE_COMMENT_HEIGHT',
     height
   }
 }
 
+export function updateCommentBorderStyle(borderStyle) {
+  return {
+    type: 'UPDATE_COMMENT_BORDER_STYLE',
+    borderStyle
+  }
+}
+
+export function updateCommentBorderWidth(borderWidth) {
+  return {
+    type: 'UPDATE_COMMENT_BORDER_STYLE',
+    borderWidth
+  }
+}
+
+
+
+// export function updateSavedCommentStyle (borderStyle, borderRadius, borderWidth, marginLeft, marginTop, marginBottom, color, width) {
+//   return {
+//     type: 'UPDATE_SAVED_COMMENT_STYLE',
+//     borderStyle,
+//     borderRadius, 
+//     borderWidth, 
+//     marginLeft, 
+//     marginTop, 
+//     marginBottom, 
+//     color, 
+//     width
+//   }
+// }
+
+//////// NEW
+
+
+// var p = new Promise(function(resolve, reject) {
+  
+//   // Do an async task async task and then...
+
+//   if(/* good condition */) {
+//     resolve('Success!');
+//   }
+//   else {
+//     reject('Failure!');
+//   }
+// });
+
+// p.then(function() { 
+//   /* do something with the result */
+// }).catch(function() {
+//   /* error :( */
+// })
+
+export function handleCommentInputThenHeight(input) {
+  // console.log('HANDLE COMMENT handleCommentInputThenHeight, input:', input);
+  return dispatch => {
+    // console.log('HANDLE COMMENT about to dispatch handleCommentInputP, input:', input);
+     return dispatch(handleCommentInputP(input))
+      .then((inputRes) => {
+        dispatch(updateCommentHeightAfterInput(inputRes));
+        dispatch(activeCommentStatus(true));
+      })
+  }
+}
+
+export function handleCommentInputP(input) {
+  // console.log('HANDLE COMMENT handleCommentInputP, input:', input);
+  const handleInputPromise = new Promise((resolve) => {
+
+    // console.log('HANDLE COMMENT inside handleInputPromise')
+    return {
+      type: 'HANDLE_COMMENT_INPUT',
+      input
+    };
+  } );
+  return handleInputPromise;
+}
+
+export function updateCommentHeightAfterInput(input) {
+  console.log('HANDLE COMMENT updateCommentHeightAfterInput, input:', input);
+  if (input !== '') {
+    return {
+      type: 'UPDATE_COMMENT_HEIGHT_AFTER_INPUT',
+      height: 70
+    } 
+  } else {
+    return {
+      type: 'UPDATE_COMMENT_HEIGHT_AFTER_INPUT',
+      height: 50
+    }
+  }
+}
+
+
+///
+
 export function activeCommentStatus(bool) {
+  console.log('HANDLE COMMENT activeCommentStatus, bool:', bool);
   return {
     type:'ACTIVE_COMMENT_STATUS',
     bool
@@ -84,9 +184,23 @@ export function cancelEntry() {
 }
 
 // in reducer: toggle commentclick & if true, turn off all others
-export function handleCommentClick() {
+export function setFocus(bool) {
   return {
-    type: 'HANDLE_COMMENT_CLICK'
+    type: 'SET_FOCUS',
+    bool
   }
 }
 
+export function setNewCommentStatus(status) {
+  return {
+    type: 'SET_NEW_COMMENT_STATUS',
+    status
+  }
+}
+
+// export function deleteComment(id) {
+//   return {
+//     type: 'DELETE_COMMENT',
+//     id
+//   }
+// }

@@ -4,20 +4,24 @@ import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
 import SavedComment from './SavedComment.jsx';
 import NewComment from './NewComment.jsx';
+import TextSelectionMenu from './TextSelectionMenu.jsx';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 class CommentArea extends React.Component {
   constructor(props) {
     super(props);
 
     this.getComments = this.getComments.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getComments();
   }
 
   getComments () {
+    console.log('GETTING COMMENTS, curDoc:', this.props.curDoc);
     $.ajax({
       method: 'GET',
       url: '/comments',
@@ -33,20 +37,44 @@ class CommentArea extends React.Component {
     })
   }
 
+  deleteComment(id) {
+    console.log('DELETING COMMENT:, id:', id);
+
+    axios.delete('/comments?id=' + id)
+      .then((res) => {
+        console.log('DELETED COMMENT');
+
+        this.getComments();
+      })
+      .catch((err) => {
+        console.log('ERROR DELETING COMMENT');
+      })
+
+  }
+
   render() {
     return (
       <div className="comment-area-container">
         {
           (() => {
+            console.log('THIS PROPS COMMENTS:', this.props.comments);
             return this.props.comments.map((comment, i) => {
-              return (<SavedComment key={i} comment={comment} />);
+              return (<SavedComment key={i} comment={comment} deleteComment={this.deleteComment} />);
             });
           })()
         }
 
         {
           (() => {
-            if (this.props.selectionLoc !== null) {
+            if (this.props.selectionLoc !== null && !this.props.newCommentStatus) {
+              return (<TextSelectionMenu />);
+            }
+          })()
+        }
+
+        {
+          (() => {
+            if (this.props.newCommentStatus) {
               return (<NewComment />);
             }
           })()
@@ -61,7 +89,8 @@ function mapStateToProps(state) {
   return {
     comments: state.comment.comments,
     selectionLoc: state.editor.selectionLoc,
-    curDoc: state.comment.curDoc
+    curDoc: state.editor.docId,
+    newCommentStatus: state.comment.newCommentStatus
   }
 }
 
