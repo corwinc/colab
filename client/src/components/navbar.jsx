@@ -78,7 +78,7 @@ function mapStateToProps(state) {
     docId: state.tvPage.curDoc,
     userId: state.navbar.userId,
     startCall: state.videoList.startCall, 
-    startConferenceCall: state.videoList.startConferenceCall
+    startConferenceCall: state.videoList.startConferenceCall,
     sharelink: state.editor.sharelinkId,
     curSharedUsers: state.tvPage.curSharedUsers
   }
