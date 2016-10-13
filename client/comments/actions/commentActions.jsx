@@ -55,6 +55,35 @@ export function updateCommentHeight(height) {
 }
 
 
+export function updateCommentBorderStyle(borderStyle) {
+  return {
+    type: 'UPDATE_COMMENT_BORDER_STYLE',
+    borderStyle
+  }
+}
+
+export function updateCommentBorderWidth(borderWidth) {
+  return {
+    type: 'UPDATE_COMMENT_BORDER_STYLE',
+    borderWidth
+  }
+}
+
+
+
+// export function updateSavedCommentStyle (borderStyle, borderRadius, borderWidth, marginLeft, marginTop, marginBottom, color, width) {
+//   return {
+//     type: 'UPDATE_SAVED_COMMENT_STYLE',
+//     borderStyle,
+//     borderRadius, 
+//     borderWidth, 
+//     marginLeft, 
+//     marginTop, 
+//     marginBottom, 
+//     color, 
+//     width
+//   }
+// }
 
 //////// NEW
 

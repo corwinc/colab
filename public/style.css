@@ -471,6 +471,13 @@ div.vid-scrollable-list {
 
 .comment-saved-container {
   font-family: arial;
+  border-radius: 5px;
+  border-width: .5px;
+  margin-left: 10%;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: gray;
+  width: 80%;
 }
 
 .comment-saved {
@@ -492,7 +499,7 @@ div.vid-scrollable-list {
   list-style-type: none;
   text-align: center;
   margin-left: 12px;
-  margin-top: 12
+  margin-top: 12px;
 }
 
 .comment-saved-initials {

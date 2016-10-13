@@ -10,27 +10,35 @@ import SavedCommentFocused from './SavedCommentFocused.jsx';
 class SavedComment extends React.Component {
   constructor(props) {
     super(props);
+
   }
 
-  toggleCommentFocus() {
-    console.log('INSIDE TOGGLE COMMENT FOCUS');
-    if (this.props.savedCommentFocus) {
-      console.log('saveFocus is true:', this.props.savedCommentFocus);
-      this.props.setFocus(false);
-      return <SavedCommentUnfocused setFocus={this.props.setFocus} comment={this.props.comment} />
-    } else {
-      console.log('saveFocus is false:', this.props.savedCommentFocus);
-      this.props.setFocus(true);
-      console.log('Rendering focused view');
-      // return <SavedCommentFocused setFocus={this.props.setFocus} comment={this.props.comment} />
-    }
-  }
+  // toggleCommentFocus() {
+  //   console.log('INSIDE TOGGLE COMMENT FOCUS');
+  //   if (this.props.savedCommentFocus) {
+  //     console.log('saveFocus is true:', this.props.savedCommentFocus);
+  //     this.props.setFocus(false);
+  //     return <SavedCommentUnfocused />
+  //   } else {
+  //     console.log('saveFocus is false:', this.props.savedCommentFocus);
+  //     this.props.setFocus(true);
+  //     console.log('Rendering focused view');
+  //     // return <SavedCommentFocused setFocus={this.props.setFocus} comment={this.props.comment} />
+  //   }
+  // }
 
   render() {
     console.log('PASSED IN COMMENT SC:', this.props.comment);
     return (
       <div className="comment-saved-container">
-        {() => this.toggleCommentFocus()}
+        <SavedCommentUnfocused
+          setFocus={this.props.setFocus} 
+          comment={this.props.comment} 
+          borderStyle={this.props.borderStyle}
+          borderWidth={this.props.borderWidth}
+          borderRadius={this.props.borderRadius}
+          updateCommentBorderStyle={this.props.updateCommentBorderStyle}
+          updateCommentBorderWidth={this.props.updateCommentBorderWidth} />
       </div>
     )
   }
@@ -38,13 +46,20 @@ class SavedComment extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    savedCommentFocus: state.comment.savedCommentFocus
+    savedCommentFocus: state.comment.savedCommentFocus,
+    // style: state.comment.style,
+    borderStyle: state.comment.borderStyle,
+    borderWidth: state.comment.borderWidth,
+    borderRadius: state.comment.borderRadius
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    setFocus: commentActions.setFocus
+    setFocus: commentActions.setFocus,
+    // updateSavedCommentStyle: commentActions.updateSavedCommentStyle,
+    updateCommentBorderStyle: commentActions.updateCommentBorderStyle,
+    updateCommentBorderWidth: commentActions.updateCommentBorderWidth
   }, dispatch);
 }
 

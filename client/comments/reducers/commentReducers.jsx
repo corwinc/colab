@@ -14,7 +14,20 @@ const initialState = {
   commentEntryHeight: 50,
   savedSelectionLoc: null,
   newCommentStatus: false,
-  savedCommentFocus: true
+  savedCommentFocus: true,
+  borderStyle: 'none',
+  borderWidth: 0.5,
+  borderRadius: 5
+  // style: {
+  //   borderStyle: 'none',
+  //   borderRadius: 'none',
+  //   borderWidth: 'none',
+  //   marginLeft: 'none',
+  //   marginTop: 'none',
+  //   marginBottom: 'none',
+  //   color: 'none',
+  //   width: 'none'
+  // },
 }
 
 export default function (state=initialState, action) {
@@ -64,6 +77,27 @@ export default function (state=initialState, action) {
       return Object.assign({}, state, {
         savedCommentFocus: action.bool
       })
+    case 'UPDATE_COMMENT_BORDER_STYLE':
+      return Object.assign({}, state, {
+        borderStyle: action.borderStyle
+      })
+    case 'UPDATE_COMMENT_BORDER_WIDTH':
+      return Object.assign({}, state, {
+        borderWidth: action.borderWidth
+      })
+    // case 'UPDATE_SAVED_COMMENT_STYLE':
+    //   return Object.assign({}, state, {
+    //     style: {
+    //       borderStyle: action.borderStyle,
+    //       borderRadius: action.borderRadius,
+    //       borderWidth: action.borderWidth,
+    //       marginLeft: action.marginLeft,
+    //       marginTop: action.marginTop,
+    //       marginBottom: action.marginBottom,
+    //       color: action.color,
+    //       width: action.width
+    //     }
+    //   })
     case 'POST_ENTRY':
       return Object.assign({}, state, {
         comment: action.postEntry

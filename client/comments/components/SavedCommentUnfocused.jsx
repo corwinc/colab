@@ -10,10 +10,14 @@ class SavedCommentUnfocused extends React.Component {
     super(props);
   }
 
+  updateBorder() {
+    return 
+  }
+
   render() {
     console.log('PASSED IN COMMENT SCU:', this.props.comment);
     return (
-      <div className="comment-saved-unfocused" style={{top: this.props.comment.location - 56}} onClick={() => this.props.setFocus(true)}>
+      <div className="comment-saved-unfocused" style={{top: this.props.comment.location - 56, borderStyle: this.props.borderStyle, borderWidth: this.props.borderWidth, borderRadius: this.props.borderRadius}} onClick={() => this.props.updateCommentBorderStyle('solid')}>
         <div className="comment-saved-chathead">
           <span className="comment-saved-initials">{this.props.comment.initials}</span>
         </div>
