@@ -68,21 +68,8 @@ class NavBar extends React.Component {
                     <li key={i}
                       id={user.id}
                       onClick={ ()=>{
-                        console.log("curUser is: ", this.props.userId);
-                        //signalingChannel.emit("send call from navbar", JSON.stringify({userId: this.props.userId}));
-                        console.log("start function is: ", this.props.startCall);
                         var pcKey = this.props.userId + '---' + user.id;
-                        this.props.startCall(true, pcKey, 'direct call')
-                        // var pcKey = myId + '---' + user.id;
-                        // if (isConnectionAlreadyMade(pcKey)){
-                        //   console.log("You're already connected to this user. Womp womp.");
-                        //   return;
-                        // }
-                        // if (user.id !== myId) { 
-                        //   initSingleCall(pcKey, 'direct call');
-                        // } else {
-                        //   console.log("You can't call yourself, silly goose!");
-                        // }
+                        this.props.startCall(true, pcKey, 'direct call', user.id)
                       }} 
                     >
                       <span className="chathead-initials">{initials}</span>
@@ -92,7 +79,7 @@ class NavBar extends React.Component {
               </ul>
             </div>
             <div className="navbar-button-container">
-              <div className="share-button"><button onClick={ ()=>{initConferenceCall(this.props.docId)}}>Conference Call</button></div>
+              <div className="share-button"><button onClick={ ()=>{this.props.startConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
               <div className="logout-link">
                 <a href="/logout" onClick={()=>{ var docId = this.props.docId;
@@ -115,7 +102,8 @@ function mapStateToProps(state) {
     // userId: state.documentlist.curUser,
     userId: state.navbar.userId,
     sharelink: state.editor.sharelinkId, 
-    startCall: state.videoList.startCall
+    startCall: state.videoList.startCall, 
+    startConferenceCall: state.videoList.startConferenceCall
   }
 }
 

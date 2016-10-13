@@ -26,35 +26,31 @@ class AppVideo extends React.Component {
     this.setSignalingChannel.call(this);
     this.setDocumentChannel.call(this);
     this.props.dispatch(videoActionList.setStartCall(this.start.bind(this)));
+    this.props.dispatch(videoActionList.setStartConferenceCall(this.initConferenceCall.bind(this)));
   }
+
+  // componentWillUnmount(){
+  //   documentChannel.emit('user leaving document', JSON.stringify({"documentId": this.props.documentId, "exitingUserId": this.props.userId}));
+  // }
 
   setDocumentChannel(){
     var context = this;
 
     documentChannel.on('user joins document', function(evt) {
       var signal = JSON.parse(evt);
-      console.log("FLAG FLAG FLAG : ", signal.activeUsers);
-      console.log("IDS ARE: ", context.props.documentId, signal.documentId);
       if (context.props.documentId === signal.documentId){
         if (signal.newUserId != context.props.userId){
           context.activeUsers = signal.activeUsers;
-          console.log("added user: now the array is: ", context.activeUsers);
         }
       }
     });
 
     documentChannel.on('user leaves document', function(evt) {
       var signal = JSON.parse(evt);
-      console.log("FLAG FLAG FLAG EXIT: ", signal);
-      if (context.documentId === signal.documentId){
-        if (signal.exitingUserId != context.props.userId){
-          var indexOfExiter = context.activeUsers.indexOf(signal.exitingUserId);
-          context.activeUsers.splice(indexOfExiter, indexOfExiter + 1);
-          console.log("deleted user: now the array is: ", context.activeUsers);
-        }
+      if (context.props.documentId === signal.documentId){
+        context.activeUsers = signal.activeUsers;
       }
     });
-
   }
 
   setSignalingChannel(){
@@ -112,10 +108,20 @@ class AppVideo extends React.Component {
 
   }
 
-  start(isCaller, pcKey, mode) {
-    var context = this;
+  start(isCaller, pcKey, mode, calleeId) {
+
+    if (this.isConnectionAlreadyMade(pcKey)){
+      console.log("You're already connected to this user. Womp womp.");
+      return;
+    }
+    if (this.areYouSignalingYourself(calleeId)) { 
+      console.log("You can't call yourself, silly goose!");
+      return;
+    } 
+
     this.isCaller = isCaller;
     signalingChannel.isCaller = isCaller;
+    var context = this;
 
     this.pcs[pcKey] = new RTCPeerConnection(context.configuration);
 
@@ -209,7 +215,7 @@ class AppVideo extends React.Component {
     }
   };
 
-  initConferenceCall(docId){
+  initConferenceCall(){
     var meshGrid = this.createMeshGrid(this.activeUsers);
     signalingChannel.emit('signal conference call', JSON.stringify({"meshGrid": meshGrid}));
   }
@@ -230,7 +236,7 @@ class AppVideo extends React.Component {
   }
 
   showProps() {
-    console.log("PROPS ARE: ", this.props);
+    console.log("USERS ARE: ", this.activeUsers);
   }
 
   render(){
@@ -239,7 +245,7 @@ class AppVideo extends React.Component {
         <button onClick={ this.initConferenceCall.bind(this) }> Start trial conference call </button>
         <CallAlertList isCaller={ this.isCaller } outgoingAlerts={ this.props.outgoingAlerts } incomingAlerts={ this.props.incomingAlerts }/>
         <VideoCardList connections={ this.props.connections } streams={ this.streams }/>
-        <button onClick={ this.showProps.bind(this) }> Show props </button>
+        <button onClick={ this.showProps.bind(this) }> Show users </button>
       </div>
     );
   }

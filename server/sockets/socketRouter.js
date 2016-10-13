@@ -50,6 +50,8 @@ module.exports = function(server) {
 
   });
 
+
+
   var documents = {};
 
   var documentSocket = io.of('/document');
@@ -67,12 +69,16 @@ module.exports = function(server) {
       console.log("user joining document *************************");
       setTimeout(function(){
         documentSocket.emit('user joins document', JSON.stringify({"documentId": joinInfo.documentId, "activeUsers": documents[joinInfo.documentId]}));
-      },1000);
+      }, 100);
     });
 
     socket.on('user leaving document', function(exitInfo){
-      console.log("user exiting document *************************");
-      documentSocket.emit('user leaves document', exitInfo);
+      var exitInfo = JSON.parse(exitInfo);
+      console.log("user exiting document *************************, before ", documents);
+      var exUserIndex = documents[exitInfo.documentId].indexOf(exitInfo.exitingUserId);
+      documents[exitInfo.documentId].splice(exUserIndex, exUserIndex + 1);
+      documentSocket.emit('user leaves document', JSON.stringify({"documentId": exitInfo.documentId, "activeUsers": documents[exitInfo.documentId]}));
+      console.log("********* AFTER: ", documents);
     });
 
     socket.on('disconnect', function() {

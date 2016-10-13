@@ -61,3 +61,10 @@ export function setStartCall(startCall) {
     startCall: startCall
   }
 };
+
+export function setStartConferenceCall(startConferenceCall) {
+  return {
+    type: 'SET_START_CONFERENCE_CALL', 
+    startConferenceCall: startConferenceCall
+  }
+};

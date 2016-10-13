@@ -154,7 +154,7 @@ class DocumentList extends React.Component {
 			    		  	  </div>
 			    		  	  <div>
 				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ); 
-                                            this.setCurDocId(doc.id); console.log("CLICKy ^^^^^^^^^^^^^^^^^^^^^^^^");
+                                            this.setCurDocId(doc.id);
                                             documentChannel.emit('user joining document', JSON.stringify({"documentId": doc.id, "newUserId": parseInt(this.props.curUser)})) } }>
                         { doc.title }
                       </a>
