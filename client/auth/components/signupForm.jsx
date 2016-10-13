@@ -10,6 +10,7 @@ class SignupForm extends React.Component {
 			firstname:'',
 			lastname:'',
 			username:'',
+			usernameErr:'',
 			email:'',
 			password:'',
 
@@ -40,7 +41,7 @@ class SignupForm extends React.Component {
 					this.context.router.push('/documentlist');
 				} else {
 					
-			  		this.setState({username: 'A user with that username already exists.'});
+			  		this.setState({usernameErr: 'A user with that username already exists.'});
 			  		return;
   					
 
@@ -53,14 +54,23 @@ class SignupForm extends React.Component {
 		)
 	}
 
+
 	render() {
+		var messageStyle = {
+	      color: 'red'
+	    };
+
+	    var titleStyle = {
+	      color: '#3666b5'
+	    };
+
 		const {errors} = this.state;
 		return (
 			<form  
 				role="form"
 				onSubmit={this.onSubmit}>
 
-				<h1>Welcome to ColLab</h1>
+				<h1 className="text-center"><span style={titleStyle}>Col-Lab</span></h1>
 
 				<div className="form-group" >
 					<label className="control-label">Firstname</label>
@@ -96,6 +106,7 @@ class SignupForm extends React.Component {
 						placeholder="Mike123"
 						className="form-control" required
 					/>
+					<span style={messageStyle}>{this.state.usernameErr}</span>
 				</div>
 
 				<div className="form-group">
@@ -132,7 +143,7 @@ class SignupForm extends React.Component {
 					</button>
 				</div>
 				<div className="form-group">
-		          Already have an account? <Link to="/login">Sign in</Link>
+		          Already have an account? <Link to="/login"><strong>Sign in</strong></Link>
 		        </div>
 		        <div className="form-group">
 		          <a className="btn btn-primary btn-lg" href="/auth/facebook">Sign Up With Facebook</a>

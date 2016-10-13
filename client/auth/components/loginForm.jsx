@@ -46,13 +46,19 @@ class LoginForm extends React.Component {
 
 	
 	render() {
+		var errStyle = {
+			color: 'red'
+		}
+		var titleStyle = {
+	      color: '#3666b5'
+	    };
 		return (
 			<form 
 				
 				onSubmit={this.onSubmit}
 				>
 
-				<h1>Welcome to COlLab</h1>
+				<h1 className="text-center"><span style={titleStyle}>COl-Lab</span></h1>
 
 				<div className="form-group">
 					<label className="control-label">Your username</label>
@@ -63,7 +69,7 @@ class LoginForm extends React.Component {
 						placeholder="username"
 						className="form-control" required
 					/>
-					<span >{this.state.usernameMsg}</span>
+					<span style={errStyle}>{this.state.usernameMsg}</span>
 				</div>
 
 				
@@ -78,7 +84,7 @@ class LoginForm extends React.Component {
 						className="form-control"
 						placeholder="password" required
 					/>
-					<span >{this.state.passwordMsg}</span>
+					<span style={errStyle}>{this.state.passwordMsg}</span>
 				</div>
 
 				<div className="form-group">
@@ -102,7 +108,7 @@ class LoginForm extends React.Component {
 				</div>
 
 				<div className="form-group">
-		          Don't have an account? <Link to="/signup">Register</Link>
+		          Don't have an account? <Link to="/signup"><strong>Register</strong></Link>
 		        </div>
 		        <div className="form-group">
 		          <a className="btn btn-primary btn-lg" href="/auth/facebook"><span className="fa fa-facebook"></span>Sign In With facebook</a>

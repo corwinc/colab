@@ -14,13 +14,23 @@ class Signup extends React.Component {
 	render() {
 		const {userSignupRequest, addFlashMessage} = this.props;
 		return (
-		  
-		  <div className="row">
-	        <div className="col-md-4 col-md-offset-4">
-	    		<SignupForm userSignupRequest={userSignupRequest} 
-	    		addFlashMessage={addFlashMessage}/> 
-	        </div>
-	      </div>
+		  <div>
+		  	<video className="backGroundVideo" controls autoPlay loop="loop" muted="" width="300" height="150">
+		      <source src="../../../public/media/demo.mp4" type="video/mp4" />
+		      <source src="../../../public/media/demo.ogv" type="video/ogg" />
+		      <source src="../../../public/media/demo.webm" type="video/webm" />
+		    </video>
+
+
+		    <div className="container">
+			  <div className="row">
+		        <div className="col-md-4 col-md-offset-4">
+		    		<SignupForm userSignupRequest={userSignupRequest} 
+		    		addFlashMessage={addFlashMessage}/> 
+		        </div>
+		      </div>
+		    </div>
+		  </div>
 			
 		)
 	}
