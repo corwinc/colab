@@ -1,5 +1,4 @@
 import React from 'react';
-const hidden = {display: "none"};
 
 // Incoming call options show the accept and reject call icons in the case of a direct call. 
 const IncomingCallOptions = ({shouldShow, acceptOnclick, rejectOnclick}) => { 
@@ -17,9 +16,7 @@ const IncomingCallOptions = ({shouldShow, acceptOnclick, rejectOnclick}) => {
       </div>
     );
   } else {
-    return (
-      <div style={hidden}></div>
-    );
+    return null;
   }
 };
 

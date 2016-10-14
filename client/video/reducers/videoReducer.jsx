@@ -18,6 +18,11 @@ const peerConnection = (state = initialState, action) => {
 
 export default function(state = {}, action) {
   switch (action.type) {
+    case 'SHOW_All_CALL_VIEWS': 
+    case 'HIDE_All_CALL_VIEWS': 
+      return Object.assign({}, state, {
+        shouldShow: action.shouldShow
+      });  
     case 'ADD_PEER_CONNECTION':
       var prevVideos = state.connections || [];
       return Object.assign({}, state, {

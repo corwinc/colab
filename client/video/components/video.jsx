@@ -113,6 +113,10 @@ class AppVideo extends React.Component {
         context.props.dispatch(videoActionList.removePeerConnection(signal.pcKey));
       }      
       delete context.pcs[signal.pcKey];
+      // Hide the video views if there are no peer connections left. Views show again as soon as a new call starts. 
+      if (!Object.keys(context.pcs).length) {
+        context.props.dispatch(videoActionList.hideAllCallViews());
+      }
     });
 
     // Conference calls differ from regular calls in that they (via the 'conference call' mode) do not rely on the users
@@ -140,6 +144,9 @@ class AppVideo extends React.Component {
   // start establishes the p2p connection between a caller and callee. It behaves differently for callees than callers, and 
   // also for direct call mode versus conference call mode: Callees 
   start(isCaller, pcKey, mode, calleeId) {
+
+    // Show the video views.
+    this.props.dispatch(videoActionList.showAllCallViews());
 
     // Make sure the connection doesn't already exist. 
     if (this.isConnectionAlreadyMade(pcKey)){
@@ -299,13 +306,15 @@ class AppVideo extends React.Component {
   // pushed into the array found at that key. User C in the above example thus has ["C---D"] as the only entry at grid["C"].
   createMeshGrid(userIds) {
     var grid = {};
-    for (var i = 0; i < userIds.length; i++){
-      if (grid[userIds[i]] === undefined && i !== userIds.length - 1) {
-        grid[userIds[i]] = [];
-      }
-      for (var j = i; j < userIds.length; j++){
-        if (i !== j) {
-          grid[userIds[i]].push(userIds[i] + '---' + userIds[j]);
+    if (userIds) {
+      for (var i = 0; i < userIds.length; i++){
+        if (grid[userIds[i]] === undefined && i !== userIds.length - 1) {
+          grid[userIds[i]] = [];
+        }
+        for (var j = i; j < userIds.length; j++){
+          if (i !== j) {
+            grid[userIds[i]].push(userIds[i] + '---' + userIds[j]);
+          }
         }
       }
     }
@@ -314,12 +323,16 @@ class AppVideo extends React.Component {
 
   // Render the components. No call alerts nor videos will be showing on the first load. 
   render(){
-    return (
-      <div className="call-views">
-        <CallAlertList isCaller={ this.isCaller } outgoingAlerts={ this.props.outgoingAlerts } incomingAlerts={ this.props.incomingAlerts }/>
-        <VideoCardList connections={ this.props.connections } streams={ this.streams }/>
-      </div>
-    );
+    if (this.props.shouldShow){
+      return (
+        <div className="call-views">
+          <CallAlertList isCaller={ this.isCaller } outgoingAlerts={ this.props.outgoingAlerts } incomingAlerts={ this.props.incomingAlerts }/>
+          <VideoCardList connections={ this.props.connections } streams={ this.streams }/>
+        </div>
+      );
+    } else {
+      return null;
+    }  
   }
 }
 
@@ -327,7 +340,8 @@ AppVideo.propTypes = {
   connections: React.PropTypes.array.isRequired, 
   outgoingAlerts: React.PropTypes.array.isRequired, 
   incomingAlerts: React.PropTypes.array.isRequired, 
-  userId: React.PropTypes.number.isRequired
+  userId: React.PropTypes.number.isRequired, 
+  shouldShow: React.PropTypes.bool.isRequired,
 }
 
 // Use Redux's connect to bind the AppVideo's props to values in the Redux store. 
@@ -337,7 +351,8 @@ export default connect((store) => {
     outgoingAlerts: store.alertList.outgoingAlerts || [],
     incomingAlerts: store.alertList.incomingAlerts || [], 
     userId: parseInt(store.documentlist.curUser) || 0, 
-    documentId: store.tvPage.curDoc
+    documentId: store.tvPage.curDoc,
+    shouldShow: store.videoList.shouldShow || false
   }
 })(AppVideo);
 

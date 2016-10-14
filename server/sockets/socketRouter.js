@@ -40,7 +40,6 @@ module.exports = function(server) {
     console.log("EDITOR SOCKET CONNECTED");
 
     socket.on('change', function(msg) {
-      console.log('text:' + msg)
       editorSocket.emit('change', msg);
     });  
 
