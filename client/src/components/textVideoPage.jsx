@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import * as tvPageActions from '../actions/tvPageActions.jsx';
 import * as editorActions from '../actions/editorActions.jsx';
 import * as navbarActions from '../actions/navbarActions.jsx';
+import * as commentActions from '../../comments/actions/commentActions.jsx';
 import TextEditor from './textEditor.jsx';
 import AppVideo from './../../video/components/video.jsx';
 import Chat from './chat.jsx';
@@ -123,7 +124,7 @@ class TextVideoPage extends React.Component {
       success: (data) => {
         console.log('TVP found doc from sharelink:', data);
         var docId = data.id;
-        // this.setState({curDoc: docId});
+        this.getComments(docId);
         this.props.setDocId(docId);
       },
       error: (err) => {
@@ -132,9 +133,20 @@ class TextVideoPage extends React.Component {
     })
   }
 
-  // setSelectionLoc (loc) {
-  //   this.setState({selectionLoc: loc});
-  // }
+  getComments (id) {
+    $.ajax({
+      method: 'GET',
+      url: '/comments',
+      dataType: 'json',
+      data: {docId: id},
+      success: (data) => {
+        this.props.getCommentsSuccess(data);
+      },
+      error: (err) => {
+        console.log('Error getting comments:', err);
+      }
+    })
+  }
 
   render() {
     return (
@@ -151,27 +163,6 @@ class TextVideoPage extends React.Component {
   }
 }
 
-
-
-// /* COMPONENT WITH CHAT */
-// export default class TextVideoPage extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <div className="NavBar">
-//           <NavBar />
-//         </div>
-//         <div id="editor">
-//           <p>Type here...</p>
-//         </div>
-//         <div className="video-and-chat">
-//           <AppVideo className="Video"/>
-//           <Chat className="Chat"/>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
 
 function mapStateToProps(state) {
   console.log('TVP STATE inside mapStateToProps:', state);
@@ -190,8 +181,8 @@ function mapDispatchToProps(dispatch) {
     setSharelink: editorActions.setLink,
     setDocId: tvPageActions.setDocId,
     setCurSharedUsers: tvPageActions.setCurSharedUsers,
-    setCurUserInitials: tvPageActions.setCurUserInitials
-    // setUserId: navbarActions.setUserId
+    setCurUserInitials: tvPageActions.setCurUserInitials,
+    getCommentsSuccess: commentActions.getCommentsSuccess
   }, dispatch);
 }
 
