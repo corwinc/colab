@@ -63,7 +63,6 @@ class NavBar extends React.Component {
             <div className="navbar-button-container">
               <div className="share-button"><button onClick={()=>{this.props.startConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
-              <div className="logout-link"><a href="/logout">logout</a></div>
               <div><a onClick={ this.goToDocs }>docs</a></div>
               <div className="logout-link">
                 <a href="/logout" onClick={()=>{ var docId = this.props.docId;
