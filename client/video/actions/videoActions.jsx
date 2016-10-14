@@ -1,3 +1,17 @@
+export function showAllCallViews(){
+  return {
+    type: 'SHOW_All_CALL_VIEWS', 
+    shouldShow: true
+  }
+}
+
+export function hideAllCallViews(){
+  return {
+    type: 'HIDE_All_CALL_VIEWS', 
+    shouldShow: false
+  }
+}
+
 export function addPeerConnection(pcKey, pc, hangupOnclick) {
   return {
     type: 'ADD_PEER_CONNECTION',

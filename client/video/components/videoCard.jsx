@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Video cards show the remote peer's video.
 const VideoCard = ({stream, pcKey, hangupOnclick}) => {
   return (
     <div id={"vidBox___" + pcKey} className="vid-box">
