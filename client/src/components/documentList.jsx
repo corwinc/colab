@@ -193,7 +193,7 @@ class DocumentList extends React.Component {
     };
 
     var rightSideBarStyle = {
-      marginTop: 100
+      marginTop: 25
     };
 
 	  return (
