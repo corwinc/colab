@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import * as tvPageActions from '../actions/tvPageActions.jsx';
 import * as editorActions from '../actions/editorActions.jsx';
 import * as navbarActions from '../actions/navbarActions.jsx';
+import * as commentActions from '../../comments/actions/commentActions.jsx';
 import TextEditor from './textEditor.jsx';
 import AppVideo from './../../video/components/video.jsx';
 import Chat from './chat.jsx';
@@ -124,10 +125,26 @@ class TextVideoPage extends React.Component {
         console.log('TVP found doc from sharelink:', data);
         var docId = data.id;
         // this.setState({curDoc: docId});
+        this.getComments(docId);
         this.props.setDocId(docId);
       },
       error: (err) => {
         console.log('TVP getDocId error:', err);
+      }
+    })
+  }
+
+  getComments (id) {
+    $.ajax({
+      method: 'GET',
+      url: '/comments',
+      dataType: 'json',
+      data: {docId: id},
+      success: (data) => {
+        this.props.getCommentsSuccess(data);
+      },
+      error: (err) => {
+        console.log('Error getting comments:', err);
       }
     })
   }
@@ -190,8 +207,8 @@ function mapDispatchToProps(dispatch) {
     setSharelink: editorActions.setLink,
     setDocId: tvPageActions.setDocId,
     setCurSharedUsers: tvPageActions.setCurSharedUsers,
-    setCurUserInitials: tvPageActions.setCurUserInitials
-    // setUserId: navbarActions.setUserId
+    setCurUserInitials: tvPageActions.setCurUserInitials,
+    getCommentsSuccess: commentActions.getCommentsSuccess
   }, dispatch);
 }
 
