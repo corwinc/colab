@@ -196,8 +196,8 @@ class DocumentList extends React.Component {
 		  <div className="container-fluid">
         <div className="row">
           <div id="doclist-left-sidebar" className="col-md-2">
-            <h2 style={ logoStyle } >ColLab</h2>
-            <a href="/logout">logout</a>
+            <center><h2 style={ logoStyle } >ColLab</h2></center>
+            <center><a href="/logout">logout</a></center>
           </div>
           <div className="col-md-8">
             <h1 style={ hStyle } >Docs</h1>
