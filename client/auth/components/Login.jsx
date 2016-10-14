@@ -8,22 +8,34 @@ class Login extends React.Component {
 		super(props)
 	}
 
-	render() {
-		const {userLoginRequest} = this.props;
-		return (
-			<div>
-			  	<video className="backGroundVideo" controls autoPlay loop="loop" muted="" width="300" height="150">
-			      <source src="../../../public/media/3.mp4" type="video/mp4" />
-			      <source src="../../../public/media/3.ogv" type="video/ogg" />
-			      <source src="../../../public/media/3.webm" type="video/webm" />
-			    </video>
 
-					<div className="container">
-						<div className="row">
-			        <div className="col-md-4 col-md-offset-4">
-			    		<LoginForm userLoginRequest={userLoginRequest}/> 
-			        </div>
+
+	render() {
+		var imgUrl = '../../../public/media/3.jpg'
+
+		var divStyle = {
+		  color: 'white',
+		  position: 'fixed',
+		  top:0,
+		  bottom: 0,
+		  left: 0,
+		  width:'100%',
+		  backgroundImage: 'url(' + imgUrl + ')',
+		  WebkitTransition: 'all', // note the capital 'W' here
+		  msTransition: 'all', // 'ms' is the only lowercase vendor prefix
+		  backgroundSize: 'cover',
+          overflow: 'hidden',
+		};
+		const {userLoginRequest} = this.props;
+
+		return (
+			<div style={divStyle}>
+			  	<div className="container">
+					<div className="row">
+		        <div className="col-md-4 col-md-offset-4">
+		    		<LoginForm userLoginRequest={userLoginRequest}/> 
 		        </div>
+	        </div>
 		    </div>
 	    </div>
 		)

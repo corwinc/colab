@@ -160,6 +160,10 @@ class DocumentList extends React.Component {
     this.props.dispatch(doclist.setCurDocId(docId));
   }
 
+  goToLogin () {
+    browserHistory.push('/logout');
+  }
+
   render() {
     var messageStyle = {
       color: 'red'
@@ -197,7 +201,7 @@ class DocumentList extends React.Component {
         <div className="row">
           <div id="doclist-left-sidebar" className="col-md-2">
             <h2 style={ logoStyle } >ColLab</h2>
-            <a href="/logout">logout</a>
+            <a onClick={this.goToLogin}>logout</a>
           </div>
           <div className="col-md-8">
             <h1 style={ hStyle } >Docs</h1>
