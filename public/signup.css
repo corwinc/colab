@@ -3,10 +3,9 @@
 */
 
 body, html{
-     height: 100%;
+  height: 100%;
   background-repeat: no-repeat;
-  background-color: #d3d3d3;
-  font-family: 'Oxygen', sans-serif;
+  font-family: arial, sans-serif;
 }
 
 .main{
@@ -14,9 +13,10 @@ body, html{
 }
 
 h1.title { 
-  font-size: 50px;
-  font-family: 'Passion One', cursive; 
+  font-size: 60px;
+  font-family: arial; 
   font-weight: 400; 
+  color: rgba(50, 50, 50, .75);
 }
 
 hr{
@@ -39,11 +39,11 @@ input::-webkit-input-placeholder {
 }
 
 .main-login{
-  background-color: #fff;
+  background-color: rgba(250, 250, 250, .75);
     /* shadows and rounded borders */
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
-  border-radius: 2px;
+  border-radius: 5px;
   /*-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);*/

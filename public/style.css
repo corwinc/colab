@@ -127,13 +127,12 @@
 }
 
 .call-views {
-  margin-left: 82%;
+  margin-left: 1%;
   height: auto;
-  width: auto;
+  width: 18%;
   padding: 1em;  
   position: fixed;
   background-color: #f4fdff; 
-  border: 3px solid #f4fafe;
   z-index: 10;
   top: 10%;
   display: block;

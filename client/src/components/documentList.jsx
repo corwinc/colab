@@ -204,7 +204,7 @@ class DocumentList extends React.Component {
 		  <div className="container-fluid">
         <div className="row">
           <div id="doclist-left-sidebar" className="col-md-2">
-            <center><h2 style={ logoStyle } >ColLab</h2></center>
+            <center><h2 style={ logoStyle } >Colab</h2></center>
             <center><a onClick={this.goToLogin}>logout</a></center>
           </div>
           <div className="col-md-8">
@@ -221,7 +221,9 @@ class DocumentList extends React.Component {
                           <img style={ docIconStyle }src="http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png" />
                         </div>
                         <div>
-                          <a onClick={ () => { this.openDoc( doc.sharelink ); this.setCurDocId(doc.id); } }>{ doc.title }</a>
+                          <a onClick={ () => { this.openDoc( doc.sharelink ); 
+                                              this.setCurDocId(doc.id); 
+                                              documentChannel.emit('user joining document', JSON.stringify({"documentId": doc.id, "newUserId": parseInt(this.props.curUser)}))} }>{ doc.title }</a>
                           &nbsp;
                           <input className="del-checkbox" onChange={ () => { this.handleCheckbox( doc.id, index, this.props.itemsToDelete ) } } type="checkbox"/>
                           <a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
