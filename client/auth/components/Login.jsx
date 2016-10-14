@@ -12,11 +12,7 @@ class Login extends React.Component {
 		const {userLoginRequest} = this.props;
 		return (
 			<div>
-			  	<video className="backGroundVideo" controls autoPlay loop="loop" muted="" width="300" height="150">
-			      <source src="../../../public/media/3.mp4" type="video/mp4" />
-			      <source src="../../../public/media/3.ogv" type="video/ogg" />
-			      <source src="../../../public/media/3.webm" type="video/webm" />
-			    </video>
+
 
 					<div className="container">
 						<div className="row">
