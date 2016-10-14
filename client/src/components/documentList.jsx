@@ -192,12 +192,16 @@ class DocumentList extends React.Component {
       fontFamily: 'Arial'
     };
 
+    var rightSideBarStyle = {
+      marginTop: 25
+    };
+
 	  return (
 		  <div className="container-fluid">
         <div className="row">
           <div id="doclist-left-sidebar" className="col-md-2">
-            <h2 style={ logoStyle } >ColLab</h2>
-            <a href="/logout">logout</a>
+            <center><h2 style={ logoStyle } >ColLab</h2></center>
+            <center><a href="/logout">logout</a></center>
           </div>
           <div className="col-md-8">
             <h1 style={ hStyle } >Docs</h1>
@@ -229,7 +233,7 @@ class DocumentList extends React.Component {
 
             <br />
           </div>
-          <div className="col-md-2">
+          <div className="col-md-2" style={ rightSideBarStyle }>
             <button id="add-doc" className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
             <button id="del-doc" className="btn btn btn-primary btn-large btn-block" onClick={ this.delete.bind(this) }>Delete</button>
           </div>

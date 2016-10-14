@@ -6,7 +6,7 @@
 }
 
 .navbar {
-  position: fixed;
+  position: fixed !important;
   top: 0;
   right: 0;
   height: 70px;
@@ -30,6 +30,7 @@
   padding-left: 16px;
   padding-right: 16px;
   height: 60px;
+  margin-top: 15px;
 }
 
 
@@ -106,6 +107,10 @@
   width: 60vw;
   margin-left: auto;
   margin-right: auto;
+}
+
+.ql-toolbar {
+  margin-top: 100px;
 }
 
 .video-and-chat{

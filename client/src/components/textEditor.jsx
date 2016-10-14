@@ -176,7 +176,6 @@ class TextEditor extends React.Component {
     return (
       <div>
         <span>{ this.props.quill[0] }</span>
-        <button onClick={ () => { this.saveDoc(this.props.quill[0], this.props.sharelinkId) } }>Save</button>
         <div id="editor">
         </div>
       </div>
