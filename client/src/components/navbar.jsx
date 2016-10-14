@@ -36,6 +36,10 @@ class NavBar extends React.Component {
     browserHistory.push('/documentlist');
   }
 
+  goToLogin () {
+    browserHistory.push('/logout');
+  }
+
   render() {
     return (
       <div className="navbar-container">
@@ -64,9 +68,10 @@ class NavBar extends React.Component {
               <div className="share-button"><button onClick={()=>{this.props.startConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
               <div className="logout-link">
-                <a href="/logout" onClick={()=>{ var docId = this.props.docId;
+                <a onClick={()=>{ var docId = this.props.docId;
                                                 var userId = parseInt(this.props.userId);
-                                                documentChannel.emit('user leaving document', JSON.stringify({"documentId": docId, "exitingUserId": userId}))}}>logout</a>
+                                                documentChannel.emit('user leaving document', JSON.stringify({"documentId": docId, "exitingUserId": userId}));
+                                                this.goToLogin() }}>logout</a>
               </div>
             </div>
           </div>

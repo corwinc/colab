@@ -33,6 +33,7 @@ class LoginForm extends React.Component {
 				} else {
 					console.log('inside error seting state.');
 					this.setState({usernameMsg: 'user not found',passwordMsg: 'wrong password' });	
+					console.log(this.state.usernameMsg);
 				}
 			}
 		);
@@ -46,59 +47,79 @@ class LoginForm extends React.Component {
 	      color: '#3666b5'
 	    };
 		return (
-			<form 
-				onSubmit={this.onSubmit}
-				>
-
-				<h1 className="text-center"><span style={titleStyle}>COl-Lab</span></h1>
-
-				<div className="form-group">
-					<label className="control-label">Your username</label>
-					<input 
-						value={this.state.username}
-						onChange={this.onChange}
-						name="username"
-						placeholder="username"
-						className="form-control" required
-					/>
-					<span style={errStyle}>{this.state.usernameMsg}</span>
-				</div>
-				
-				<div className="form-group">
-					<label className="control-label">Your password</label>
-					<input 
-						value={this.state.password}
-						onChange={this.onChange}
-						type="password"
-						name="password"
-						className="form-control"
-						placeholder="password" required
-					/>
-					<span style={errStyle}>{this.state.passwordMsg}</span>
-				</div>
-
-				<div className="form-group">
-					<label className="checkbox control-label">
-				        <input type="checkbox" value="remember-me" name="rememberMe" className="form-level" 
-				        /> Remember me
-				      </label>
-			    </div>
-				
-				<div className="form-group">
-					<button className="btn btn-primary btn-lg"
+			<div className="main-login main-center"> 
+				<form className="form-horizontal" 
+					onSubmit={this.onSubmit}
 					>
-					Log In
-					</button>
-				</div>
 
-				<div className="form-group">
-          Don't have an account? <Link to="/signup"><strong>Register</strong></Link>
-        </div>
-		        
-        <div className="form-group">
-          <a className="btn btn-primary btn-lg" href="/auth/facebook"><span className="fa fa-facebook"></span>Sign In With facebook</a>
-        </div>
-		  </form>
+					<div className="form-group1">
+						<label 
+							className="cols-sm-2 control-label">Username</label>
+						<div className="cols-sm-10">
+							<div className="input-group">
+								<span className="input-group-addon">
+									<i className="fa fa-users fa" 
+										aria-hidden="true">
+									</i></span>
+								<input 
+									value={this.state.username}
+									onChange={this.onChange}
+									type="text"
+									name="username"
+									placeholder="username"
+									className="form-control" required
+								/>
+							</div>
+							<span style={errStyle}>{this.state.usernameMsg}</span>
+						</div>
+					</div>
+					
+					<div className="form-group1">
+						<label 
+							className="cols-sm-2 control-label">Password</label>
+						<div className="cols-sm-10">
+							<div className="input-group">
+								<span className="input-group-addon">
+									<i className="fa fa-lock fa-lg" 
+										aria-hidden="true">
+									</i></span>
+								<input 
+									value={this.state.password}
+									onChange={this.onChange}
+									type="password"
+			
+									name="password"
+									className="form-control" 
+									placeholder="Password" required
+								/>
+							</div>
+							<span style={errStyle}>{this.state.passwordMsg}</span>
+						</div>
+					</div>
+					
+					<div className="form-group1">
+						<label className="cols-sm-2 control-label">
+			        <input type="checkbox" value="remember-me" name="rememberMe" className="form-level" 
+			        /> Remember me
+			      </label>
+			    </div>
+					
+					<div className="form-group1">
+						<button className="btn btn-primary btn-lg
+						  btn-block login-button">
+						  Log In
+						</button>
+					</div>
+
+					<div className="form-group1">
+	          Don't have an account? <Link to="/signup"><strong>Register</strong></Link>
+	        </div>
+			        
+	        <div className="form-group1">
+	          <a className="btn btn-primary btn-lg btn-block login-button" href="/auth/facebook">Login With Facebook</a>
+	        </div>
+			  </form>
+			</div>
 		);
 	}
 }

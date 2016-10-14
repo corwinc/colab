@@ -10,24 +10,38 @@ class Signup extends React.Component {
 	}
 
 	render() {
+		var imgUrl = '../../../public/media/bckgrnd.jpg'
+
+		var divStyle = {
+		  position: 'fixed',
+		  top:0,
+		  bottom: 0,
+		  left: 0,
+		  width:'100%',
+		  backgroundImage: 'url(' + imgUrl + ')',
+		  WebkitTransition: 'all', // note the capital 'W' here
+		  msTransition: 'all', // 'ms' is the only lowercase vendor prefix
+		  backgroundSize: 'cover',
+          overflow: 'hidden',
+		};
 		const {userSignupRequest, addFlashMessage} = this.props;
 		return (
-		  <div>
-		  	<video className="backGroundVideo" controls autoPlay loop="loop" muted="" width="300" height="150">
-		      <source src="../../../public/media/demo.mp4" type="video/mp4" />
-		      <source src="../../../public/media/demo.ogv" type="video/ogg" />
-		      <source src="../../../public/media/demo.webm" type="video/webm" />
-		    </video>
-
-			<div className="container">
-			  <div className="row">
-		        <div className="col-md-4 col-md-offset-4">
-		    	  <SignupForm userSignupRequest={userSignupRequest} 
-		    	  addFlashMessage={addFlashMessage}/> 
-		        </div>
-		      </div>
-		    </div>
-		  </div>
+			<div style={divStyle}>
+			  <div class="container">
+			    <div class="row main">
+					  <div class="panel-heading">
+		          <div class="panel-title text-center">
+		           	  <h1 class="title">Col-Lab</h1>
+		           	  <hr />
+		          </div>
+		        </div> 
+	          <div className="col-md-4 col-md-offset-4">
+		    	    <SignupForm userSignupRequest={userSignupRequest} 
+		    	    addFlashMessage={addFlashMessage}/> 
+	          </div>
+			    </div>
+			  </div>
+			</div>
 		)
 	}
 }
