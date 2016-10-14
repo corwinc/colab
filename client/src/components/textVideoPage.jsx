@@ -124,7 +124,6 @@ class TextVideoPage extends React.Component {
       success: (data) => {
         console.log('TVP found doc from sharelink:', data);
         var docId = data.id;
-        // this.setState({curDoc: docId});
         this.getComments(docId);
         this.props.setDocId(docId);
       },
@@ -149,10 +148,6 @@ class TextVideoPage extends React.Component {
     })
   }
 
-  // setSelectionLoc (loc) {
-  //   this.setState({selectionLoc: loc});
-  // }
-
   render() {
     return (
       <div>
@@ -168,27 +163,6 @@ class TextVideoPage extends React.Component {
   }
 }
 
-
-
-// /* COMPONENT WITH CHAT */
-// export default class TextVideoPage extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <div className="NavBar">
-//           <NavBar />
-//         </div>
-//         <div id="editor">
-//           <p>Type here...</p>
-//         </div>
-//         <div className="video-and-chat">
-//           <AppVideo className="Video"/>
-//           <Chat className="Chat"/>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
 
 function mapStateToProps(state) {
   console.log('TVP STATE inside mapStateToProps:', state);
