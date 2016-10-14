@@ -44,7 +44,7 @@ class NavBar extends React.Component {
     return (
       <div className="navbar-container">
         <div className="navbar">
-          <div className="navbar-title">ColLab</div>
+          <div className="navbar-title"><span onClick={ this.goToDocs }>ColLab</span></div>
           <div className="navbar-right">
             <div className="chathead-container">
               <ul className="chathead-list">
@@ -67,7 +67,6 @@ class NavBar extends React.Component {
             <div className="navbar-button-container">
               <div className="share-button"><button onClick={()=>{this.props.startConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
-              <div><a onClick={ this.goToDocs }>docs</a></div>
               <div className="logout-link">
                 <a onClick={()=>{ var docId = this.props.docId;
                                                 var userId = parseInt(this.props.userId);
