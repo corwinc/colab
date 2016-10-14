@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as navbarActions from '../actions/navbarActions.jsx';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 const documentChannel = io('/document');
 
 
@@ -29,6 +30,10 @@ class NavBar extends React.Component {
     }
 
     return firstInit + lastInit;
+  }
+
+  goToDocs () {
+    browserHistory.push('/documentlist');
   }
 
   render() {
@@ -58,6 +63,7 @@ class NavBar extends React.Component {
             <div className="navbar-button-container">
               <div className="share-button"><button onClick={()=>{this.props.startConferenceCall()}}>Conference Call</button></div>
               <div className="share-button"><button>Share</button></div>
+              <div><a onClick={ this.goToDocs }>docs</a></div>
               <div className="logout-link">
                 <a href="/logout" onClick={()=>{ var docId = this.props.docId;
                                                 var userId = parseInt(this.props.userId);

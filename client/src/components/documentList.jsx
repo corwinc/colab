@@ -177,42 +177,63 @@ class DocumentList extends React.Component {
       marginRight: 10
     };
 
+    var lSidebarStyle = {
+      backgroundColor: 'blue',
+      height: 100
+    };
+
+    var hStyle = {
+      fontWeight: 100,
+      paddingLeft: 50
+    };
+
+    var logoStyle = {
+      fontSize: 36,
+      fontFamily: 'Arial'
+    };
+
 	  return (
-		  <div className="container">
-		    <button id="add-doc" className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
-        <button id="del-doc" className="btn btn btn-primary btn-large btn-block" onClick={ this.delete.bind(this) }>Delete</button>
-        <div className="logout-link btn-block"><a href="/logout">logout</a></div>
-		    <br />
-		    <span style={ messageStyle }>{ this.props.message }</span>
-        <br />
+		  <div className="container-fluid">
+        <div className="row">
+          <div id="doclist-left-sidebar" className="col-md-2">
+            <h2 style={ logoStyle } >ColLab</h2>
+            <a href="/logout">logout</a>
+          </div>
+          <div className="col-md-8">
+            <h1 style={ hStyle } >Docs</h1>
+            <br />
+            <span style={ messageStyle }>{ this.props.message }</span>
+            <br />
 
-			    <ul>
-			    	{ this.props.documents.length > 0 ? this.props.documents.map( (doc, index) => {
-			    		  return ( 
-			    		  	<li className="doclist-li" key={ index }>
-			    		  	  <div>
-			    		  	    <img style={ docIconStyle }src="http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png" />
-			    		  	  </div>
-			    		  	  <div>
-				    		  	  <a onClick={ () => { this.openDoc( doc.sharelink ); 
-                                            this.setCurDocId(doc.id); 
-                                            documentChannel.emit('user joining document', JSON.stringify({"documentId": doc.id, "newUserId": parseInt(this.props.curUser)}))
-                                            } }>{ doc.title }</a>
-		                  &nbsp;
-                      <input className="del-checkbox" onChange={ () => { this.handleCheckbox( doc.id, index, this.props.itemsToDelete ) } } type="checkbox"/>
-                      <a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
-		                  <br />
-		                  <span onClick={ this.test.bind(this) } style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>
-	                  </div>
-	                  <hr />
-			    		  	</li> 
-			    		  );
-			    	  }) : ''
-			      }
-			    </ul>
+              <ul>
+                { this.props.documents.length > 0 ? this.props.documents.map( (doc, index) => {
+                    return ( 
+                      <li className="doclist-li" key={ index }>
+                        <div>
+                          <img style={ docIconStyle }src="http://images.clipshrine.com/getimg/PngMedium-Paper-3-icon-19797.png" />
+                        </div>
+                        <div>
+                          <a onClick={ () => { this.openDoc( doc.sharelink ); this.setCurDocId(doc.id); } }>{ doc.title }</a>
+                          &nbsp;
+                          <input className="del-checkbox" onChange={ () => { this.handleCheckbox( doc.id, index, this.props.itemsToDelete ) } } type="checkbox"/>
+                          <a className="del-doc-link" onClick={ () => { this.deleteDoc(doc.sharelink, index, doc.title) } }>Delete</a>
+                          <br />
+                          <span onClick={ this.test.bind(this) } style={ lastUpdateStyle }>{ this.calcTime( doc.updatedAt ) }</span>
+                        </div>
+                        <hr />
+                      </li> 
+                    );
+                  }) : ''
+                }
+              </ul>
 
-		    <br />
-      
+            <br />
+          </div>
+          <div className="col-md-2">
+            <button id="add-doc" className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
+            <button id="del-doc" className="btn btn btn-primary btn-large btn-block" onClick={ this.delete.bind(this) }>Delete</button>
+          </div>
+        </div>
       </div>
           );
   }
