@@ -192,6 +192,10 @@ class DocumentList extends React.Component {
       fontFamily: 'Arial'
     };
 
+    var rightSideBarStyle = {
+      marginTop: 100
+    };
+
 	  return (
 		  <div className="container-fluid">
         <div className="row">
@@ -229,7 +233,7 @@ class DocumentList extends React.Component {
 
             <br />
           </div>
-          <div className="col-md-2">
+          <div className="col-md-2" style={ rightSideBarStyle }>
             <button id="add-doc" className="btn btn btn-primary btn-large btn-block " onClick={ () => { this.createNewDoc(window.localStorage.user.slice(1, window.localStorage.user.length - 1)) } }>Create new doc</button>
             <button id="del-doc" className="btn btn btn-primary btn-large btn-block" onClick={ this.delete.bind(this) }>Delete</button>
           </div>
