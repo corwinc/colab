@@ -3,7 +3,6 @@ const initialState = {
 	statusmessage: '',
 }
 
-
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case 'AUTH_SUCCESS':

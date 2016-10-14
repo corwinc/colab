@@ -19,7 +19,7 @@ import promise from 'redux-promise';
 
   const createStoreWithMiddleware = applyMiddleware(thunk, promise, logger)(createStore);
   
-  //@
+//@
 
 
 //if you want to use redux devtool then use these 4 lines of code below:-

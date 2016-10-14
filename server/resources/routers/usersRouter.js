@@ -18,20 +18,14 @@ usersRouter.route('/')
 usersRouter.route('/id')
   .get(usersController.getId)
 
-
 usersRouter.route('/user')
   .get(usersController.getUserById)
 
-
-  //facebook oauth routes
-  // usersRouter.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
-  // usersRouter.get('/auth/facebook/callback',
-  // 	passport.authenticate('facebook'), usersController.oauthSuccess); //
+//facebook oauth
 usersRouter.route('/facebook')
 .get( passport.authenticate('facebook', {scope: ['email']}))
 usersRouter.route('/facebook/callback')
 .get(passport.authenticate('facebook'), usersController.oauthSuccess); //
 
-  /////////////////////////////////////
 module.exports = usersRouter;
 

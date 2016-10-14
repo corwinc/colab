@@ -53,10 +53,7 @@ exports.createUser = function(req, res) {
   
   if (Object.keys(req.body).length === 0) {
 
-    // console.log('--------------------------------------------------------------------->>>>>>inside facebook create user');
     ////////////////////////////////////////////facebook
-    
-
     User.findOne({where: {username: req.user.id} })
       .then(function(user){
         
@@ -71,7 +68,6 @@ exports.createUser = function(req, res) {
 
           User.create(newUser)
             .then(function(user){
-              // console.log('newUser----->', user);
               res.send(user);
             })
             .catch(function(error){
@@ -82,13 +78,9 @@ exports.createUser = function(req, res) {
       .catch(function(error){
         res.status(500).send('Error finding this user.');
       });
-
-
-
-      ///////////////////////////////////////////facebook
-
+    ///////////////////////////////////////////facebook
   } else {
-      //////////////////////////////////////////Regular Signup
+    //////////////////////////////////////////Regular Signup
     User.findOne({where: {username: req.body.username} })
       .then(function(user){
         if (user !== null){
@@ -96,7 +88,6 @@ exports.createUser = function(req, res) {
         } else {
           User.create(req.body)
             .then(function(user){
-              // console.log('Regularuser----->', user);
               res.send(user);
             })
             .catch(function(error){
@@ -124,7 +115,6 @@ exports.oauthSuccess = function(req, res) {
   if (!req.user) { return res.status(404).send({ message: 'Login failed' }); }
   const user = req.user;
   const token = req.user.id;
-
   exports.createUser(req);
 
   return res.redirect(`/oauthSuccess?token=${token}&username=${user.id}`);
