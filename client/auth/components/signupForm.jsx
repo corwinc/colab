@@ -13,7 +13,6 @@ class SignupForm extends React.Component {
 			usernameErr:'',
 			email:'',
 			password:'',
-
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -26,11 +25,8 @@ class SignupForm extends React.Component {
 	}
 
 	onSubmit(e) {
-		// this.setState({errors: {} });
 		e.preventDefault();
-
 		this.props.userSignupRequest(this.state).then(
-
 			(res) => {
 				if (res !== 'A user with that username already exists.') {
 					console.log('response', res);
@@ -40,12 +36,9 @@ class SignupForm extends React.Component {
 					})
 					this.context.router.push('/documentlist');
 				} else {
-					
-			  		this.setState({usernameErr: 'A user with that username already exists.'});
-			  		return;
-  					
-
-				}
+					this.setState({usernameErr: 'A user with that username already exists.'});
+			  	return;
+  			}
 			},
 		).catch(
 			(err) => {
@@ -54,15 +47,14 @@ class SignupForm extends React.Component {
 		)
 	}
 
-
 	render() {
 		var messageStyle = {
-	      color: 'red'
-	    };
+	    color: 'red'
+	  };
 
-	    var titleStyle = {
-	      color: '#3666b5'
-	    };
+    var titleStyle = {
+      color: '#3666b5'
+    };
 
 		const {errors} = this.state;
 		return (
@@ -118,8 +110,7 @@ class SignupForm extends React.Component {
 						name="email"
 						placeholder="Email" 
 						className="form-control" required
-						
-				    />
+					/>
 				    <div className="help-block with-errors"></div>
 				</div>
 
@@ -142,19 +133,20 @@ class SignupForm extends React.Component {
 					Sign up
 					</button>
 				</div>
+				
 				<div className="form-group">
-		          Already have an account? <Link to="/login"><strong>Sign in</strong></Link>
-		        </div>
-		        <div className="form-group">
-		          <a className="btn btn-primary btn-lg" href="/auth/facebook">Sign Up With Facebook</a>
-		        </div>
+          Already have an account? <Link to="/login"><strong>Sign in</strong></Link>
+        </div>
+		        
+        <div className="form-group">
+          <a className="btn btn-primary btn-lg" href="/auth/facebook">Sign Up With Facebook</a>
+        </div>
 			</form>
 		);
 	}
 }
 
 SignupForm.propTypes = {
-
 	userSignupRequest: React.PropTypes.func.isRequired, 
 	addFlashMessage: React.PropTypes.func.isRequired 
 }
