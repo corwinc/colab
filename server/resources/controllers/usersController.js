@@ -175,4 +175,15 @@ exports.deleteUser = function(req, res) {
     });
   };
 
+  exports.getUserById = function(req, res) {
+    console.log('INSIDE GETUSERBYID, id:', req.query.id);
+    User.findOne({where: {id: req.query.id}})
+      .then((user) => {
+        res.send(user);
+      })
+      .catch((err) => {
+        res.status(500).send('Error getting user by id');
+      })
+  }
+
 

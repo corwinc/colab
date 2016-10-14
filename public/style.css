@@ -1,5 +1,6 @@
+/********************** NAVBAR ***********************/
 
-/* NAVBAR */
+/*** GENERAL ***/
 .navbar-container {
   position: relative;
 }
@@ -12,7 +13,6 @@
   width: 100%;
   background-color: #f4fdff;
   float: right;
-/*  vertical-align: middle;*/
 }
 
 .navbar-title {
@@ -32,6 +32,8 @@
   height: 60px;
 }
 
+
+/*** CHATHEADS ***/
 .chathead-container {
   display: inline-block;
   vertical-align: top;
@@ -54,7 +56,6 @@
   list-style-type: none;
   text-align: center;
   margin-right: 4px;
-/*  vertical-align: middle;*/
 }
 
 .chathead-initials {
@@ -67,6 +68,7 @@
   font-family: arial;
 }
 
+/*** BUTTONS ***/
 .navbar-button-container {
   display: inline-block;
   vertical-align: top;
@@ -94,7 +96,9 @@
 
 }
 
-/* VIDEO */
+
+
+/********************* VIDEO *************************/
 
 .ql-toolbar,
 .ql-snow,
@@ -379,7 +383,9 @@ div.vid-scrollable-list {
   align-items: center;
 }
 
-/* COMMENTS */
+
+
+/**************************** COMMENTS ***************************/
 .comment-area-container {
   width: 20vw;
   height: 1000px;
@@ -390,6 +396,7 @@ div.vid-scrollable-list {
   border: none;
 }
 
+/*** NEW COMMENT ***/
 .comment-container {
   font-family: arial;
 }
@@ -470,8 +477,15 @@ div.vid-scrollable-list {
   font-size: 12px;
 }
 
+/*** SAVED COMMENT ***/
 .comment-saved-container {
   font-family: arial;
+  border-radius: 5px;
+  border-width: .5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: gray;
+  width: 80%;
 }
 
 .comment-saved {
@@ -515,15 +529,40 @@ div.vid-scrollable-list {
   color: gray;
 }
 
-.comment-test {
-  background: blue;
-  width: 200px;
-  height: 50px;
+.comment-saved-unfocused {
+
 }
 
-/***
- * document list css
- */
+.comment-saved-focused {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: .5px;
+  margin-left: 10%;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: gray;
+  width: 80%;
+}
+
+
+/*** TEXT SELECTION MENU ***/
+.text-selection-menu-container {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: none;
+}
+
+.comment-icon {
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  margin-left: 6px;
+}
+
+
+
+/************************* DOCUMENT LIST **************************/
 .doclist-li {
   margin-bottom: 20px;
   list-style-type: none;

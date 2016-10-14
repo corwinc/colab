@@ -4,16 +4,18 @@ import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
 import SavedComment from './SavedComment.jsx';
 import NewComment from './NewComment.jsx';
+import TextSelectionMenu from './TextSelectionMenu.jsx';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 class CommentArea extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getComments = this.getComments.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getComments();
   }
 
@@ -24,29 +26,50 @@ class CommentArea extends React.Component {
       dataType: 'json',
       data: {docId: this.props.curDoc},
       success: (data) => {
-        console.log('COMMENT Success getting comments!:', data);
-        this.props.getCommentsSuccess(data); // reducer should update state w/ this once hooked up
+        this.props.getCommentsSuccess(data);
       },
       error: (err) => {
-        console.log('COMMENT error getting comments:', err);
+        console.log('Error getting comments:', err);
       }
     })
+  }
+
+  deleteComment(id) {
+    axios.delete('/comments?id=' + id)
+      .then((res) => {
+        this.getComments();
+      })
+      .catch((err) => {
+        console.log('Error deleting comment:', err);
+      })
+
   }
 
   render() {
     return (
       <div className="comment-area-container">
         {
+          // Render all saved comments
           (() => {
             return this.props.comments.map((comment, i) => {
-              return (<SavedComment key={i} comment={comment} />);
+              return (<SavedComment key={i} comment={comment} deleteComment={this.deleteComment} />);
             });
           })()
         }
 
         {
+          // If text is selected and a NewComment component is not rendered, show menu (currently only shows comment icon)
           (() => {
-            if (this.props.selectionLoc !== null) {
+            if (this.props.selectionLoc !== null && !this.props.newCommentStatus) {
+              return (<TextSelectionMenu />);
+            }
+          })()
+        }
+
+        {
+          // If comment icon has been selected (and therefor newCommentStatus == true), render NewComment
+          (() => {
+            if (this.props.newCommentStatus) {
               return (<NewComment />);
             }
           })()
@@ -56,12 +79,12 @@ class CommentArea extends React.Component {
   }
 }
 
-// 1st 'comment' = root reducer, 2nd is props
 function mapStateToProps(state) {
   return {
     comments: state.comment.comments,
     selectionLoc: state.editor.selectionLoc,
-    curDoc: state.comment.curDoc
+    curDoc: state.editor.docId,
+    newCommentStatus: state.comment.newCommentStatus
   }
 }
 

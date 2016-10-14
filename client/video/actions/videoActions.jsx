@@ -54,3 +54,17 @@ export function showIncomingCallOptions(shouldShow) {
     shouldShow: shouldShow
   }
 };
+
+export function setStartCall(startCall) {
+  return {
+    type: 'SET_START_CALL', 
+    startCall: startCall
+  }
+};
+
+export function setStartConferenceCall(startConferenceCall) {
+  return {
+    type: 'SET_START_CONFERENCE_CALL', 
+    startConferenceCall: startConferenceCall
+  }
+};

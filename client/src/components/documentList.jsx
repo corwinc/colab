@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as doclist from '../actions/documentlistActions.jsx';
 // set curUser: user id using username
+const documentChannel = io('/document');
 
 class DocumentList extends React.Component {
 
@@ -233,9 +234,6 @@ class DocumentList extends React.Component {
             <button id="del-doc" className="btn btn btn-primary btn-large btn-block" onClick={ this.delete.bind(this) }>Delete</button>
           </div>
         </div>
-
-		    
-      
       </div>
           );
   }

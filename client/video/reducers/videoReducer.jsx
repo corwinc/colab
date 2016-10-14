@@ -33,6 +33,14 @@ export default function(state = {}, action) {
       return Object.assign({}, state, {
         connections: connsCopy
       });
+    case 'SET_START_CALL':
+      return Object.assign({}, state, {
+        startCall: action.startCall
+      })
+    case 'SET_START_CONFERENCE_CALL':
+      return Object.assign({}, state, {
+        startConferenceCall: action.startConferenceCall
+      })  
     default:
       return state;
   }

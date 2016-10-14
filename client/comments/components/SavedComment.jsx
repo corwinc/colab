@@ -3,20 +3,23 @@ import {render} from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as commentActions from '../actions/commentActions.jsx';
+import axios from 'axios';
 
-var initials = 'CC';
 
 class SavedComment extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (
-      <div className="comment-saved-container">
+      <div className="comment-saved-container" onClick={() => this.props.deleteComment(this.props.comment.id)}>
         <div className="comment-saved" style={{top: this.props.comment.location - 56}}>
-          <div className="comment-saved-chathead" onClick={() => this.props.handleCommentClick()}>
-            <span className="comment-saved-initials">{initials}</span>
+          <div className="comment-saved-chathead">
+            <span className="comment-saved-initials">{this.props.comment.initials}</span>
           </div>
           <div className="comment-saved-text">{this.props.comment.text}</div>
-        </div>
+        </div> 
       </div>
     )
   }
@@ -24,8 +27,9 @@ class SavedComment extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    handleCommentClick: commentActions.handleCommentClick
+    deleteComment: commentActions.deleteComment
   }, dispatch);
 }
 
 export default connect(mapDispatchToProps)(SavedComment);
+

@@ -1,6 +1,6 @@
-export function setUserId(userId) {
+export function SetCurSharedUsers(users) {
   return {
-    type: 'SET_USER_ID',
-    userId
+    type: 'SET_CUR_SHARED_USERS',
+    users
   }
 }

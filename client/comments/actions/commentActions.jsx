@@ -1,20 +1,7 @@
-// DEMO
-export function addComment(comment) {
-  return {
-    type: 'ADD_COMMENT',
-    comment
-  }
-}
+import thunk from 'redux-thunk';
+import promise from 'redux-promise';
 
-export function addCommentToComments(comment) {
-  return {
-    type: 'ADD_COMMENT_TO_COMMENTS',
-    comment
-  }
-}
-
-// ADD COMMENTS TO STATE ON GETCOMMENTS SUCCESS
-
+/* SAVED COMMENTS */ 
 export function getComments() {
   return {
     type: 'GET_COMMENTS'
@@ -35,6 +22,8 @@ export function getCommentsError(error) {
   }
 }
 
+
+/* NEW COMMENTS */
 export function handleCommentInput(input) {
   return {
     type: 'HANDLE_COMMENT_INPUT',
@@ -56,37 +45,11 @@ export function activeCommentStatus(bool) {
   }
 }
 
-export function postEntry(entry) {
+// Keep track of new comment status in order to hide newComment after post / cancel
+export function setNewCommentStatus(status) {
   return {
-    type: 'POST_ENTRY',
-    entry
-  }
-}
-
-export function postEntrySuccess(data) {
-  return {
-    type: 'POST_ENTRY_SUCCESS',
-    data
-  }
-}
-
-export function postEntryError(err) {
-  return {
-    type: 'POST_ENTRY_ERROR',
-    err
-  }
-}
-
-export function cancelEntry() {
-  return {
-    type: 'CANCEL_ENTRY'
-  }
-}
-
-// in reducer: toggle commentclick & if true, turn off all others
-export function handleCommentClick() {
-  return {
-    type: 'HANDLE_COMMENT_CLICK'
+    type: 'SET_NEW_COMMENT_STATUS',
+    status
   }
 }
 
