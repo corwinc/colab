@@ -108,6 +108,10 @@
   margin-right: auto;
 }
 
+.ql-toolbar {
+  margin-top: 100px;
+}
+
 .video-and-chat{
 	width: 30%;
 	float: right;
