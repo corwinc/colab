@@ -11,10 +11,9 @@ class Login extends React.Component {
 
 
 	render() {
-		var imgUrl = '../../../public/media/3.jpg'
+		var imgUrl = '../../../public/media/4.jpg'
 
 		var divStyle = {
-		  color: 'white',
 		  position: 'fixed',
 		  top:0,
 		  bottom: 0,
@@ -30,10 +29,16 @@ class Login extends React.Component {
 
 		return (
 			<div style={divStyle}>
-			  	<div className="container">
-					<div className="row">
+			  <div className="container">
+					<div class="row main">
+					  <div class="panel-heading">
+	            <div class="panel-title text-center">
+             	  <h1 class="title">Col-Lab</h1>
+             	  <hr />
+	            </div>
+			      </div> 
 		        <div className="col-md-4 col-md-offset-4">
-		    		<LoginForm userLoginRequest={userLoginRequest}/> 
+		    			<LoginForm userLoginRequest={userLoginRequest}/> 
 		        </div>
 	        </div>
 		    </div>
