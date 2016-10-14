@@ -204,7 +204,7 @@ class DocumentList extends React.Component {
 		  <div className="container-fluid">
         <div className="row">
           <div id="doclist-left-sidebar" className="col-md-2">
-            <center><h2 style={ logoStyle } >ColLab</h2></center>
+            <center><h2 style={ logoStyle } >Colab</h2></center>
             <center><a onClick={this.goToLogin}>logout</a></center>
           </div>
           <div className="col-md-8">

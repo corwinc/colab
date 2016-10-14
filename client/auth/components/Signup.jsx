@@ -10,8 +10,7 @@ class Signup extends React.Component {
 	}
 
 	render() {
-		var imgUrl = '../../../public/media/bckgrnd.jpg'
-
+		var imgUrl = 'https://c2.staticflickr.com/2/1463/25664074173_3e98714146_o.jpg'
 		var divStyle = {
 		  position: 'fixed',
 		  top:0,
@@ -31,7 +30,7 @@ class Signup extends React.Component {
 			    <div class="row main">
 					  <div class="panel-heading">
 		          <div class="panel-title text-center">
-		           	  <h1 class="title">Col-Lab</h1>
+		           	  <h1 class="title">Colab</h1>
 		           	  <hr />
 		          </div>
 		        </div> 
