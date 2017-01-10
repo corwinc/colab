@@ -24,10 +24,10 @@ class NewComment extends React.Component {
   updateCommentHeight() {
     if (this.props.commentInput !== '') {
       this.props.updateCommentHeight(70);
-      this.props.activeCommentStatus(true);
+      // this.props.activeCommentStatus(true);
     } else {
       this.props.updateCommentHeight(50);
-      this.props.activeCommentStatus(false);
+      // this.props.activeCommentStatus(false);
     }
   }
 
@@ -62,7 +62,7 @@ function mapStateToProps(state) {
     selectionLoc: state.editor.selectionLoc,
     commentInput: state.comment.commentInput,
     commentEntryHeight: state.comment.commentEntryHeight,
-    activeComment: state.comment.activeCommentStatus,
+    // activeComment: state.comment.activeCommentStatus,
     curUserInitials: state.tvPage.curUserInitials
   }
 }
@@ -71,7 +71,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     handleCommentInput: commentActions.handleCommentInput,
     updateCommentHeight: commentActions.updateCommentHeight,
-    activeCommentStatus: commentActions.activeCommentStatus
+    // activeCommentStatus: commentActions.activeCommentStatus
   }, dispatch);
 }
 

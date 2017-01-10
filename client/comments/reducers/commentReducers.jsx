@@ -3,7 +3,7 @@ const initialState = {
   curDoc: null,
   comments: [],
   commentInput: '',
-  activeCommentStatus: false,
+  // activeCommentStatus: false,
   commentEntryHeight: 50,
   savedSelectionLoc: null,
   newCommentStatus: false
@@ -23,10 +23,10 @@ export default function (state=initialState, action) {
       return Object.assign({}, state, {
         commentInput: action.input
       })
-    case 'ACTIVE_COMMENT_STATUS':
-      return Object.assign({}, state, {
-        activeCommentStatus: action.bool
-      })
+    // case 'ACTIVE_COMMENT_STATUS':
+    //   return Object.assign({}, state, {
+    //     activeCommentStatus: action.bool
+    //   })
     case 'UPDATE_COMMENT_HEIGHT':
       return Object.assign({}, state, {
         commentEntryHeight: action.height
